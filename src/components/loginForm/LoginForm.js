@@ -13,7 +13,8 @@ export const ME = gql`
     }
   }
 `;
-// Login Mutation
+
+// Login mutation
 export const LOGIN = gql`
   mutation login($mail: String!, $password: String!) {
     login(mail: $mail, password: $password) {
