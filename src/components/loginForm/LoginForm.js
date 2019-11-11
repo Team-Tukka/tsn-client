@@ -1,7 +1,8 @@
-import React, { useState } from "react";
-import logo from "../../assets/images/logo.png";
-import { gql } from "apollo-boost";
-import "./LoginForm.css";
+import React, { useState } from 'react';
+import { useMutation } from '@apollo/react-hooks';
+import logo from '../../assets/images/logo.png';
+import { gql } from 'apollo-boost';
+import './LoginForm.css';
 
 // Importér Reactstrap komponenter
 import {
@@ -14,12 +15,12 @@ import {
   Input,
   Button,
   Alert
-} from "reactstrap";
+} from 'reactstrap';
 
 // Importér Font Awesome komponenter
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faKey } from "@fortawesome/free-solid-svg-icons";
-import { faAt } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faKey } from '@fortawesome/free-solid-svg-icons';
+import { faAt } from '@fortawesome/free-solid-svg-icons';
 
 // Me query
 export const ME = gql`
@@ -49,16 +50,38 @@ export const LOGIN = gql`
 // LoginForm komponent
 function LoginForm() {
   // States med React Hooks
-  const [mail, setMail] = useState("");
-  const [password, setPassword] = useState("");
+  const [mail, setMail] = useState('');
+  const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState(null);
   const [loginSuccess, setLoginSuccess] = useState(false);
 
   // Håndtér fejl der kan opstå, når der logges ind
-  /* Meben brillierer her */
+  const handleError = error => {
+    setErrorMessage(error.graphQLErrors[0].message);
+  };
 
   // Anvend Login mutation
-  /* Meben brillierer her */
+  const [login] = useMutation(LOGIN, {
+    onError: handleError,
+    variables: { mail, password },
+    update: (cache, { data }) => {
+      cache.reset();
+      cache.writeQuery({
+        query: ME,
+        data: { me: data.login }
+      });
+      setErrorMessage(null);
+      setLoginSuccess(true);
+      const timer = setTimeout(() => {
+        // JEG SKAL ÆNDRES SÅ SNART ROUTEN ER OPRETTET
+        window.location = '/';
+      }, 800);
+      return () => clearTimeout(timer);
+    },
+    onCompleted({ login }) {
+      localStorage.setItem('token', JSON.stringify(login.token));
+    }
+  });
 
   // Håndtér ændringer i mail input
   const handleMailChange = event => {
@@ -72,36 +95,36 @@ function LoginForm() {
 
   // Vis alert box med fejlbesked, når login mislykkes
   const errorNotification = () =>
-    errorMessage && <Alert color="danger">{errorMessage}</Alert>;
+    errorMessage && <Alert color='danger'>{errorMessage}</Alert>;
 
   // Bestem hvad der skal ske, når der submittes
   const handleSubmit = event => {
     event.preventDefault();
     if (mail && password) {
-      // login();
+      login();
     }
   };
 
   return (
-    <Container className="containerStyles">
-      <div className="text-center">
-        <img src={logo} className="logoStyles" alt="TSN Logo" />
+    <Container className='containerStyles'>
+      <div className='text-center'>
+        <img src={logo} className='logoStyles' alt='TSN Logo' />
       </div>
-      <Form className="form" onSubmit={handleSubmit}>
+      <Form className='form' onSubmit={handleSubmit}>
         <Row>
           <Col>
             <FormGroup>
               <InputGroup>
                 <FontAwesomeIcon
                   icon={faAt}
-                  className="fontAwesomeStyles"
+                  className='fontAwesomeStyles'
                 ></FontAwesomeIcon>
                 <Input
                   required
-                  type="email"
-                  name="email"
-                  id="mail"
-                  placeholder="din@mail.dk"
+                  type='email'
+                  name='email'
+                  id='mail'
+                  placeholder='din@mail.dk'
                   value={mail}
                   onChange={handleMailChange}
                 />
@@ -115,14 +138,14 @@ function LoginForm() {
               <InputGroup>
                 <FontAwesomeIcon
                   icon={faKey}
-                  className="fontAwesomeStyles"
+                  className='fontAwesomeStyles'
                 ></FontAwesomeIcon>
                 <Input
                   required
-                  type="password"
-                  name="password"
-                  id="password"
-                  placeholder="**********"
+                  type='password'
+                  name='password'
+                  id='password'
+                  placeholder='**********'
                   value={password}
                   onChange={handlePasswordChange}
                 />
@@ -134,7 +157,7 @@ function LoginForm() {
           <Col>
             {/* Hvis login lykkes */}
             {loginSuccess === true && (
-              <Alert color="success">Logger ind...</Alert>
+              <Alert color='success'>Logger ind...</Alert>
             )}
             {/* Hvis login mislykkes */}
             {errorNotification()}
@@ -142,7 +165,7 @@ function LoginForm() {
         </Row>
         <Row>
           <Col>
-            <Button className="submitStyles">Log ind</Button>
+            <Button className='submitStyles'>Log ind</Button>
           </Col>
         </Row>
       </Form>
