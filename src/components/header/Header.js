@@ -23,7 +23,7 @@ function Header(props) {
 
   return (
     <header>
-      <Navbar className="lightGreenBg" light expand="md">
+      <Navbar className="lightGreenBg headerStyles" light expand="md">
         <Container>
           <NavbarBrand href="/">Top Scooter Nordic</NavbarBrand>
           <NavbarToggler onClick={toggle} />

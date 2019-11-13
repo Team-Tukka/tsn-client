@@ -124,6 +124,7 @@ function LoginForm() {
                   name="email"
                   id="mail"
                   placeholder="din@mail.dk"
+                  className="inputStyles"
                   value={mail}
                   onChange={handleMailChange}
                 />
@@ -145,6 +146,7 @@ function LoginForm() {
                   name="password"
                   id="password"
                   placeholder="**********"
+                  className="inputStyles"
                   value={password}
                   onChange={handlePasswordChange}
                 />

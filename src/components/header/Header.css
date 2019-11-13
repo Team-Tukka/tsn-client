@@ -1,1 +1,6 @@
 @import url("../../assets/css/globalStyles.css");
+
+.headerStyles {
+  border-bottom: 1px #f0f6ea solid;
+  box-shadow: 0 1px 5px #fafafa;
+}

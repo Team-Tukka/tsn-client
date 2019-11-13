@@ -34,6 +34,7 @@ function App() {
       }
     />
   );
+
   return (
     <Router>
       <ApolloProvider client={client}>

@@ -1,5 +1,6 @@
 @import url("../../assets/css/globalStyles.css");
 
 .adminNavStyles {
-  border-bottom: 2px #f0f6ea solid;
+  border-bottom: 1px #f0f6ea solid;
+  box-shadow: 0 1px 5px #ececec;
 }
