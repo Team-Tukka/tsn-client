@@ -3,6 +3,7 @@ import './Header.css';
 
 // Importér Reactstrap komponenter
 import {
+  Container,
   Collapse,
   Navbar,
   NavbarToggler,
@@ -23,32 +24,34 @@ function Header(props) {
   return (
     <header>
       <Navbar className="lightGreenBg" light expand="md">
-        <NavbarBrand href="/">Top Scooter Nordic</NavbarBrand>
-        <NavbarToggler onClick={toggle} />
-        <Collapse isOpen={isOpen} navbar>
-          <Nav className="ml-auto" navbar>
-            <NavItem>
-              <NavLink className="linkStyles" href="#">
-                Forside
-              </NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink className="linkStyles" href="#">
-                Elscootere
-              </NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink className="linkStyles" href="#">
-                Reservedele
-              </NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink className="linkStyles" href="#">
-                Kontakt
-              </NavLink>
-            </NavItem>
-          </Nav>
-        </Collapse>
+        <Container>
+          <NavbarBrand href="/">Top Scooter Nordic</NavbarBrand>
+          <NavbarToggler onClick={toggle} />
+          <Collapse isOpen={isOpen} navbar>
+            <Nav className="ml-auto" navbar>
+              <NavItem>
+                <NavLink className="linkStyles" href="#">
+                  Forside
+                </NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink className="linkStyles" href="#">
+                  Elscootere
+                </NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink className="linkStyles" href="#">
+                  Reservedele
+                </NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink className="linkStyles" href="#">
+                  Kontakt
+                </NavLink>
+              </NavItem>
+            </Nav>
+          </Collapse>
+        </Container>
       </Navbar>
     </header>
   );
