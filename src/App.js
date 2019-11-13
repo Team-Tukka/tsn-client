@@ -22,6 +22,7 @@ import Welcome from './components/welcome/Welcome';
 
 // App komponentet indeholder den samlede app, der renderes i index.js
 function App() {
+  // Definér angivelsen af Auth route
   const Auth = ({ render: Component, ...rest }) => (
     <Route
       {...rest}
@@ -40,8 +41,10 @@ function App() {
       <ApolloProvider client={client}>
         <Header />
         <Switch>
+          {/* Routes til offentligt tilgængeligt indhold */}
           <Route path="/" exact component={TextArea} />
           <Route path="/login" exact component={LoginForm} />
+          {/* Routes til adgangsbeskyttet indhold */}
           <Auth
             path="/welcome"
             render={() => (
