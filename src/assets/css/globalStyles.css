@@ -1,9 +1,9 @@
 .lightGreenBg {
-  background-color: #e2eed8;
+  background-color: #e2eed8 !important;
 }
 
 .veryLightGreenBg {
-  background-color: #f6fdf2;
+  background-color: #f6fdf2 !important;
 }
 
 .linkStyles {
@@ -12,4 +12,14 @@
 
 .linkStyles:hover {
   text-decoration: underline !important;
+}
+
+.btnStyles {
+  color: #4b713d !important;
+  background-color: #e2eed8 !important;
+  border: 1px #f0f6ea solid !important;
+}
+
+.btnStyles:hover {
+  background-color: #f6fdf2 !important;
 }

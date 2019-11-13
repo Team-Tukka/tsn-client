@@ -49,6 +49,11 @@ function Header(props) {
                   Kontakt
                 </NavLink>
               </NavItem>
+              <NavItem>
+                <NavLink className="linkStyles" href="/login">
+                  Log ind
+                </NavLink>
+              </NavItem>
             </Nav>
           </Collapse>
         </Container>
