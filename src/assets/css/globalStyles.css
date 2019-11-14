@@ -1,5 +1,9 @@
 .lightGreenBg {
-  background-color: #e2eed8;
+  background-color: #e2eed8 !important;
+}
+
+.veryLightGreenBg {
+  background-color: #f6fdf2 !important;
 }
 
 .linkStyles {
@@ -8,4 +12,22 @@
 
 .linkStyles:hover {
   text-decoration: underline !important;
+}
+
+.inputStyles {
+  border: 1px #f0f6ea solid !important;
+  border-radius: 0.4rem !important;
+  box-shadow: 1px 1px 2px #ececec;
+}
+
+.btnStyles {
+  color: #4b713d !important;
+  background-color: #e2eed8 !important;
+  border: 1px #f0f6ea solid !important;
+  border-radius: 0.4rem !important;
+  box-shadow: 1px 1px 2px #ececec;
+}
+
+.btnStyles:hover {
+  background-color: #f6fdf2 !important;
 }

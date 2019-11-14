@@ -1,5 +1,7 @@
+@import url("../../assets/css/globalStyles.css");
+
 .containerStyles {
-  max-width: 10rem;
+  max-width: 25rem !important;
 }
 
 .logoStyles {
@@ -10,9 +12,5 @@
   font-size: 1.5rem;
   margin-right: 0.8rem;
   margin-top: 0.4rem;
-  color: #5a6268;
-}
-
-.submitStyles {
-  float: right;
+  color: #4b713d;
 }
