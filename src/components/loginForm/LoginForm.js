@@ -73,9 +73,8 @@ function LoginForm() {
       setErrorMessage(null);
       setLoginSuccess(true);
       const timer = setTimeout(() => {
-        // JEG SKAL ÆNDRES SÅ SNART ROUTEN ER OPRETTET
-        window.location = '/';
-      }, 800);
+        window.location = '/welcome';
+      }, 700);
       return () => clearTimeout(timer);
     },
     onCompleted({ login }) {
@@ -125,6 +124,7 @@ function LoginForm() {
                   name="email"
                   id="mail"
                   placeholder="din@mail.dk"
+                  className="inputStyles"
                   value={mail}
                   onChange={handleMailChange}
                 />
@@ -146,6 +146,7 @@ function LoginForm() {
                   name="password"
                   id="password"
                   placeholder="**********"
+                  className="inputStyles"
                   value={password}
                   onChange={handlePasswordChange}
                 />
@@ -165,7 +166,9 @@ function LoginForm() {
         </Row>
         <Row>
           <Col>
-            <Button className="submitStyles">Log ind</Button>
+            <Button className="btnStyles" style={{ float: 'right' }}>
+              Log ind
+            </Button>
           </Col>
         </Row>
       </Form>
