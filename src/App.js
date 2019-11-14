@@ -13,7 +13,9 @@ import { Container } from 'reactstrap';
 
 // Importér egne komponenter uden auth-beskyttelse
 import Header from './components/header/Header';
-import TextArea from './components/textArea/TextArea';
+import AdminNav from './components/adminNav/AdminNav';
+import Textarea from './components/textArea/Textarea';
+
 import LoginForm from './components/loginForm/LoginForm';
 
 // Importér egne komponenter med auth-beskyttelse
@@ -41,8 +43,12 @@ function App() {
       <ApolloProvider client={client}>
         <Header />
         <Switch>
+
+          <Route path="/" exact component={Textarea} />
+
           {/* Routes til offentligt tilgængeligt indhold */}
-          <Route path="/" exact component={TextArea} />
+     
+
           <Route path="/login" exact component={LoginForm} />
           {/* Routes til adgangsbeskyttet indhold */}
           <Auth
