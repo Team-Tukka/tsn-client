@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import './Textarea.css';
 import { useMutation, useQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
-// import TinyMCE from 'react-tinymce';
 
 // Importér Reactstrap komponenter
 import {
