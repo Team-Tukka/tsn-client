@@ -11,7 +11,7 @@ import { ApolloProvider } from '@apollo/react-hooks';
 // Importér komponenter
 import Header from './components/header/Header';
 import AdminNav from './components/adminNav/AdminNav';
-import TextArea from './components/textArea/TextArea';
+import Textarea from './components/textArea/Textarea';
 import LoginForm from './components/loginForm/LoginForm';
 
 function App() {
@@ -21,7 +21,7 @@ function App() {
         <Header />
         <AdminNav />
         <Switch>
-          <Route path="/" exact component={TextArea} />
+          <Route path="/" exact component={Textarea} />
           <Route path="/login" exact component={LoginForm} />
         </Switch>
       </ApolloProvider>
