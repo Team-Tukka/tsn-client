@@ -1,3 +1,7 @@
+.contentWrapper {
+  padding-top: 1rem;
+}
+
 .lightGreenBg {
   background-color: #e2eed8 !important;
 }

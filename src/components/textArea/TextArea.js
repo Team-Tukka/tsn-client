@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import './Textarea.css';
 import { useMutation, useQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
+import './Textarea.css';
 
 // Importér Reactstrap komponenter
 import {
@@ -55,7 +55,7 @@ function Textarea() {
   };
 
   return (
-    <Container>
+    <Container className="contentWrapper">
       <h1>Ændrer tekst til forsiden</h1>
       <Form onSubmit={handleSubmit}>
         <FormGroup>

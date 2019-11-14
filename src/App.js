@@ -13,14 +13,13 @@ import { Container } from 'reactstrap';
 
 // Importér egne komponenter uden auth-beskyttelse
 import Header from './components/header/Header';
-import AdminNav from './components/adminNav/AdminNav';
-import Textarea from './components/textArea/Textarea';
-
+import Textarea from './components/textarea/Textarea';
 import LoginForm from './components/loginForm/LoginForm';
 
 // Importér egne komponenter med auth-beskyttelse
 import AdminNav from './components/adminNav/AdminNav';
 import Welcome from './components/welcome/Welcome';
+import EditTextarea from './components/editTextarea/EditTextarea';
 
 // App komponentet indeholder den samlede app, der renderes i index.js
 function App() {
@@ -43,12 +42,8 @@ function App() {
       <ApolloProvider client={client}>
         <Header />
         <Switch>
-
-          <Route path="/" exact component={Textarea} />
-
           {/* Routes til offentligt tilgængeligt indhold */}
-     
-
+          <Route path="/" exact component={Textarea} />
           <Route path="/login" exact component={LoginForm} />
           {/* Routes til adgangsbeskyttet indhold */}
           <Auth
@@ -58,6 +53,17 @@ function App() {
                 <AdminNav />
                 <Container className="contentWrapper">
                   <Welcome />
+                </Container>
+              </React.Fragment>
+            )}
+          />
+          <Auth
+            path="/editTextarea"
+            render={() => (
+              <React.Fragment>
+                <AdminNav />
+                <Container className="contentWrapper">
+                  <EditTextarea />
                 </Container>
               </React.Fragment>
             )}
