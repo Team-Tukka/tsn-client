@@ -21,6 +21,7 @@ import NotFound from './components/notFound/NotFound';
 import AdminNav from './components/adminNav/AdminNav';
 import Welcome from './components/welcome/Welcome';
 import EditTextarea from './components/editTextarea/EditTextarea';
+import Products from './components/products/Products';
 
 // App komponentet indeholder den samlede app, der renderes i index.js
 function App() {
@@ -65,6 +66,17 @@ function App() {
                 <AdminNav />
                 <Container className="contentWrapper">
                   <EditTextarea />
+                </Container>
+              </React.Fragment>
+            )}
+          />
+          <Auth
+            path="/products"
+            render={() => (
+              <React.Fragment>
+                <AdminNav />
+                <Container className="contentWrapper">
+                  <Products />
                 </Container>
               </React.Fragment>
             )}

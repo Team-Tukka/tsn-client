@@ -54,7 +54,7 @@ function AdminNav(props) {
           <Collapse isOpen={isOpen} navbar>
             <Nav className="ml-auto" navbar>
               <NavItem>
-                <NavLink className="linkStyles" href="#">
+                <NavLink className="linkStyles" href="/products">
                   Produktliste
                 </NavLink>
               </NavItem>
