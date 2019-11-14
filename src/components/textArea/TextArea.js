@@ -73,30 +73,6 @@ function Textarea() {
       </Form>
     </Container>
   );
-  // return (
-  //   <Container className="containerStyles">
-  //     <Form>
-  //       <Row>
-  //         <Col>
-  //           <div>
-  //             <p>{data.getTextareaById.text}</p>
-  //           </div>
-  //           <div>
-  //             <TinyMCE
-  //               content={data.getTextareaById.text}
-  //               config={{
-  //                 plugins: 'autolink link image lists print preview',
-  //                 toolbar:
-  //                   'undo redo | bold italic | alignleft aligncenter alignright'
-  //               }}
-  //               onChange={handleEditorChange}
-  //             />
-  //           </div>
-  //         </Col>
-  //       </Row>
-  //     </Form>
-  //   </Container>
-  // );
 }
 
 export default Textarea;
