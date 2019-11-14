@@ -15,6 +15,7 @@ import { Container } from 'reactstrap';
 import Header from './components/header/Header';
 import Textarea from './components/textarea/Textarea';
 import LoginForm from './components/loginForm/LoginForm';
+import NotFound from './components/notFound/NotFound';
 
 // Importér egne komponenter med auth-beskyttelse
 import AdminNav from './components/adminNav/AdminNav';
@@ -68,6 +69,8 @@ function App() {
               </React.Fragment>
             )}
           />
+          {/* Route til alle ugyldige stier */}
+          <Route exact component={NotFound} />
         </Switch>
       </ApolloProvider>
     </Router>
