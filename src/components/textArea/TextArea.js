@@ -46,15 +46,6 @@ function Textarea() {
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error!</p>;
 
-  // const handleEditorChange = event => {
-  //   event.preventDefault();
-  //   console.log(event.target.getContent());
-  //   setText(event.target.getContent());
-  //   updateTextareaById({
-  //     variables: { text: text }
-  //   });
-  // };
-
   const handleSubmit = event => {
     event.preventDefault();
     updateTextareaById({
