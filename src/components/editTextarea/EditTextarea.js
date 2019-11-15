@@ -14,11 +14,14 @@ import {
   Alert
 } from 'reactstrap';
 
-function EditTextarea(props) {
+// EditTextArea komponent
+function EditTextarea() {
+  // States med React Hooks
   const [text, setText] = useState('');
   const [content, setContent] = useState('hiddenContent');
   const [alertStatus, setAlertStatus] = useState('0');
 
+  // Definér query til at hente textarea
   const GET_TEXTAREA_BY_ID = gql`
     {
       getTextareaById(_id: "5dcbd28e8d50cf53c4f97a58") {
@@ -28,6 +31,7 @@ function EditTextarea(props) {
     }
   `;
 
+  // Definér mutation til at ændre i textarea
   const UPDATE_TEXTAREA_BY_ID = gql`
     mutation {
       updateTextareaById(
@@ -39,21 +43,24 @@ function EditTextarea(props) {
       }
     }
   `;
+  
+  // Anvend query og mutation
   const { loading, error, data } = useQuery(GET_TEXTAREA_BY_ID);
   const [updateTextareaById] = useMutation(UPDATE_TEXTAREA_BY_ID);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error!</p>;
 
+  // Bestem hvad der skal ske, når der submittes
   const handleSubmit = event => {
     event.preventDefault();
-
     updateTextareaById({
       variables: { text: text }
     });
     setAlertStatus('2');
   };
 
+  // Toggle til at vise og skjule preview
   const handlePreview = () => {
     if (content === 'hiddenContent') {
       setContent('shownContent');
@@ -61,6 +68,7 @@ function EditTextarea(props) {
       setContent('hiddenContent');
     }
   };
+  
   return (
     <Container className="contentWrapper">
       <h1>Tekst på forsiden:</h1>
