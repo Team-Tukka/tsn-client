@@ -20,9 +20,6 @@ export const ME = gql`
   {
     me {
       _id
-      firstName
-      lastName
-      mail
     }
   }
 `;
@@ -46,28 +43,30 @@ function AdminNav(props) {
   };
 
   return (
-    <header>
-      <Navbar className="veryLightGreenBg adminNavStyles" light expand="md">
-        <Container>
-          <NavbarBrand></NavbarBrand>
-          <NavbarToggler onClick={toggle} />
-          <Collapse isOpen={isOpen} navbar>
-            <Nav className="ml-auto" navbar>
-              <NavItem>
-                <NavLink className="linkStyles" href="#">
-                  Produktliste
-                </NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink className="linkStyles" href="#" onClick={Logout}>
-                  Log ud
-                </NavLink>
-              </NavItem>
-            </Nav>
-          </Collapse>
-        </Container>
-      </Navbar>
-    </header>
+    <React.Fragment>
+      {localStorage.token && (
+        <Navbar className="veryLightGreenBg adminNavStyles" light expand="md">
+          <Container>
+            <NavbarBrand></NavbarBrand>
+            <NavbarToggler onClick={toggle} />
+            <Collapse isOpen={isOpen} navbar>
+              <Nav className="ml-auto" navbar>
+                <NavItem>
+                  <NavLink className="linkStyles" href="/products">
+                    Produktliste
+                  </NavLink>
+                </NavItem>
+                <NavItem>
+                  <NavLink className="linkStyles" href="#" onClick={Logout}>
+                    Log ud
+                  </NavLink>
+                </NavItem>
+              </Nav>
+            </Collapse>
+          </Container>
+        </Navbar>
+      )}
+    </React.Fragment>
   );
 }
 

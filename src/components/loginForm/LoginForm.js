@@ -27,9 +27,6 @@ export const ME = gql`
   {
     me {
       _id
-      firstName
-      lastName
-      mail
     }
   }
 `;
@@ -39,9 +36,6 @@ export const LOGIN = gql`
   mutation login($mail: String!, $password: String!) {
     login(mail: $mail, password: $password) {
       _id
-      firstName
-      lastName
-      mail
       token
     }
   }

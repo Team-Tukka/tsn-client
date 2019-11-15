@@ -15,11 +15,13 @@ import { Container } from 'reactstrap';
 import Header from './components/header/Header';
 import Textarea from './components/textarea/Textarea';
 import LoginForm from './components/loginForm/LoginForm';
+import NotFound from './components/notFound/NotFound';
 
 // Importér egne komponenter med auth-beskyttelse
 import AdminNav from './components/adminNav/AdminNav';
 import Welcome from './components/welcome/Welcome';
 import EditTextarea from './components/editTextarea/EditTextarea';
+import Products from './components/products/Products';
 
 // App komponentet indeholder den samlede app, der renderes i index.js
 function App() {
@@ -41,6 +43,7 @@ function App() {
     <Router>
       <ApolloProvider client={client}>
         <Header />
+        <AdminNav />
         <Switch>
           {/* Routes til offentligt tilgængeligt indhold */}
           <Route path="/" exact component={Textarea} />
@@ -49,25 +52,29 @@ function App() {
           <Auth
             path="/welcome"
             render={() => (
-              <React.Fragment>
-                <AdminNav />
-                <Container className="contentWrapper">
-                  <Welcome />
-                </Container>
-              </React.Fragment>
+              <Container className="contentWrapper">
+                <Welcome />
+              </Container>
             )}
           />
           <Auth
             path="/editTextarea"
             render={() => (
-              <React.Fragment>
-                <AdminNav />
-                <Container className="contentWrapper">
-                  <EditTextarea />
-                </Container>
-              </React.Fragment>
+              <Container className="contentWrapper">
+                <EditTextarea />
+              </Container>
             )}
           />
+          <Auth
+            path="/products"
+            render={() => (
+              <Container className="contentWrapper">
+                <Products />
+              </Container>
+            )}
+          />
+          {/* Route til alle ugyldige stier */}
+          <Route exact component={NotFound} />
         </Switch>
       </ApolloProvider>
     </Router>
