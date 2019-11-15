@@ -43,6 +43,7 @@ function App() {
     <Router>
       <ApolloProvider client={client}>
         <Header />
+        <AdminNav />
         <Switch>
           {/* Routes til offentligt tilgængeligt indhold */}
           <Route path="/" exact component={Textarea} />
@@ -51,34 +52,25 @@ function App() {
           <Auth
             path="/welcome"
             render={() => (
-              <React.Fragment>
-                <AdminNav />
-                <Container className="contentWrapper">
-                  <Welcome />
-                </Container>
-              </React.Fragment>
+              <Container className="contentWrapper">
+                <Welcome />
+              </Container>
             )}
           />
           <Auth
             path="/editTextarea"
             render={() => (
-              <React.Fragment>
-                <AdminNav />
-                <Container className="contentWrapper">
-                  <EditTextarea />
-                </Container>
-              </React.Fragment>
+              <Container className="contentWrapper">
+                <EditTextarea />
+              </Container>
             )}
           />
           <Auth
             path="/products"
             render={() => (
-              <React.Fragment>
-                <AdminNav />
-                <Container className="contentWrapper">
-                  <Products />
-                </Container>
-              </React.Fragment>
+              <Container className="contentWrapper">
+                <Products />
+              </Container>
             )}
           />
           {/* Route til alle ugyldige stier */}
