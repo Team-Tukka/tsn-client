@@ -6,7 +6,9 @@ import './Textarea.css';
 // Importér Reactstrap komponenter
 import { Container, Row, Col } from 'reactstrap';
 
+// Textarea komponent
 function Textarea() {
+  // Definér mutation til at hente textarea
   const GET_TEXTAREA_BY_ID = gql`
     {
       getTextareaById(_id: "5dcbd28e8d50cf53c4f97a58") {
@@ -16,6 +18,7 @@ function Textarea() {
     }
   `;
 
+  // Anvend mutation
   const { loading, error, data } = useQuery(GET_TEXTAREA_BY_ID);
 
   if (loading) return <p>Loading...</p>;
@@ -25,7 +28,7 @@ function Textarea() {
     <Container className="contentWrapper">
       <Row>
         <Col>
-          <h1>Forside tekst:</h1>
+          <h3>Top Scooter Nordic</h3>
         </Col>
       </Row>
       <Row>
