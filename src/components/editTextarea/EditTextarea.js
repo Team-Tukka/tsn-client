@@ -56,8 +56,8 @@ function EditTextarea(props) {
 
   const handlePreview = () => {
     if (content === 'hiddenContent') {
-      setContent('showedContent');
-    } else if (content === 'showedContent') {
+      setContent('shownContent');
+    } else if (content === 'shownContent') {
       setContent('hiddenContent');
     }
   };
