@@ -1,1 +1,5 @@
-@import url("../../assets/css/globalStyles.css");
+@import url('../../assets/css/globalStyles.css');
+
+.frontpageText {
+  white-space: pre-wrap;
+}
