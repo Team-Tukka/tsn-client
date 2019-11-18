@@ -1,20 +1,11 @@
-/* Global scrollbar styling starter */
-::-webkit-scrollbar {
-  width: 10px;
-}
+@import url("../../assets/css/fadeInStyles.css");
+@import url("../../assets/css/scrollbarStyles.css");
 
-::-webkit-scrollbar-track {
-  background: #f1f1f1;
+h1,
+h2,
+h3 {
+  font-weight: normal !important;
 }
-
-::-webkit-scrollbar-thumb {
-  background: #888;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #555;
-}
-/* Global scrollbar styling slutter */
 
 .contentWrapper {
   padding-top: 1rem;

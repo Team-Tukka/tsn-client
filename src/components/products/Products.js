@@ -11,7 +11,7 @@ function Products() {
   return (
     <React.Fragment>
       <h3 className="mb-3">Produktliste</h3>
-      <div className="tableScrollView">
+      <div className="tableScrollView fadeIn">
         <Table responsive borderless>
           <thead className="lightGreenBg tableHeaderStyles">
             <tr>
