@@ -1,46 +1,37 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { useQuery } from '@apollo/react-hooks';
-import { gql } from 'apollo-boost';
+import ProductRows from './ProductRows';
+import ProductsFooterText from './ProductsFooterText';
+import './Products.css';
 
-// Komponent, der renderer alle produkter
+// Importér Reactstrap komponenter
+import { Table } from 'reactstrap';
+
+// Komponent, der renderer alle produkter i et table view
 function Products() {
-  // Definér query til at hente alle produkter
-  const GET_CUSTOMERS = gql`
-    {
-      getCustomers {
-        _id
-        name
-        vatNo
-      }
-    }
-  `;
-
-  // Anvend query
-  const { loading, error, data } = useQuery(GET_CUSTOMERS);
-
-  if (loading)
-    return (
-      <tr>
-        <td>Loading...</td>
-      </tr>
-    );
-  if (error)
-    return (
-      <tr>
-        <td>Error!</td>
-      </tr>
-    );
-  return data.getCustomers.map(({ _id, name, vatNo }) => (
-    <tr key={_id}>
-      <td>
-        <Link to={`/dashboard/customers/${_id}`}>{name}</Link>
-      </td>
-      <td>
-        <Link to={`/dashboard/customers/${_id}`}>{vatNo}</Link>
-      </td>
-    </tr>
-  ));
+  return (
+    <React.Fragment>
+      <h3 className="mb-3">Produktliste</h3>
+      <div className="tableScrollView">
+        <Table responsive borderless>
+          <thead className="lightGreenBg tableHeaderStyles">
+            <tr>
+              <th className="font-weight-normal">Navn</th>
+              <th className="font-weight-normal">Pris</th>
+              <th className="font-weight-normal">SKU</th>
+              <th className="font-weight-normal">Mærke</th>
+              <th className="font-weight-normal">Beskrivelse</th>
+              <th className="font-weight-normal">Enhedsnummer</th>
+              <th className="font-weight-normal">Kategori</th>
+            </tr>
+          </thead>
+          <tbody>
+            <ProductRows />
+          </tbody>
+        </Table>
+      </div>
+      <ProductsFooterText />
+    </React.Fragment>
+  );
 }
 
 export default Products;

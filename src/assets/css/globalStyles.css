@@ -1,3 +1,21 @@
+/* Global scrollbar styling starter */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+/* Global scrollbar styling slutter */
+
 .contentWrapper {
   padding-top: 1rem;
 }
@@ -15,6 +33,7 @@
 }
 
 .linkStyles:hover {
+  color: #4b713d !important;
   text-decoration: underline !important;
 }
 
@@ -34,4 +53,22 @@
 
 .btnStyles:hover {
   background-color: #f6fdf2 !important;
+}
+
+.tableHeaderStyles {
+  border-bottom: 1px #f0f6ea solid;
+  box-shadow: 0 1px 5px #fafafa !important;
+}
+
+.tableRowStyles {
+  background-color: #ffffff !important;
+}
+
+.tableRowStyles:hover {
+  background-color: #f6fdf2 !important;
+}
+
+.tableScrollView {
+  max-height: 60vh;
+  overflow: auto;
 }
