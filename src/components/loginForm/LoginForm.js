@@ -101,7 +101,7 @@ function LoginForm() {
   return (
     <Container className="containerStyles">
       <div className="text-center">
-        <img src={logo} className="logoStyles" alt="TSN Logo" />
+        <img src={logo} className="logoStyles img-fluid" alt="TSN Logo" />
       </div>
       <Form className="form" onSubmit={handleSubmit}>
         <Row>

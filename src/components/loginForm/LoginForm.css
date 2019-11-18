@@ -6,6 +6,7 @@
 
 .logoStyles {
   margin: 2rem;
+  max-width: 12rem !important;
 }
 
 .fontAwesomeStyles {
