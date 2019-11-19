@@ -62,10 +62,15 @@ function AddNewUser() {
       }
     }
   `;
-  const [addUser, { error: mutatuionError }] = useMutation(ADD_USER);
+  const [addUser, { error }] = useMutation(ADD_USER, {
+    errorPolicy: 'all'
+  });
 
   const handleSubmit = event => {
     event.preventDefault();
+    // setErrorAlert(false);
+    // setAlert(false);
+
     addUser({
       variables: {
         firstName: firstName,
@@ -78,14 +83,35 @@ function AddNewUser() {
         phone: phone
       }
     });
+
+    // if (!error) {
     setAlert(true);
-    setFirstName('');
-    setLastName('');
-    setMail('');
-    setPassword('');
-    setAddress('');
-    setZipCode('');
-    setPhone('');
+
+    //   setFirstName('');
+    //   setLastName('');
+    //   setMail('');
+    //   setPassword('');
+    //   setAddress('');
+    //   setZipCode('');
+    //   setPhone('');
+    // }
+
+    // if ({ error }) {
+    //   setErrorAlert(true);
+    //   console.log({ error });
+    //   console.log('fejl?');
+    // } else {
+    // setAlert(true);
+    //   setFirstName('');
+    //   setLastName('');
+    //   setMail('');
+    //   setPassword('');
+    //   setAddress('');
+    //   setZipCode('');
+    //   setPhone('');
+    // }
+
+    // console.log(error.graphQLErrors.map(({ message }) == "Mailen er allerede i brug"));
   };
 
   return (
@@ -208,10 +234,15 @@ function AddNewUser() {
             />
           </InputGroup>
         </FormGroup>
-        {alert === true && <Alert>Brugeren blev oprettet!</Alert>}
+        {!error && alert === true && <Alert>Brugeren blev oprettet!</Alert>}
+        {error &&
+          error.graphQLErrors.map(({ message }, i) => (
+            <Alert color="danger" key={i}>
+              {message}
+            </Alert>
+          ))}
         <Button type="submit">Opret</Button>
       </Form>
-      {mutatuionError && <p>Fejl, prøv igen</p>}
     </Container>
   );
 }
