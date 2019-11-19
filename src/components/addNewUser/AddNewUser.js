@@ -17,6 +17,7 @@ import {
 } from 'reactstrap';
 
 function AddNewUser() {
+  // Gør brug af useState til at sætte værdierne, der skal sendes til DB.
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [mail, setMail] = useState('');
@@ -27,6 +28,7 @@ function AddNewUser() {
   const [phone, setPhone] = useState('');
   const [alert, setAlert] = useState(false);
 
+  // Opsætter addUser mutation
   const ADD_USER = gql`
     mutation addUser(
       $firstName: String!
@@ -62,10 +64,10 @@ function AddNewUser() {
       }
     }
   `;
-  const [addUser, { error }] = useMutation(ADD_USER, {
-    errorPolicy: 'all'
-  });
+  // Konstanter, som gør det muligt at bruge mutation og hente errors
+  const [addUser, { error }] = useMutation(ADD_USER);
 
+  // Funktion til at håndtere submit
   const handleSubmit = event => {
     event.preventDefault();
     // setErrorAlert(false);
@@ -241,9 +243,12 @@ function AddNewUser() {
             />
           </InputGroup>
         </FormGroup>
+        {/* Opsætter alert hvis der ikke er nogen fejl */}
         {!error && alert === true && (
           <Alert color="success">Brugeren blev oprettet!</Alert>
         )}
+
+        {/* Opsætter alert hvis der er fejl, samt henter fejlen som er beskrevet i mutation fra serveren */}
         {error &&
           error.graphQLErrors.map(({ message }, i) => (
             <Alert color="danger" key={i}>

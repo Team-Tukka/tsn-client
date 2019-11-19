@@ -91,10 +91,12 @@ function EditTextarea() {
           </InputGroup>
         </FormGroup>
         {alertStatus === '2' && <Alert color="success">Teksten er gemt.</Alert>}
-        <Button className="mr-2" type="submit">
+        <Button className="btnStyles mr-2" type="submit">
           Gem
         </Button>
-        <Button onClick={handlePreview}>Preview</Button>
+        <Button onClick={handlePreview} className="btnStyles">
+          Preview
+        </Button>
       </Form>
       <div>
         <h1 className={content}>Preview:</h1> <br />
