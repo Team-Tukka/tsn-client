@@ -116,12 +116,13 @@ function AddNewUser() {
 
   return (
     <Container className="contentWrapper">
-      <h1>Opret nyt bruger:</h1>
+      <h1 className="mb-4">Opret nyt bruger:</h1>
       <Form onSubmit={handleSubmit}>
         <FormGroup>
           <Label>Fornavn</Label>
           <InputGroup>
             <Input
+              className="inputStyles"
               required
               type="text"
               name="firstName"
@@ -137,6 +138,7 @@ function AddNewUser() {
           <Label>Efternavn</Label>
           <InputGroup>
             <Input
+              className="inputStyles"
               required
               type="text"
               name="lastName"
@@ -152,6 +154,7 @@ function AddNewUser() {
           <Label>Mail</Label>
           <InputGroup>
             <Input
+              className="inputStyles"
               required
               type="email"
               name="mail"
@@ -167,6 +170,7 @@ function AddNewUser() {
           <Label>Password</Label>
           <InputGroup>
             <Input
+              className="inputStyles"
               required
               type="text"
               name="password"
@@ -182,6 +186,7 @@ function AddNewUser() {
           <Label>Adresse</Label>
           <InputGroup>
             <Input
+              className="inputStyles"
               required
               type="text"
               name="address"
@@ -197,6 +202,7 @@ function AddNewUser() {
           <Label>Postnummer</Label>
           <InputGroup>
             <Input
+              className="inputStyles"
               required
               type="number"
               name="zipCode"
@@ -212,6 +218,7 @@ function AddNewUser() {
           <Label>Telefon</Label>
           <InputGroup>
             <Input
+              className="inputStyles"
               type="number"
               name="phone"
               minLength="2"
@@ -234,14 +241,18 @@ function AddNewUser() {
             />
           </InputGroup>
         </FormGroup>
-        {!error && alert === true && <Alert>Brugeren blev oprettet!</Alert>}
+        {!error && alert === true && (
+          <Alert color="success">Brugeren blev oprettet!</Alert>
+        )}
         {error &&
           error.graphQLErrors.map(({ message }, i) => (
             <Alert color="danger" key={i}>
               {message}
             </Alert>
           ))}
-        <Button type="submit">Opret</Button>
+        <Button type="submit" className="btnStyles">
+          Opret
+        </Button>
       </Form>
     </Container>
   );
