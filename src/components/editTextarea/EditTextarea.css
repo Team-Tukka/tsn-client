@@ -7,5 +7,5 @@
 .shownContent {
   display: block;
   padding-top: 1rem;
-  white-space: pre-wrap;
+  white-space: pre-wrap; /* bruges til at formatere <pre> elementet */
 }
