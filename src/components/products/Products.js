@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import ProductRows from './ProductRows';
 import ProductsFooterText from './ProductsFooterText';
 import './Products.css';
@@ -6,11 +7,25 @@ import './Products.css';
 // Importér Reactstrap komponenter
 import { Table } from 'reactstrap';
 
+// Importér Font Awesome komponenter
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
+
 // Komponent, der renderer alle produkter i et table view
 function Products() {
   return (
     <React.Fragment>
-      <h3 className="mb-3">Produktliste</h3>
+      <div className="flexElements">
+        <h3 className="mb-3">Produktliste</h3>
+        {/* Mulighed for at tilføje nyt produkt */}
+        <Link to="/addNewProduct" className="linkStyles">
+          <FontAwesomeIcon
+            icon={faPlusCircle}
+            className="fontAwesomeIconNavStyles"
+          ></FontAwesomeIcon>
+          Tilføj produkt
+        </Link>
+      </div>
       <div className="tableScrollView fadeIn">
         <Table responsive borderless>
           <thead className="lightGreenBg tableHeaderStyles">

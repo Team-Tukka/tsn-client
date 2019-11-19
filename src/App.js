@@ -22,6 +22,7 @@ import AdminNav from './components/adminNav/AdminNav';
 import Welcome from './components/welcome/Welcome';
 import EditTextarea from './components/editTextarea/EditTextarea';
 import Products from './components/products/Products';
+import AddNewProduct from './components/addNewProduct/AddNewProduct';
 
 // App komponentet indeholder den samlede app, der renderes i index.js
 function App() {
@@ -70,6 +71,14 @@ function App() {
             render={() => (
               <Container className="contentWrapper">
                 <Products />
+              </Container>
+            )}
+          />
+          <Auth
+            path="/addNewProduct"
+            render={() => (
+              <Container className="contentWrapper">
+                <AddNewProduct />
               </Container>
             )}
           />
