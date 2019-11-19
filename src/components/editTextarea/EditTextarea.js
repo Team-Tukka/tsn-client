@@ -43,7 +43,7 @@ function EditTextarea() {
       }
     }
   `;
-  
+
   // Anvend query og mutation
   const { loading, error, data } = useQuery(GET_TEXTAREA_BY_ID);
   const [updateTextareaById] = useMutation(UPDATE_TEXTAREA_BY_ID);
@@ -68,7 +68,7 @@ function EditTextarea() {
       setContent('hiddenContent');
     }
   };
-  
+
   return (
     <Container className="contentWrapper">
       <h1>Tekst på forsiden:</h1>
@@ -78,24 +78,29 @@ function EditTextarea() {
             <Input
               type="textarea"
               style={{ minHeight: '200px' }}
+              // Henter teksten fra databasen og erstatter <br /> med viselige linjeskift med brug af regex
               defaultValue={data.getTextareaById.text.replace(
                 /<br\s*\/?>/gi,
                 '\r\n'
               )}
               onChange={event =>
+                // Det indskrevede tekst bliver sat på "text"-staten og linjeskift vil blive erstattet med <br /> i databasen vha. regex
                 setText(event.target.value.replace(/\r?\n/g, '<br />'))
               }
             />
           </InputGroup>
         </FormGroup>
         {alertStatus === '2' && <Alert color="success">Teksten er gemt.</Alert>}
-        <Button className="mr-2" type="submit">
+        <Button className="btnStyles mr-2" type="submit">
           Gem
         </Button>
-        <Button onClick={handlePreview}>Preview</Button>
+        <Button onClick={handlePreview} className="btnStyles">
+          Preview
+        </Button>
       </Form>
       <div>
         <h1 className={content}>Preview:</h1> <br />
+        {/* Henter teksten fra databasen og erstatter <br /> med viselige linjeskift med brug af regex  */}
         <pre className={content}>{text.replace(/<br\s*\/?>/gi, '\r\n')}</pre>
       </div>
     </Container>

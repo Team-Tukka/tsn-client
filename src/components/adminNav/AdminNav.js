@@ -52,8 +52,18 @@ function AdminNav(props) {
             <Collapse isOpen={isOpen} navbar>
               <Nav className="ml-auto" navbar>
                 <NavItem>
+                  <NavLink className="linkStyles" href="/addNewUser">
+                    Opret ny bruger
+                  </NavLink>
+                </NavItem>
+                <NavItem>
                   <NavLink className="linkStyles" href="/products">
                     Produktliste
+                  </NavLink>
+                </NavItem>
+                <NavItem>
+                  <NavLink className="linkStyles" href="/editTextarea">
+                    Redigér tekstfelter
                   </NavLink>
                 </NavItem>
                 <NavItem>
