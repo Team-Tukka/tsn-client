@@ -23,6 +23,8 @@ import Welcome from './components/welcome/Welcome';
 import EditTextarea from './components/editTextarea/EditTextarea';
 import Products from './components/products/Products';
 import AddNewProduct from './components/addNewProduct/AddNewProduct';
+import AddNewUser from './components/addNewUser/AddNewUser';
+
 
 // App komponentet indeholder den samlede app, der renderes i index.js
 function App() {
@@ -79,6 +81,11 @@ function App() {
             render={() => (
               <Container className="contentWrapper">
                 <AddNewProduct />
+          <Auth
+            path="/addNewUser"
+            render={() => (
+              <Container className="contentWrapper">
+                <AddNewUser />
               </Container>
             )}
           />
