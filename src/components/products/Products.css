@@ -1,1 +1,12 @@
 @import url("../../assets/css/globalStyles.css");
+
+.flexElements {
+  display: flex;
+  justify-content: space-between;
+}
+
+.fontAwesomeIconNavStyles {
+  font-size: 1rem;
+  margin-right: 0.4rem;
+  margin-left: 1rem;
+}
