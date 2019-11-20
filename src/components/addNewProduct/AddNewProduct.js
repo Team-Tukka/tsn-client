@@ -27,17 +27,27 @@ function AddNewProduct() {
 
   // Definér mutation til at tilføje nyt produkt
   const ADD_PRODUCT = gql`
-    mutation {
+    mutation addProduct(
+      $name: String!
+      $price: Float!
+      $sku: String
+      $tags: [String]
+      $brand: String
+      $description: String
+      $itemNo: String!
+      $categoryId: String
+      $subCategoryId: String
+    ) {
       addProduct(
-        name: "${name}"
-        price: "${price}"
-        sku: "${sku}"
-        tags: "${tags}"
-        brand: "${brand}"
-        description: "${description}"
-        itemNo: "${itemNo}"
-        categoryId: "${categoryId}"
-        subCategoryId: "${subCategoryId}"
+        name: $name
+        price: $price
+        sku: $sku
+        tags: $tags
+        brand: $brand
+        description: $description
+        itemNo: $itemNo
+        categoryId: $categoryId
+        subCategoryId: $subCategoryId
       ) {
         name
         price
@@ -121,20 +131,17 @@ function AddNewProduct() {
               maxLength="10"
               value={price}
               placeholder="Pris..."
-              onChange={event => setPrice(event.target.value)}
+              onChange={event => setPrice(parseFloat(event.target.value))}
             />
           </InputGroup>
         </FormGroup>
         <FormGroup>
           <InputGroup>
             <Input
-              required
               className="inputStyles"
               type="text"
               name="sku"
               id="productSku"
-              minLength="1"
-              maxLength="30"
               value={sku}
               placeholder="SKU..."
               onChange={event => setSku(event.target.value)}
@@ -144,7 +151,6 @@ function AddNewProduct() {
         <FormGroup>
           <InputGroup>
             <Input
-              required
               className="inputStyles"
               type="text"
               name="tags"
@@ -158,13 +164,10 @@ function AddNewProduct() {
         <FormGroup>
           <InputGroup>
             <Input
-              required
               className="inputStyles"
               type="text"
               name="brand"
               id="productBrand"
-              minLength="1"
-              maxLength="30"
               value={brand}
               placeholder="Mærke..."
               onChange={event => setBrand(event.target.value)}
@@ -190,13 +193,10 @@ function AddNewProduct() {
         <FormGroup>
           <InputGroup>
             <Input
-              required
               className="inputStyles"
               type="number"
               name="categoryId"
               id="productCategoryId"
-              minLength="1"
-              maxLength="10"
               value={categoryId}
               placeholder="Kategori ID..."
               onChange={event => setCategoryId(event.target.value)}
@@ -206,13 +206,10 @@ function AddNewProduct() {
         <FormGroup>
           <InputGroup>
             <Input
-              required
               className="inputStyles"
               type="number"
               name="subCategoryId"
               id="productSubCategoryId"
-              minLength="1"
-              maxLength="10"
               value={subCategoryId}
               placeholder="Underkategori ID..."
               onChange={event => setSubCategoryId(event.target.value)}
@@ -222,7 +219,6 @@ function AddNewProduct() {
         <FormGroup>
           <InputGroup>
             <Input
-              required
               className="inputStyles"
               style={{ minHeight: '5rem' }}
               type="textarea"
