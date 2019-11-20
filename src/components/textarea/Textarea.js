@@ -28,7 +28,7 @@ function Textarea() {
     <Container className="contentWrapper">
       <Row>
         <Col>
-          <h3>Top Scooter Nordic</h3>
+          <h3 className="mb-2">Top Scooter Nordic</h3>
         </Col>
       </Row>
       <Row>

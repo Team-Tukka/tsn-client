@@ -1,11 +1,10 @@
-@import url('../../assets/css/globalStyles.css');
+@import url("../../assets/css/globalStyles.css");
 
 .hiddenContent {
   display: none;
-  padding-top: 1rem;
 }
+
 .shownContent {
   display: block;
-  padding-top: 1rem;
-  white-space: pre-wrap; /* bruges til at formatere <pre> elementet */
+  white-space: pre-wrap; /* Bruges til at formatere <pre> elementet */
 }

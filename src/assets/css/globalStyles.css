@@ -35,6 +35,7 @@ h3 {
 }
 
 .btnStyles {
+  margin-bottom: 1.5rem;
   color: #4b713d !important;
   background-color: #e2eed8 !important;
   border: 1px #f0f6ea solid !important;

@@ -25,7 +25,6 @@ import Products from './components/products/Products';
 import AddNewProduct from './components/addNewProduct/AddNewProduct';
 import AddNewUser from './components/addNewUser/AddNewUser';
 
-
 // App komponentet indeholder den samlede app, der renderes i index.js
 function App() {
   // Definér angivelsen af Auth route
@@ -81,6 +80,9 @@ function App() {
             render={() => (
               <Container className="contentWrapper">
                 <AddNewProduct />
+              </Container>
+            )}
+          />
           <Auth
             path="/addNewUser"
             render={() => (

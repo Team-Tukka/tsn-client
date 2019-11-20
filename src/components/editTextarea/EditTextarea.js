@@ -4,20 +4,14 @@ import { gql } from 'apollo-boost';
 import './EditTextarea.css';
 
 // Importér Reactstrap komponenter
-import {
-  Container,
-  Form,
-  InputGroup,
-  FormGroup,
-  Input,
-  Button,
-  Alert
-} from 'reactstrap';
+import { Form, Input, InputGroup, FormGroup, Button, Alert } from 'reactstrap';
 
 // EditTextArea komponent
 function EditTextarea() {
   // States med React Hooks
-  const [text, setText] = useState('');
+  const [text, setText] = useState(
+    'Du skal ændre i teksten for at se et preview!'
+  );
   const [content, setContent] = useState('hiddenContent');
   const [alertStatus, setAlertStatus] = useState('0');
 
@@ -51,7 +45,7 @@ function EditTextarea() {
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error!</p>;
 
-  // Bestem hvad der skal ske, når der submittes
+  // Bestem, hvad der skal ske, når data indsendes
   const handleSubmit = event => {
     event.preventDefault();
     updateTextareaById({
@@ -70,40 +64,45 @@ function EditTextarea() {
   };
 
   return (
-    <Container className="contentWrapper">
-      <h1>Tekst på forsiden:</h1>
-      <Form onSubmit={handleSubmit} className="mb-5">
+    <React.Fragment>
+      <h3 className="mb-3">Redigér forsidetekst</h3>
+      <Form className="form mb-3" onSubmit={handleSubmit}>
         <FormGroup>
           <InputGroup>
             <Input
+              className="inputStyles"
               type="textarea"
-              style={{ minHeight: '200px' }}
-              // Henter teksten fra databasen og erstatter <br /> med viselige linjeskift med brug af regex
+              style={{ minHeight: '20rem' }}
+              // Henter teksten fra databasen og erstatter <br /> med synlige linjeskift vha. regex
               defaultValue={data.getTextareaById.text.replace(
                 /<br\s*\/?>/gi,
                 '\r\n'
               )}
               onChange={event =>
-                // Det indskrevede tekst bliver sat på "text"-staten og linjeskift vil blive erstattet med <br /> i databasen vha. regex
+                /* Det indskrevede tekst bliver initialiseret til staten 'text',
+                og linjeskift vil blive erstattet med <br /> i databasen vha. regex */
                 setText(event.target.value.replace(/\r?\n/g, '<br />'))
               }
             />
           </InputGroup>
         </FormGroup>
+        {/* Vis alert, hvis teksten blev opdateret */}
         {alertStatus === '2' && <Alert color="success">Teksten er gemt.</Alert>}
+        {/* Knap til at opdatere teksten */}
         <Button className="btnStyles mr-2" type="submit">
           Gem
         </Button>
+        {/* Knap til at se preview af ændringerne */}
         <Button onClick={handlePreview} className="btnStyles">
           Preview
         </Button>
       </Form>
       <div>
-        <h1 className={content}>Preview:</h1> <br />
-        {/* Henter teksten fra databasen og erstatter <br /> med viselige linjeskift med brug af regex  */}
+        <h3 className={content}>Preview af ændringer</h3>
+        {/* Henter teksten fra databasen og erstatter <br /> med synlige linjeskift vha. regex */}
         <pre className={content}>{text.replace(/<br\s*\/?>/gi, '\r\n')}</pre>
       </div>
-    </Container>
+    </React.Fragment>
   );
 }
 export default EditTextarea;
