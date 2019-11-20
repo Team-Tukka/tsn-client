@@ -3,7 +3,8 @@
 
 h1,
 h2,
-h3 {
+h3,
+h4 {
   font-weight: normal !important;
 }
 
@@ -35,7 +36,7 @@ h3 {
 }
 
 .btnStyles {
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.3rem;
   color: #4b713d !important;
   background-color: #e2eed8 !important;
   border: 1px #f0f6ea solid !important;

@@ -33,8 +33,8 @@ function ProductHeaders() {
   // Anvend query
   const { loading, error, data } = useQuery(GET_PRODUCTS);
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error!</p>;
+  if (loading) return <p className="text-center m-3">Loading...</p>;
+  if (error) return <p className="text-center m-3">Error!</p>;
 
   // Initialiser 'header' til at være et objekt med alle keys fra 'getProducts'
   let header = Object.keys(data.getProducts[0]);

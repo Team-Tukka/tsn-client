@@ -42,8 +42,8 @@ function EditTextarea() {
   const { loading, error, data } = useQuery(GET_TEXTAREA_BY_ID);
   const [updateTextareaById] = useMutation(UPDATE_TEXTAREA_BY_ID);
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error!</p>;
+  if (loading) return <p className="text-center m-3">Loading...</p>;
+  if (error) return <p className="text-center m-3">Error!</p>;
 
   // Bestem, hvad der skal ske, når data indsendes
   const handleSubmit = event => {

@@ -21,8 +21,8 @@ function Textarea() {
   // Anvend mutation
   const { loading, error, data } = useQuery(GET_TEXTAREA_BY_ID);
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error!</p>;
+  if (loading) return <p className="text-center m-3">Loading...</p>;
+  if (error) return <p className="text-center m-3">Error!</p>;
 
   return (
     <Container className="contentWrapper">
