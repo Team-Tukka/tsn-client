@@ -5,7 +5,17 @@ import client from '../../config/apolloClient';
 import './AddNewProduct.css';
 
 // Importér Reactstrap komponenter
-import { Form, InputGroup, FormGroup, Input, Button, Alert } from 'reactstrap';
+import {
+  Form,
+  InputGroup,
+  FormGroup,
+  Input,
+  Button,
+  Alert,
+  Collapse,
+  CardBody,
+  Card
+} from 'reactstrap';
 
 // Komponent, der håndterer oprettelse af nyt produkt
 function AddNewProduct() {
@@ -24,6 +34,7 @@ function AddNewProduct() {
   const [categoryId, setCategoryId] = useState('');
   const [subCategoryId, setSubCategoryId] = useState('');
   const [alertStatus, setAlertStatus] = useState(false);
+  const [HelpIsOpen, setHelpIsOpen] = useState(false);
 
   // Definér mutation til at tilføje nyt produkt
   const ADD_PRODUCT = gql`
@@ -99,9 +110,24 @@ function AddNewProduct() {
     }
   };
 
+  // Toggle til at åbne og lukke boksen med hjælp
+  const toggle = () => setHelpIsOpen(!HelpIsOpen);
+
   return (
     <React.Fragment>
       <h3 className="mb-3">Tilføj nyt produkt</h3>
+      {/* Box der vises, hvis der klikkes på hjælp */}
+      <Collapse isOpen={HelpIsOpen}>
+        <Card className="mb-4">
+          <CardBody>
+            Her tilføjes nye produkter som fx en ny elscooter. Hvis du i stedet
+            vil tilføje en reservedel, så skal du gøre det under "Tilføj
+            reservedel". Felterne "Navn", "Pris" og "Enhedsnummer" er
+            obligatoriske, og skal derfor udfyldes. Jo flere felter, du kan
+            udfylde, des bedre.
+          </CardBody>
+        </Card>
+      </Collapse>
       <Form className="form" onSubmit={handleSubmit}>
         <FormGroup>
           <InputGroup>
@@ -237,8 +263,12 @@ function AddNewProduct() {
           <Alert color="success">Produktet blev oprettet.</Alert>
         )}
         {/* Knap til at indsende indtastede data */}
-        <Button type="submit" className="btnStyles">
+        <Button type="submit" className="btnStyles mr-2">
           Tilføj produkt
+        </Button>
+        {/* Knap til at toggle box med hjælp */}
+        <Button onClick={toggle} className="btnStyles">
+          Hjælp mig!
         </Button>
       </Form>
     </React.Fragment>

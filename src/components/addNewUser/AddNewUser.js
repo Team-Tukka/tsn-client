@@ -11,7 +11,10 @@ import {
   Input,
   Button,
   Alert,
-  CustomInput
+  CustomInput,
+  Collapse,
+  CardBody,
+  Card
 } from 'reactstrap';
 
 // Komponent, der håndterer oprettelse af ny bruger
@@ -25,7 +28,8 @@ function AddNewUser() {
   const [address, setAddress] = useState('');
   const [zipCode, setZipCode] = useState('');
   const [phone, setPhone] = useState('');
-  const [alert, setAlert] = useState(false);
+  const [alertStatus, setAlertStatus] = useState(false);
+  const [HelpIsOpen, setHelpIsOpen] = useState(false);
 
   // Opsætter addUser mutation
   const ADD_USER = gql`
@@ -86,7 +90,7 @@ function AddNewUser() {
     });
 
     // if (!error) {
-    setAlert(true);
+    setAlertStatus(true);
 
     //   setFirstName('');
     //   setLastName('');
@@ -115,9 +119,25 @@ function AddNewUser() {
     // console.log(error.graphQLErrors.map(({ message }) == "Mailen er allerede i brug"));
   };
 
+  // Toggle til at åbne og lukke boksen med hjælp
+  const toggle = () => setHelpIsOpen(!HelpIsOpen);
+
   return (
     <React.Fragment>
       <h3 className="mb-3">Opret ny bruger</h3>
+      {/* Box der vises, hvis der klikkes på hjælp */}
+      <Collapse isOpen={HelpIsOpen}>
+        <Card className="mb-4">
+          <CardBody>
+            Du kan som administrator oprette både administrator- og
+            forhandlerprofiler. Den adgangskode, du indtaster, er kun
+            midlertidig og skal ændres af forhandleren, når de logger ind første
+            gang. Vær opmærksom på, at hvis du checker af i boksen ud for
+            "Administrator", så vil den oprettede bruger have fuld adgang til
+            systemet!
+          </CardBody>
+        </Card>
+      </Collapse>
       <Form className="form" onSubmit={handleSubmit}>
         <FormGroup>
           <InputGroup>
@@ -236,7 +256,7 @@ function AddNewUser() {
           </InputGroup>
         </FormGroup>
         {/* Vis alert, hvis brugeren oprettes korrekt */}
-        {!error && alert === true && (
+        {!error && alertStatus === true && (
           <Alert color="success">Brugeren blev oprettet!</Alert>
         )}
         {/* Vis anden alert, hvis der er fejl, og hent fejlen som er beskrevet i mutation fra serveren */}
@@ -247,8 +267,12 @@ function AddNewUser() {
             </Alert>
           ))}
         {/* Knap til at indsende indtastede data */}
-        <Button type="submit" className="btnStyles">
+        <Button type="submit" className="btnStyles mr-2">
           Opret bruger
+        </Button>
+        {/* Knap til at toggle box med hjælp */}
+        <Button onClick={toggle} className="btnStyles">
+          Hjælp mig!
         </Button>
       </Form>
     </React.Fragment>
