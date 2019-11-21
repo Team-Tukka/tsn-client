@@ -9,9 +9,7 @@ import { Form, Input, InputGroup, FormGroup, Button, Alert } from 'reactstrap';
 // EditTextArea komponent
 function EditTextarea() {
   // States med React Hooks
-  const [text, setText] = useState(
-    'Du skal ændre i teksten for at se et preview!'
-  );
+  const [text, setText] = useState('');
   const [content, setContent] = useState('hiddenContent');
   const [alertStatus, setAlertStatus] = useState('0');
 
@@ -48,10 +46,14 @@ function EditTextarea() {
   // Bestem, hvad der skal ske, når data indsendes
   const handleSubmit = event => {
     event.preventDefault();
-    updateTextareaById({
-      variables: { text: text }
-    });
-    setAlertStatus('2');
+    if (text === '') {
+      setAlertStatus('1');
+    } else {
+      updateTextareaById({
+        variables: { text: text }
+      });
+      setAlertStatus('2');
+    }
   };
 
   // Toggle til at vise og skjule preview
@@ -86,8 +88,16 @@ function EditTextarea() {
             />
           </InputGroup>
         </FormGroup>
+        {/* Vis alert, hvis der ikke var ændringer i teksten */}
+        {alertStatus === '1' && (
+          <Alert color="danger">
+            Du har ikke foretaget nogle ændringer i teksten!
+          </Alert>
+        )}
         {/* Vis alert, hvis teksten blev opdateret */}
-        {alertStatus === '2' && <Alert color="success">Teksten er gemt.</Alert>}
+        {alertStatus === '2' && (
+          <Alert color="success">Dine ændringer blev gemt.</Alert>
+        )}
         {/* Knap til at opdatere teksten */}
         <Button className="btnStyles mr-2" type="submit">
           Gem
@@ -97,10 +107,16 @@ function EditTextarea() {
           Preview
         </Button>
       </Form>
-      <div>
-        <h3 className={content}>Preview af ændringer</h3>
+      <div className={content}>
+        <h3>Preview af ændringer</h3>
         {/* Henter teksten fra databasen og erstatter <br /> med synlige linjeskift vha. regex */}
-        <pre className={content}>{text.replace(/<br\s*\/?>/gi, '\r\n')}</pre>
+        <pre>{text.replace(/<br\s*\/?>/gi, '\r\n')}</pre>
+        {/* Vis alert, hvis der ingen ændringer er endnu */}
+        {text === '' && (
+          <Alert color="danger">
+            Du skal foretage ændringer i teksten, før du kan se et preview!
+          </Alert>
+        )}
       </div>
     </React.Fragment>
   );
