@@ -5,19 +5,21 @@ import './AddNewUser.css';
 
 // Importér Reactstrap komponenter
 import {
-  Container,
   Form,
   InputGroup,
   FormGroup,
   Input,
-  Label,
   Button,
   Alert,
-  CustomInput
+  CustomInput,
+  Collapse,
+  CardBody,
+  Card
 } from 'reactstrap';
 
+// Komponent, der håndterer oprettelse af ny bruger
 function AddNewUser() {
-  // Gør brug af useState til at sætte værdierne, der skal sendes til DB.
+  // States med React Hooks
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [mail, setMail] = useState('');
@@ -26,7 +28,8 @@ function AddNewUser() {
   const [address, setAddress] = useState('');
   const [zipCode, setZipCode] = useState('');
   const [phone, setPhone] = useState('');
-  const [alert, setAlert] = useState(false);
+  const [alertStatus, setAlertStatus] = useState(false);
+  const [HelpIsOpen, setHelpIsOpen] = useState(false);
 
   // Opsætter addUser mutation
   const ADD_USER = gql`
@@ -64,15 +67,15 @@ function AddNewUser() {
       }
     }
   `;
-  // Konstanter, som gør det muligt at bruge mutation og hente errors
+
+  // Anvend mutation
   const [addUser, { error }] = useMutation(ADD_USER);
 
-  // Funktion til at håndtere submit
+  // Håndtér indsendelse af brugeroplysninger
   const handleSubmit = event => {
     event.preventDefault();
     // setErrorAlert(false);
     // setAlert(false);
-
     addUser({
       variables: {
         firstName: firstName,
@@ -87,7 +90,7 @@ function AddNewUser() {
     });
 
     // if (!error) {
-    setAlert(true);
+    setAlertStatus(true);
 
     //   setFirstName('');
     //   setLastName('');
@@ -116,16 +119,31 @@ function AddNewUser() {
     // console.log(error.graphQLErrors.map(({ message }) == "Mailen er allerede i brug"));
   };
 
+  // Toggle til at åbne og lukke boksen med hjælp
+  const toggle = () => setHelpIsOpen(!HelpIsOpen);
+
   return (
-    <Container className="contentWrapper">
-      <h1 className="mb-4">Opret nyt bruger:</h1>
-      <Form onSubmit={handleSubmit}>
+    <React.Fragment>
+      <h3 className="mb-3">Opret ny bruger</h3>
+      {/* Box der vises, hvis der klikkes på hjælp */}
+      <Collapse isOpen={HelpIsOpen}>
+        <Card className="mb-4">
+          <CardBody>
+            Du kan som administrator oprette både administrator- og
+            forhandlerprofiler. Den adgangskode, du indtaster, er kun
+            midlertidig og skal ændres af forhandleren, når de logger ind første
+            gang. Vær opmærksom på, at hvis du checker af i boksen ud for
+            "Administrator", så vil den oprettede bruger have fuld adgang til
+            systemet!
+          </CardBody>
+        </Card>
+      </Collapse>
+      <Form className="form" onSubmit={handleSubmit}>
         <FormGroup>
-          <Label>Fornavn</Label>
           <InputGroup>
             <Input
-              className="inputStyles"
               required
+              className="inputStyles"
               type="text"
               name="firstName"
               minLength="2"
@@ -137,11 +155,10 @@ function AddNewUser() {
           </InputGroup>
         </FormGroup>
         <FormGroup>
-          <Label>Efternavn</Label>
           <InputGroup>
             <Input
-              className="inputStyles"
               required
+              className="inputStyles"
               type="text"
               name="lastName"
               minLength="2"
@@ -153,11 +170,10 @@ function AddNewUser() {
           </InputGroup>
         </FormGroup>
         <FormGroup>
-          <Label>Mail</Label>
           <InputGroup>
             <Input
-              className="inputStyles"
               required
+              className="inputStyles"
               type="email"
               name="mail"
               minLength="2"
@@ -169,27 +185,25 @@ function AddNewUser() {
           </InputGroup>
         </FormGroup>
         <FormGroup>
-          <Label>Password</Label>
           <InputGroup>
             <Input
-              className="inputStyles"
               required
+              className="inputStyles"
               type="text"
               name="password"
               minLength="8"
               maxLength="32"
               value={password}
-              placeholder="Midlertidigt password..."
+              placeholder="Midlertidig adgangskode..."
               onChange={event => setPassword(event.target.value)}
             />
           </InputGroup>
         </FormGroup>
         <FormGroup>
-          <Label>Adresse</Label>
           <InputGroup>
             <Input
-              className="inputStyles"
               required
+              className="inputStyles"
               type="text"
               name="address"
               minLength="2"
@@ -201,11 +215,10 @@ function AddNewUser() {
           </InputGroup>
         </FormGroup>
         <FormGroup>
-          <Label>Postnummer</Label>
           <InputGroup>
             <Input
-              className="inputStyles"
               required
+              className="inputStyles"
               type="number"
               name="zipCode"
               minLength="2"
@@ -217,7 +230,6 @@ function AddNewUser() {
           </InputGroup>
         </FormGroup>
         <FormGroup>
-          <Label>Telefon</Label>
           <InputGroup>
             <Input
               className="inputStyles"
@@ -226,40 +238,44 @@ function AddNewUser() {
               minLength="2"
               maxLength="50"
               value={phone}
-              placeholder="Telefon..."
+              placeholder="Telefonnummer..."
               onChange={event => setPhone(parseInt(event.target.value))}
             />
           </InputGroup>
         </FormGroup>
         <FormGroup>
-          <Label>Adminstrator</Label>
           <InputGroup>
+            <span style={{ marginRight: '0.4rem' }}>Administrator</span>
             <CustomInput
               type="checkbox"
-              id="exampleCustomCheckbox"
+              id="customCheckbox"
               name="adminRole"
               checked={adminRole}
               onChange={event => setAdminRole(event.target.checked)}
             />
           </InputGroup>
         </FormGroup>
-        {/* Opsætter alert hvis der ikke er nogen fejl */}
-        {!error && alert === true && (
+        {/* Vis alert, hvis brugeren oprettes korrekt */}
+        {!error && alertStatus === true && (
           <Alert color="success">Brugeren blev oprettet!</Alert>
         )}
-
-        {/* Opsætter alert hvis der er fejl, samt henter fejlen som er beskrevet i mutation fra serveren */}
+        {/* Vis anden alert, hvis der er fejl, og hent fejlen som er beskrevet i mutation fra serveren */}
         {error &&
           error.graphQLErrors.map(({ message }, i) => (
             <Alert color="danger" key={i}>
               {message}
             </Alert>
           ))}
-        <Button type="submit" className="btnStyles">
-          Opret
+        {/* Knap til at indsende indtastede data */}
+        <Button type="submit" className="btnStyles mr-2">
+          Opret bruger
+        </Button>
+        {/* Knap til at toggle box med hjælp */}
+        <Button onClick={toggle} className="btnStyles">
+          Hjælp mig!
         </Button>
       </Form>
-    </Container>
+    </React.Fragment>
   );
 }
 

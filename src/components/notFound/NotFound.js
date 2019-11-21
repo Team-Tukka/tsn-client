@@ -4,6 +4,7 @@ import './NotFound.css';
 // Importér Reactstrap komponenter
 import { Container } from 'reactstrap';
 
+// Komponent der vises, når routen ikke findes
 function NotFound() {
   return (
     <Container className="contentWrapper">

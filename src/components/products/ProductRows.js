@@ -25,8 +25,18 @@ function ProductRows() {
   // Anvend query
   const { loading, error, data } = useQuery(GET_PRODUCTS);
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error!</p>;
+  if (loading)
+    return (
+      <tr>
+        <td>Loading...</td>
+      </tr>
+    );
+  if (error)
+    return (
+      <tr>
+        <td>Error!</td>
+      </tr>
+    );
 
   // Returnér nu alle props for hvert enkelt produkt som en tabel-række
   return data.getProducts.map((product, index) => {
