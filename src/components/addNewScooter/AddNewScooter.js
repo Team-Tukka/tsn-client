@@ -134,12 +134,28 @@ function AddNewScooter() {
               required
               className="inputStyles"
               type="text"
+              name="itemNo"
+              id="scooterItemNo"
+              minLength="1"
+              maxLength="20"
+              value={itemNo}
+              placeholder="Enhedsnummer..."
+              onChange={event => setItemNo(event.target.value)}
+            />
+          </InputGroup>
+        </FormGroup>
+        <FormGroup>
+          <InputGroup>
+            <Input
+              required
+              className="inputStyles"
+              type="text"
               name="name"
               id="scooterName"
               minLength="1"
               maxLength="50"
               value={name}
-              placeholder="Navn..."
+              placeholder="Enhedsnavn..."
               onChange={event => setName(event.target.value)}
             />
           </InputGroup>
@@ -155,7 +171,7 @@ function AddNewScooter() {
               minLength="1"
               maxLength="10"
               value={price}
-              placeholder="Pris..."
+              placeholder="Pris uden moms..."
               onChange={event => setPrice(parseFloat(event.target.value))}
             />
           </InputGroup>
@@ -202,16 +218,16 @@ function AddNewScooter() {
         <FormGroup>
           <InputGroup>
             <Input
-              required
               className="inputStyles"
-              type="text"
-              name="itemNo"
-              id="scooterItemNo"
+              style={{ minHeight: '5rem' }}
+              type="textarea"
+              name="description"
+              id="scooterDescription"
               minLength="1"
-              maxLength="20"
-              value={itemNo}
-              placeholder="Enhedsnummer..."
-              onChange={event => setItemNo(event.target.value)}
+              maxLength="200"
+              value={description}
+              placeholder="Beskrivelse..."
+              onChange={event => setDescription(event.target.value)}
             />
           </InputGroup>
         </FormGroup>
@@ -241,22 +257,6 @@ function AddNewScooter() {
             />
           </InputGroup>
         </FormGroup> */}
-        <FormGroup>
-          <InputGroup>
-            <Input
-              className="inputStyles"
-              style={{ minHeight: '5rem' }}
-              type="textarea"
-              name="description"
-              id="scooterDescription"
-              minLength="1"
-              maxLength="200"
-              value={description}
-              placeholder="Beskrivelse..."
-              onChange={event => setDescription(event.target.value)}
-            />
-          </InputGroup>
-        </FormGroup>
         {/* Vis alert, hvis elscooteren oprettes korrekt */}
         {alertStatus === true && (
           <Alert color="success">Scooteren blev oprettet.</Alert>
