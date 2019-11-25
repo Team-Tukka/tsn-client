@@ -74,8 +74,6 @@ function AddNewUser() {
   // Håndtér indsendelse af brugeroplysninger
   const handleSubmit = event => {
     event.preventDefault();
-    // setErrorAlert(false);
-    // setAlert(false);
     addUser({
       variables: {
         firstName: firstName,
@@ -88,35 +86,16 @@ function AddNewUser() {
         phone: phone
       }
     });
-
-    // if (!error) {
     setAlertStatus(true);
-
-    //   setFirstName('');
-    //   setLastName('');
-    //   setMail('');
-    //   setPassword('');
-    //   setAddress('');
-    //   setZipCode('');
-    //   setPhone('');
-    // }
-
-    // if ({ error }) {
-    //   setErrorAlert(true);
-    //   console.log({ error });
-    //   console.log('fejl?');
-    // } else {
-    // setAlert(true);
-    //   setFirstName('');
-    //   setLastName('');
-    //   setMail('');
-    //   setPassword('');
-    //   setAddress('');
-    //   setZipCode('');
-    //   setPhone('');
-    // }
-
-    // console.log(error.graphQLErrors.map(({ message }) == "Mailen er allerede i brug"));
+    // Clear felter, så der kan indtastes nye oplysninger
+    setFirstName('');
+    setLastName('');
+    setMail('');
+    setPassword('');
+    setAdminRole(false);
+    setAddress('');
+    setZipCode('');
+    setPhone('');
   };
 
   // Toggle til at åbne og lukke boksen med hjælp
@@ -206,7 +185,7 @@ function AddNewUser() {
               className="inputStyles"
               type="text"
               name="address"
-              minLength="2"
+              minLength="5"
               maxLength="50"
               value={address}
               placeholder="Adresse..."
@@ -221,8 +200,8 @@ function AddNewUser() {
               className="inputStyles"
               type="number"
               name="zipCode"
-              minLength="2"
-              maxLength="50"
+              minLength="1"
+              maxLength="10"
               value={zipCode}
               placeholder="Postnummer..."
               onChange={event => setZipCode(parseInt(event.target.value))}
@@ -232,11 +211,12 @@ function AddNewUser() {
         <FormGroup>
           <InputGroup>
             <Input
+              required
               className="inputStyles"
               type="number"
               name="phone"
               minLength="2"
-              maxLength="50"
+              maxLength="20"
               value={phone}
               placeholder="Telefonnummer..."
               onChange={event => setPhone(parseInt(event.target.value))}

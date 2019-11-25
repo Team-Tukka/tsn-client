@@ -3,27 +3,23 @@ import { Link } from 'react-router-dom';
 import { useQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
 
-function ProductRows() {
-  // Definér først query til at hente array med alle produkter
-  const GET_PRODUCTS = gql`
+function ScooterRows() {
+  // Definér først query til at hente array med alle elscootere
+  const GET_SCOOTERS = gql`
     {
-      getProducts {
+      getScooters {
         _id
+        itemNo
         name
         price
-        sku
-        tags
-        brand
-        description
-        itemNo
+        priceVAT
         categoryId
-        subCategoryId
       }
     }
   `;
 
   // Anvend query
-  const { loading, error, data } = useQuery(GET_PRODUCTS);
+  const { loading, error, data } = useQuery(GET_SCOOTERS);
 
   if (loading)
     return (
@@ -38,20 +34,16 @@ function ProductRows() {
       </tr>
     );
 
-  // Returnér nu alle props for hvert enkelt produkt som en tabel-række
-  return data.getProducts.map((product, index) => {
-    const {
-      _id,
-      name,
-      price,
-      sku,
-      brand,
-      description,
-      itemNo,
-      categoryId
-    } = product; // Destructuring
+  // Returnér nu alle props for hvert enkel scooter som en tabel-række
+  return data.getScooters.map((scooter, index) => {
+    const { _id, itemNo, name, price, priceVAT, categoryId } = scooter; // Destructuring
     return (
       <tr key={_id} className="tableRowStyles">
+        <td>
+          <Link to="#" className="linkStyles">
+            {itemNo}
+          </Link>
+        </td>
         <td>
           <Link to="#" className="linkStyles">
             {name}
@@ -64,22 +56,7 @@ function ProductRows() {
         </td>
         <td>
           <Link to="#" className="linkStyles">
-            {sku}
-          </Link>
-        </td>
-        <td>
-          <Link to="#" className="linkStyles">
-            {brand}
-          </Link>
-        </td>
-        <td>
-          <Link to="#" className="linkStyles">
-            {description.slice(0, 20)}...
-          </Link>
-        </td>
-        <td>
-          <Link to="#" className="linkStyles">
-            {itemNo}
+            {priceVAT}
           </Link>
         </td>
         <td>
@@ -92,4 +69,4 @@ function ProductRows() {
   });
 }
 
-export default ProductRows;
+export default ScooterRows;

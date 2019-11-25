@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useMutation } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
 import client from '../../config/apolloClient';
-import './AddNewProduct.css';
+import './AddNewScooter.css';
 
 // Importér Reactstrap komponenter
 import {
@@ -17,10 +17,10 @@ import {
   Card
 } from 'reactstrap';
 
-// Komponent, der håndterer oprettelse af nyt produkt
-function AddNewProduct() {
-  /* Klientens cache ryddes, så vi er sikkre på, at det nye
-  produkt tilføjes, uden man behøver rerendere hele DOM'en */
+// Komponent, der håndterer oprettelse af ny elscooter
+function AddNewScooter() {
+  /* Klientens cache ryddes, så vi er sikkre på, at den nye
+  elscooter tilføjes, uden man behøver rerendere hele DOM'en */
   client.cache.reset();
 
   // States med React Hooks
@@ -36,20 +36,20 @@ function AddNewProduct() {
   const [alertStatus, setAlertStatus] = useState(false);
   const [HelpIsOpen, setHelpIsOpen] = useState(false);
 
-  // Definér mutation til at tilføje nyt produkt
-  const ADD_PRODUCT = gql`
-    mutation addProduct(
+  // Definér mutation til at tilføje ny elscooter
+  const ADD_SCOOTER = gql`
+    mutation addScooter(
       $name: String!
       $price: Float!
       $sku: String
-      $tags: [String]
+      $tags: String
       $brand: String
       $description: String
       $itemNo: String!
       $categoryId: String
       $subCategoryId: String
     ) {
-      addProduct(
+      addScooter(
         name: $name
         price: $price
         sku: $sku
@@ -74,15 +74,15 @@ function AddNewProduct() {
   `;
 
   // Anvend mutation
-  const [addProduct] = useMutation(ADD_PRODUCT);
+  const [addScooter] = useMutation(ADD_SCOOTER);
 
-  // Håndtér indsendelse af produktoplysninger
+  // Håndtér indsendelse af elscooteroplysninger
   const handleSubmit = event => {
     event.preventDefault();
     if (name === '') {
-      alert('Du skal som minimum udfylde et produktnavn!');
+      alert('Du skal som minimum udfylde et navn på elscooteren!');
     } else {
-      addProduct({
+      addScooter({
         variables: {
           name: name,
           price: price,
@@ -115,16 +115,15 @@ function AddNewProduct() {
 
   return (
     <React.Fragment>
-      <h3 className="mb-3">Tilføj nyt produkt</h3>
+      <h3 className="mb-3">Tilføj ny elscooter</h3>
       {/* Box der vises, hvis der klikkes på hjælp */}
       <Collapse isOpen={HelpIsOpen}>
         <Card className="mb-4">
           <CardBody>
-            Her tilføjes nye produkter som fx en ny elscooter. Hvis du i stedet
-            vil tilføje en reservedel, så skal du gøre det under "Tilføj
-            reservedel". Felterne "Navn", "Pris" og "Enhedsnummer" er
-            obligatoriske, og skal derfor udfyldes. Jo flere felter, du kan
-            udfylde, des bedre.
+            Her tilføjes nye elscootere. Hvis du i stedet vil tilføje en
+            reservedel, så skal du gøre det under "Tilføj reservedel". Felterne
+            "Navn", "Pris" og "Enhedsnummer" er obligatoriske, og skal derfor
+            udfyldes. Jo flere felter, du kan udfylde, des bedre.
           </CardBody>
         </Card>
       </Collapse>
@@ -135,12 +134,28 @@ function AddNewProduct() {
               required
               className="inputStyles"
               type="text"
+              name="itemNo"
+              id="scooterItemNo"
+              minLength="1"
+              maxLength="20"
+              value={itemNo}
+              placeholder="Enhedsnummer..."
+              onChange={event => setItemNo(event.target.value)}
+            />
+          </InputGroup>
+        </FormGroup>
+        <FormGroup>
+          <InputGroup>
+            <Input
+              required
+              className="inputStyles"
+              type="text"
               name="name"
-              id="productName"
+              id="scooterName"
               minLength="1"
               maxLength="50"
               value={name}
-              placeholder="Navn..."
+              placeholder="Enhedsnavn..."
               onChange={event => setName(event.target.value)}
             />
           </InputGroup>
@@ -152,11 +167,11 @@ function AddNewProduct() {
               className="inputStyles"
               type="number"
               name="price"
-              id="productPrice"
+              id="scooterPrice"
               minLength="1"
               maxLength="10"
               value={price}
-              placeholder="Pris..."
+              placeholder="Pris uden moms..."
               onChange={event => setPrice(parseFloat(event.target.value))}
             />
           </InputGroup>
@@ -167,7 +182,7 @@ function AddNewProduct() {
               className="inputStyles"
               type="text"
               name="sku"
-              id="productSku"
+              id="scooterSku"
               value={sku}
               placeholder="SKU..."
               onChange={event => setSku(event.target.value)}
@@ -180,7 +195,7 @@ function AddNewProduct() {
               className="inputStyles"
               type="text"
               name="tags"
-              id="productTags"
+              id="scooterTags"
               value={tags}
               placeholder="Tags..."
               onChange={event => setTags(event.target.value)}
@@ -193,7 +208,7 @@ function AddNewProduct() {
               className="inputStyles"
               type="text"
               name="brand"
-              id="productBrand"
+              id="scooterBrand"
               value={brand}
               placeholder="Mærke..."
               onChange={event => setBrand(event.target.value)}
@@ -203,26 +218,26 @@ function AddNewProduct() {
         <FormGroup>
           <InputGroup>
             <Input
-              required
               className="inputStyles"
-              type="text"
-              name="itemNo"
-              id="productItemNo"
+              style={{ minHeight: '5rem' }}
+              type="textarea"
+              name="description"
+              id="scooterDescription"
               minLength="1"
-              maxLength="20"
-              value={itemNo}
-              placeholder="Enhedsnummer..."
-              onChange={event => setItemNo(event.target.value)}
+              maxLength="200"
+              value={description}
+              placeholder="Beskrivelse..."
+              onChange={event => setDescription(event.target.value)}
             />
           </InputGroup>
         </FormGroup>
-        <FormGroup>
+        {/* <FormGroup>
           <InputGroup>
             <Input
               className="inputStyles"
               type="number"
               name="categoryId"
-              id="productCategoryId"
+              id="scooterCategoryId"
               value={categoryId}
               placeholder="Kategori ID..."
               onChange={event => setCategoryId(event.target.value)}
@@ -235,36 +250,20 @@ function AddNewProduct() {
               className="inputStyles"
               type="number"
               name="subCategoryId"
-              id="productSubCategoryId"
+              id="scooterSubCategoryId"
               value={subCategoryId}
               placeholder="Underkategori ID..."
               onChange={event => setSubCategoryId(event.target.value)}
             />
           </InputGroup>
-        </FormGroup>
-        <FormGroup>
-          <InputGroup>
-            <Input
-              className="inputStyles"
-              style={{ minHeight: '5rem' }}
-              type="textarea"
-              name="description"
-              id="productDescription"
-              minLength="1"
-              maxLength="200"
-              value={description}
-              placeholder="Beskrivelse..."
-              onChange={event => setDescription(event.target.value)}
-            />
-          </InputGroup>
-        </FormGroup>
-        {/* Vis alert, hvis produktet oprettes korrekt */}
+        </FormGroup> */}
+        {/* Vis alert, hvis elscooteren oprettes korrekt */}
         {alertStatus === true && (
-          <Alert color="success">Produktet blev oprettet.</Alert>
+          <Alert color="success">Scooteren blev oprettet.</Alert>
         )}
         {/* Knap til at indsende indtastede data */}
         <Button type="submit" className="btnStyles mr-2">
-          Tilføj produkt
+          Tilføj elscooter
         </Button>
         {/* Knap til at toggle box med hjælp */}
         <Button onClick={toggle} className="btnStyles">
@@ -275,4 +274,4 @@ function AddNewProduct() {
   );
 }
 
-export default AddNewProduct;
+export default AddNewScooter;
