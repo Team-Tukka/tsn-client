@@ -17,13 +17,13 @@ function Products() {
     <React.Fragment>
       <div className="flexElements">
         <h3 className="mb-3">Produktliste</h3>
-        {/* Mulighed for at tilføje nyt produkt */}
-        <Link to="/addNewProduct" className="linkStyles">
+        {/* Mulighed for at tilføje ny elscooter */}
+        <Link to="/addNewScooter" className="linkStyles">
           <FontAwesomeIcon
             icon={faPlusCircle}
             className="fontAwesomeIconNavStyles"
           ></FontAwesomeIcon>
-          Tilføj produkt
+          Tilføj elscooter
         </Link>
       </div>
       <div className="tableScrollView fadeIn">
