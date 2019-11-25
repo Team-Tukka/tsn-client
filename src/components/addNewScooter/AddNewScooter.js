@@ -42,7 +42,7 @@ function AddNewScooter() {
       $name: String!
       $price: Float!
       $sku: String
-      $tags: [String]
+      $tags: String
       $brand: String
       $description: String
       $itemNo: String!
@@ -215,7 +215,7 @@ function AddNewScooter() {
             />
           </InputGroup>
         </FormGroup>
-        <FormGroup>
+        {/* <FormGroup>
           <InputGroup>
             <Input
               className="inputStyles"
@@ -240,7 +240,7 @@ function AddNewScooter() {
               onChange={event => setSubCategoryId(event.target.value)}
             />
           </InputGroup>
-        </FormGroup>
+        </FormGroup> */}
         <FormGroup>
           <InputGroup>
             <Input
