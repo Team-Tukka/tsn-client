@@ -1,0 +1,31 @@
+@import url("../../assets/css/globalStyles.css");
+
+@media only screen and (min-width: 768px) {
+  .profileIconStyles {
+    display: inline !important;
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .profileNavItemStyles {
+    display: inline !important;
+  }
+}
+
+.profileIconStyles {
+  display: none;
+}
+
+.profileNavItemStyles {
+  display: none;
+}
+
+.headerStyles {
+  border-bottom: 1px #f0f6ea solid;
+  box-shadow: 0 1px 5px #fafafa;
+}
+
+.fontAwesomeStyles {
+  font-size: 1.3rem !important;
+  margin-left: 1rem;
+}

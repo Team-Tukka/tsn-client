@@ -22,26 +22,20 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faKey } from '@fortawesome/free-solid-svg-icons';
 import { faAt } from '@fortawesome/free-solid-svg-icons';
 
-// Me query
+// ME query defineres
 export const ME = gql`
   {
     me {
       _id
-      firstName
-      lastName
-      mail
     }
   }
 `;
 
-// Login mutation
+// Login mutation defineres
 export const LOGIN = gql`
   mutation login($mail: String!, $password: String!) {
     login(mail: $mail, password: $password) {
       _id
-      firstName
-      lastName
-      mail
       token
     }
   }
@@ -73,9 +67,8 @@ function LoginForm() {
       setErrorMessage(null);
       setLoginSuccess(true);
       const timer = setTimeout(() => {
-        // JEG SKAL ÆNDRES SÅ SNART ROUTEN ER OPRETTET
-        window.location = '/';
-      }, 800);
+        window.location = '/welcome';
+      }, 700);
       return () => clearTimeout(timer);
     },
     onCompleted({ login }) {
@@ -95,7 +88,7 @@ function LoginForm() {
 
   // Vis alert box med fejlbesked, når login mislykkes
   const errorNotification = () =>
-    errorMessage && <Alert color='danger'>{errorMessage}</Alert>;
+    errorMessage && <Alert color="danger">{errorMessage}</Alert>;
 
   // Bestem hvad der skal ske, når der submittes
   const handleSubmit = event => {
@@ -106,25 +99,26 @@ function LoginForm() {
   };
 
   return (
-    <Container className='containerStyles'>
-      <div className='text-center'>
-        <img src={logo} className='logoStyles' alt='TSN Logo' />
+    <Container className="containerStyles">
+      <div className="text-center">
+        <img src={logo} className="logoStyles img-fluid" alt="TSN Logo" />
       </div>
-      <Form className='form' onSubmit={handleSubmit}>
+      <Form className="form" onSubmit={handleSubmit}>
         <Row>
           <Col>
             <FormGroup>
               <InputGroup>
                 <FontAwesomeIcon
                   icon={faAt}
-                  className='fontAwesomeStyles'
+                  className="fontAwesomeStyles"
                 ></FontAwesomeIcon>
                 <Input
                   required
-                  type='email'
-                  name='email'
-                  id='mail'
-                  placeholder='din@mail.dk'
+                  type="email"
+                  name="email"
+                  id="mail"
+                  placeholder="din@mail.dk"
+                  className="inputStyles"
                   value={mail}
                   onChange={handleMailChange}
                 />
@@ -138,14 +132,15 @@ function LoginForm() {
               <InputGroup>
                 <FontAwesomeIcon
                   icon={faKey}
-                  className='fontAwesomeStyles'
+                  className="fontAwesomeStyles"
                 ></FontAwesomeIcon>
                 <Input
                   required
-                  type='password'
-                  name='password'
-                  id='password'
-                  placeholder='**********'
+                  type="password"
+                  name="password"
+                  id="password"
+                  placeholder="**********"
+                  className="inputStyles"
                   value={password}
                   onChange={handlePasswordChange}
                 />
@@ -157,7 +152,7 @@ function LoginForm() {
           <Col>
             {/* Hvis login lykkes */}
             {loginSuccess === true && (
-              <Alert color='success'>Logger ind...</Alert>
+              <Alert color="success">Logger ind...</Alert>
             )}
             {/* Hvis login mislykkes */}
             {errorNotification()}
@@ -165,7 +160,9 @@ function LoginForm() {
         </Row>
         <Row>
           <Col>
-            <Button className='submitStyles'>Log ind</Button>
+            <Button className="btnStyles" style={{ float: 'right' }}>
+              Log ind
+            </Button>
           </Col>
         </Row>
       </Form>
