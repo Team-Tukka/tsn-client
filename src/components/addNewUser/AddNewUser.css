@@ -1,1 +1,6 @@
-@import url('../../assets/css/globalStyles.css');
+@import url("../../assets/css/globalStyles.css");
+
+.questionIconStyles {
+  font-size: 1rem !important;
+  margin-top: 0.25rem;
+}
