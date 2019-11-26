@@ -23,6 +23,7 @@ import Welcome from './components/welcome/Welcome';
 import EditTextarea from './components/editTextarea/EditTextarea';
 import Products from './components/products/Products';
 import AddNewScooter from './components/addNewScooter/AddNewScooter';
+import AddNewSparepart from './components/addNewSparepart/AddNewSparepart';
 import AddNewUser from './components/addNewUser/AddNewUser';
 
 // App komponentet indeholder den samlede app, der renderes i index.js
@@ -80,6 +81,14 @@ function App() {
             render={() => (
               <Container className="contentWrapper">
                 <AddNewScooter />
+              </Container>
+            )}
+          />
+          <Auth
+            path="/addNewSparepart"
+            render={() => (
+              <Container className="contentWrapper">
+                <AddNewSparepart />
               </Container>
             )}
           />
