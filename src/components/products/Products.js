@@ -6,7 +6,7 @@ import ProductsFooterText from './ProductsFooterText';
 import './Products.css';
 
 // Importér Reactstrap komponenter
-import { Table } from 'reactstrap';
+import { Table, Input } from 'reactstrap';
 
 // Importér Font Awesome komponenter
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -14,6 +14,29 @@ import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 
 // Komponent, der renderer alle produkter i et table-view
 function Products() {
+  // Mulighed for at filtrere i listen med produkter
+  const filterProducts = () => {
+    // Variabler deklareres og initialiseres
+    let input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById('filterInput');
+    filter = input.value.toUpperCase(); // Værdien i inputfeltet
+    table = document.getElementById('productList');
+    tr = table.getElementsByTagName('tr'); // Hver række i tabellen
+
+    // Loop gennem alle tabelrækkerne og skjul dem, der ikke matcher med indtastningen
+    for (i = 0; i < tr.length; i++) {
+      td = tr[i].getElementsByTagName('td')[0]; // Søger blandt værdierne i index 0 (række 0)
+      if (td) {
+        txtValue = td.textContent || td.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          tr[i].style.display = '';
+        } else {
+          tr[i].style.display = 'none';
+        }
+      }
+    }
+  };
+
   return (
     <React.Fragment>
       <div className="flexElements">
@@ -37,8 +60,16 @@ function Products() {
           </Link>
         </div>
       </div>
+      {/* Mulighed for at søge i listen af produkter */}
+      <Input
+        type="text"
+        id="filterInput"
+        className="inputStyles mb-3"
+        onKeyUp={filterProducts}
+        placeholder="Søg efter enhedsnummer..."
+      />
       <div className="tableScrollView fadeIn">
-        <Table responsive borderless>
+        <Table id="productList" responsive borderless>
           {/* Tabeloverskrifter der er fælles for både elscootere og reservedele */}
           <thead className="lightGreenBg tableHeaderStyles">
             <tr>

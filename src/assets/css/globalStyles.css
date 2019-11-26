@@ -62,6 +62,6 @@ h4 {
 }
 
 .tableScrollView {
-  max-height: 60vh;
+  max-height: 54vh;
   overflow: auto;
 }
