@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useMutation } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
 import client from '../../config/apolloClient';
@@ -12,9 +13,7 @@ import {
   Input,
   Button,
   Alert,
-  Collapse,
-  CardBody,
-  Card
+  Tooltip
 } from 'reactstrap';
 
 // Komponent, der håndterer oprettelse af ny elscooter
@@ -34,7 +33,15 @@ function AddNewScooter() {
   const [categoryId, setCategoryId] = useState('');
   const [subCategoryId, setSubCategoryId] = useState('');
   const [alertStatus, setAlertStatus] = useState(false);
-  const [HelpIsOpen, setHelpIsOpen] = useState(false);
+
+  // States til tooltips
+  const [nameTooltipOpen, setNameTooltipOpen] = useState(false);
+  const [itemNoTooltipOpen, setItemNoTooltipOpen] = useState(false);
+  const [priceTooltipOpen, setPriceTooltipOpen] = useState(false);
+  const [skuTooltipOpen, setSkuTooltipOpen] = useState(false);
+  const [tagsTooltipOpen, setTagsTooltipOpen] = useState(false);
+  const [brandTooltipOpen, setBrandTooltipOpen] = useState(false);
+  const [descriptionTooltipOpen, setDescriptionTooltipOpen] = useState(false);
 
   // Definér mutation til at tilføje ny elscooter
   const ADD_SCOOTER = gql`
@@ -110,23 +117,19 @@ function AddNewScooter() {
     }
   };
 
-  // Toggle til at åbne og lukke boksen med hjælp
-  const toggle = () => setHelpIsOpen(!HelpIsOpen);
+  // Toggle tooltips ved hver inputfelt
+  const toggleName = () => setNameTooltipOpen(!nameTooltipOpen);
+  const toggleItemNo = () => setItemNoTooltipOpen(!itemNoTooltipOpen);
+  const togglePrice = () => setPriceTooltipOpen(!priceTooltipOpen);
+  const toggleSku = () => setSkuTooltipOpen(!skuTooltipOpen);
+  const toggleTags = () => setTagsTooltipOpen(!tagsTooltipOpen);
+  const toggleBrand = () => setBrandTooltipOpen(!brandTooltipOpen);
+  const toggleDescription = () =>
+    setDescriptionTooltipOpen(!descriptionTooltipOpen);
 
   return (
     <React.Fragment>
       <h3 className="mb-3">Tilføj ny elscooter</h3>
-      {/* Box der vises, hvis der klikkes på hjælp */}
-      <Collapse isOpen={HelpIsOpen}>
-        <Card className="mb-4">
-          <CardBody>
-            Her tilføjes nye elscootere. Hvis du i stedet vil tilføje en
-            reservedel, så skal du gøre det under "Tilføj reservedel". Felterne
-            "Navn", "Pris" og "Enhedsnummer" er obligatoriske, og skal derfor
-            udfyldes. Jo flere felter, du kan udfylde, des bedre.
-          </CardBody>
-        </Card>
-      </Collapse>
       <Form className="form" onSubmit={handleSubmit}>
         <FormGroup>
           <InputGroup>
@@ -142,6 +145,19 @@ function AddNewScooter() {
               placeholder="Enhedsnummer..."
               onChange={event => setItemNo(event.target.value)}
             />
+            <Tooltip
+              placement="top"
+              isOpen={itemNoTooltipOpen}
+              target="scooterItemNo"
+              toggle={toggleItemNo}
+              style={{
+                padding: '0.5rem',
+                whiteSpace: 'nowrap',
+                minWidth: 'fit-content'
+              }}
+            >
+              Her indtaster du elscooterens enhedsnummer. Fx AK-3761.
+            </Tooltip>
           </InputGroup>
         </FormGroup>
         <FormGroup>
@@ -158,6 +174,19 @@ function AddNewScooter() {
               placeholder="Enhedsnavn..."
               onChange={event => setName(event.target.value)}
             />
+            <Tooltip
+              placement="top"
+              isOpen={nameTooltipOpen}
+              target="scooterName"
+              toggle={toggleName}
+              style={{
+                padding: '0.5rem',
+                whiteSpace: 'nowrap',
+                minWidth: 'fit-content'
+              }}
+            >
+              Her indtaster du elscooterens navn. Fx HS-855 Hvid.
+            </Tooltip>
           </InputGroup>
         </FormGroup>
         <FormGroup>
@@ -174,6 +203,19 @@ function AddNewScooter() {
               placeholder="Pris uden moms..."
               onChange={event => setPrice(parseFloat(event.target.value))}
             />
+            <Tooltip
+              placement="top"
+              isOpen={priceTooltipOpen}
+              target="scooterPrice"
+              toggle={togglePrice}
+              style={{
+                padding: '0.5rem',
+                whiteSpace: 'nowrap',
+                minWidth: 'fit-content'
+              }}
+            >
+              Her indtaster du elscooterens pris uden moms i DKK. Fx 22999,95.
+            </Tooltip>
           </InputGroup>
         </FormGroup>
         <FormGroup>
@@ -187,6 +229,20 @@ function AddNewScooter() {
               placeholder="SKU..."
               onChange={event => setSku(event.target.value)}
             />
+            <Tooltip
+              placement="top"
+              isOpen={skuTooltipOpen}
+              target="scooterSku"
+              toggle={toggleSku}
+              style={{
+                padding: '0.5rem',
+                whiteSpace: 'nowrap',
+                minWidth: 'fit-content'
+              }}
+            >
+              Her indtaster du den unikke kode, der identificerer enheden. En
+              såkaldt Stock Keeping Unit.
+            </Tooltip>
           </InputGroup>
         </FormGroup>
         <FormGroup>
@@ -200,6 +256,20 @@ function AddNewScooter() {
               placeholder="Tags..."
               onChange={event => setTags(event.target.value)}
             />
+            <Tooltip
+              placement="top"
+              isOpen={tagsTooltipOpen}
+              target="scooterTags"
+              toggle={toggleTags}
+              style={{
+                padding: '0.5rem',
+                whiteSpace: 'nowrap',
+                minWidth: 'fit-content'
+              }}
+            >
+              Her indtaster du de ord, der kan identificere enheden. Ordene
+              separeres med mellemrum. Fx en-hjulet rød el-scooter.
+            </Tooltip>
           </InputGroup>
         </FormGroup>
         <FormGroup>
@@ -213,6 +283,19 @@ function AddNewScooter() {
               placeholder="Mærke..."
               onChange={event => setBrand(event.target.value)}
             />
+            <Tooltip
+              placement="top"
+              isOpen={brandTooltipOpen}
+              target="scooterBrand"
+              toggle={toggleBrand}
+              style={{
+                padding: '0.5rem',
+                whiteSpace: 'nowrap',
+                minWidth: 'fit-content'
+              }}
+            >
+              Her indtaster du elscooterens mærke. Fx C.T.M.
+            </Tooltip>
           </InputGroup>
         </FormGroup>
         <FormGroup>
@@ -229,13 +312,27 @@ function AddNewScooter() {
               placeholder="Beskrivelse..."
               onChange={event => setDescription(event.target.value)}
             />
+            <Tooltip
+              placement="top"
+              isOpen={descriptionTooltipOpen}
+              target="scooterDescription"
+              toggle={toggleDescription}
+              style={{
+                padding: '0.5rem',
+                whiteSpace: 'nowrap',
+                minWidth: 'fit-content'
+              }}
+            >
+              Her indtaster du en fyldestgørende beskrivelse af enheden. Max 200
+              tegn.
+            </Tooltip>
           </InputGroup>
         </FormGroup>
         {/* <FormGroup>
           <InputGroup>
             <Input
               className="inputStyles"
-              type="number"
+              type="text"
               name="categoryId"
               id="scooterCategoryId"
               value={categoryId}
@@ -248,7 +345,7 @@ function AddNewScooter() {
           <InputGroup>
             <Input
               className="inputStyles"
-              type="number"
+              type="text"
               name="subCategoryId"
               id="scooterSubCategoryId"
               value={subCategoryId}
@@ -262,14 +359,13 @@ function AddNewScooter() {
           <Alert color="success">Scooteren blev oprettet.</Alert>
         )}
         {/* Knap til at indsende indtastede data */}
-        <Button type="submit" className="btnStyles mr-2">
+        <Button type="submit" className="btnStyles">
           Tilføj elscooter
         </Button>
-        {/* Knap til at toggle box med hjælp */}
-        <Button onClick={toggle} className="btnStyles">
-          Hjælp mig!
-        </Button>
       </Form>
+      <Link to="/addNewSparepart" className="linkStyles">
+        Vil du i stedet tilføje ny reservedel?
+      </Link>
     </React.Fragment>
   );
 }
