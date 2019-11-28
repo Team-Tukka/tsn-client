@@ -40,27 +40,27 @@ function SparepartRows() {
     return (
       <tr key={_id} className="tableRowStyles">
         <td>
-          <Link to="#" className="linkStyles">
+          <Link to={`/editSparepart/${_id}`} className="linkStyles">
             {itemNo}
           </Link>
         </td>
         <td>
-          <Link to="#" className="linkStyles">
+          <Link to={`/editSparepart/${_id}`} className="linkStyles">
             {name}
           </Link>
         </td>
         <td>
-          <Link to="#" className="linkStyles">
+          <Link to={`/editSparepart/${_id}`} className="linkStyles">
             {price}
           </Link>
         </td>
         <td>
-          <Link to="#" className="linkStyles">
+          <Link to={`/editSparepart/${_id}`} className="linkStyles">
             {priceVAT}
           </Link>
         </td>
         <td>
-          <Link to="#" className="linkStyles">
+          <Link to={`/editSparepart/${_id}`} className="linkStyles">
             {categoryId}
           </Link>
         </td>
