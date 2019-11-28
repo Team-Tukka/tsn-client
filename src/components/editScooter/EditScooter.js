@@ -136,13 +136,13 @@ function EditScooter(props) {
       }
     }
   `;
+
   // Anvend mutation
   const [updateScooterById] = useMutation(UPDATE_SCOOTER_BY_ID);
 
   // Håndtér indsendelse af redigerede elscooteroplysninger
   const handleSubmit = event => {
     event.preventDefault();
-
     if (name === '') {
       alert('Du skal som minimum udfylde et navn på elscooteren!');
     } else {
@@ -189,6 +189,7 @@ function EditScooter(props) {
               minLength="1"
               maxLength="20"
               defaultValue={itemNo}
+              placeholder="Enhedsnummer..."
               onChange={event => setItemNo(event.target.value)}
             />
             <Tooltip
@@ -217,6 +218,7 @@ function EditScooter(props) {
               minLength="1"
               maxLength="50"
               defaultValue={name}
+              placeholder="Enhedsnavn..."
               onChange={event => setName(event.target.value)}
             />
             <Tooltip
@@ -372,16 +374,17 @@ function EditScooter(props) {
               tegn.
             </Tooltip>
           </InputGroup>
-        </FormGroup>{' '}
+        </FormGroup>
         <FormGroup>
           <InputGroup>
             <Input
+              readOnly="readonly"
               className="inputStyles"
               type="text"
               name="categoryId"
               id="scooterCategoryId"
               defaultValue={categoryId}
-              placeholder="Kategori ID..."
+              placeholder="Kategori ID (Under udvikling)"
               onChange={event => setCategoryId(event.target.value)}
             />
           </InputGroup>
@@ -389,12 +392,13 @@ function EditScooter(props) {
         <FormGroup>
           <InputGroup>
             <Input
+              readOnly="readonly"
               className="inputStyles"
               type="text"
               name="subCategoryId"
               id="scooterSubCategoryId"
               defaultValue={subCategoryId}
-              placeholder="Underkategori ID..."
+              placeholder="Underkategori ID (Under udvikling)"
               onChange={event => setSubCategoryId(event.target.value)}
             />
           </InputGroup>
@@ -403,7 +407,7 @@ function EditScooter(props) {
         {alertStatus === true && (
           <Alert color="success">Elscooteren blev opdateret.</Alert>
         )}
-        {/*  Knap til at indsende indtastede data*/}
+        {/* Knap til at indsende redigerede data */}
         <Button type="submit" className="btnStyles">
           Opdatér elscooteren
         </Button>

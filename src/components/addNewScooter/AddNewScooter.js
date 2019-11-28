@@ -329,15 +329,16 @@ function AddNewScooter() {
             </Tooltip>
           </InputGroup>
         </FormGroup>
-        {/* <FormGroup>
+        <FormGroup>
           <InputGroup>
             <Input
+              readOnly="readonly"
               className="inputStyles"
               type="text"
               name="categoryId"
               id="scooterCategoryId"
               value={categoryId}
-              placeholder="Kategori ID..."
+              placeholder="Kategori ID (Under udvikling)"
               onChange={event => setCategoryId(event.target.value)}
             />
           </InputGroup>
@@ -345,16 +346,17 @@ function AddNewScooter() {
         <FormGroup>
           <InputGroup>
             <Input
+              readOnly="readonly"
               className="inputStyles"
               type="text"
               name="subCategoryId"
               id="scooterSubCategoryId"
               value={subCategoryId}
-              placeholder="Underkategori ID..."
+              placeholder="Underkategori ID (Under udvikling)"
               onChange={event => setSubCategoryId(event.target.value)}
             />
           </InputGroup>
-        </FormGroup> */}
+        </FormGroup>
         {/* Vis alert, hvis elscooteren oprettes korrekt */}
         {alertStatus === true && (
           <Alert color="success">Scooteren blev oprettet.</Alert>
