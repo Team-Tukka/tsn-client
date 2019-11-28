@@ -18,7 +18,7 @@ import {
 export function GetSparepartById() {
   const { id } = useParams();
 
-  // Definér query og mutation til at tilføje ny reservedel
+  // Definér query til at hente specifik reservedel
   const GET_SPAREPART_BY_ID = gql`
     {
       getSparepartById(_id: "${id}") {
@@ -39,6 +39,7 @@ export function GetSparepartById() {
   if (loading) return <p>Loading...</p>;
   if (error) return <p> Error! </p>;
 
+  //Deklarerer konstanter som initialiseres til at være reservedelens data
   const spaId = data.getSparepartById._id;
   const spaName = data.getSparepartById.name;
   const spaPrice = data.getSparepartById.price;
@@ -46,6 +47,7 @@ export function GetSparepartById() {
   const spaScooterId = data.getSparepartById.ScooterId;
   const spaCategoryId = data.getSparepartById.categoryId;
 
+  //Retuneren EditSparepart komponentet, med konstanterne som props.
   return (
     <EditSparepart
       spaId={spaId}
@@ -58,10 +60,9 @@ export function GetSparepartById() {
   );
 }
 
-// Komponent, der håndterer oprettelse af ny reservedel
-
+// Komponent, der håndterer opdatering af en reservedel
 function EditSparepart(props) {
-  // States med React Hooks
+  //Deklarerer konstanter som initialiseres til at være de medsendte props
   const spaId = props.spaId;
   const spaName = props.spaName;
   const spaPrice = props.spaPrice;
@@ -69,6 +70,7 @@ function EditSparepart(props) {
   const spaCategoryId = props.spaCategoryId;
   const spaScooterId = props.spaScooterId;
 
+  // States med React Hooks
   const [name, setName] = useState(spaName);
   const [price, setPrice] = useState(spaPrice);
   const [itemNo, setItemNo] = useState(spaItemNo);
@@ -81,6 +83,7 @@ function EditSparepart(props) {
   const [itemNoTooltipOpen, setItemNoTooltipOpen] = useState(false);
   const [priceTooltipOpen, setPriceTooltipOpen] = useState(false);
 
+  // Mutation til at opdatere en reservedel
   const UPDATE_SPAREPART_BY_ID = gql`
     mutation { 
         updateSparepartById(
@@ -101,7 +104,7 @@ function EditSparepart(props) {
       }
     }
   `;
-
+  // Anvend mutation
   const [updateSparepartById] = useMutation(UPDATE_SPAREPART_BY_ID);
 
   // Håndtér indsendelse af reservedeloplysninger
@@ -130,7 +133,6 @@ function EditSparepart(props) {
   const toggleItemNo = () => setItemNoTooltipOpen(!itemNoTooltipOpen);
   const togglePrice = () => setPriceTooltipOpen(!priceTooltipOpen);
 
-  //Toggle tooltips ved hver inputfelt
   return (
     <React.Fragment>
       <h3 className="mb-3">Opdatér reservedelen</h3>
@@ -247,7 +249,7 @@ function EditSparepart(props) {
             />
           </InputGroup>
         </FormGroup>
-        {/* Vis alert, hvis reservedelen oprettes korrekt */}
+        {/* Vis alert, hvis reservedelen opdateres korrekt */}
         {alertStatus === true && (
           <Alert color="success">Reservedelen blev opdateret.</Alert>
         )}

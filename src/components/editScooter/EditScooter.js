@@ -18,7 +18,7 @@ import {
 export function GetScooterById() {
   const { id } = useParams();
 
-  // Definér query og mutation til at tilføje ny elscooter
+  // Definér query til at hente specifik elscooter
   const GET_SCOOTER_BY_ID = gql`
     {
       getScooterById(_id: "${id}") {
@@ -43,6 +43,7 @@ export function GetScooterById() {
   if (loading) return <p>Loading...</p>;
   if (error) return <p> Error! </p>;
 
+  //Deklarerer konstanter som initialiseres til at være elscooterens data
   const scoId = data.getScooterById._id;
   const scoName = data.getScooterById.name;
   const scoPrice = data.getScooterById.price;
@@ -54,6 +55,7 @@ export function GetScooterById() {
   const scoCategoryId = data.getScooterById.categoryId;
   const scoSubCategoryId = data.getScooterById.subCategoryId;
 
+  //Retuneren EditScooter komponentet, med konstanterne som props.
   return (
     <EditScooter
       scoId={scoId}
@@ -70,10 +72,9 @@ export function GetScooterById() {
   );
 }
 
-// Komponent, der håndterer oprettelse af ny elscooter
-
+// Komponent, der håndterer opdatering af en elscooter
 function EditScooter(props) {
-  // States med React Hooks
+  //Deklarerer konstanter som initialiseres til at være de medsendte props
   const scoId = props.scoId;
   const scoName = props.scoName;
   const scoPrice = props.scoPrice;
@@ -85,6 +86,7 @@ function EditScooter(props) {
   const scoCategoryId = props.scoCategoryId;
   const scoSubCategoryId = props.scoSubCategoryId;
 
+  // States med React Hooks
   const [name, setName] = useState(scoName);
   const [price, setPrice] = useState(scoPrice);
   const [sku, setSku] = useState(scoSku);
@@ -105,6 +107,7 @@ function EditScooter(props) {
   const [brandTooltipOpen, setBrandTooltipOpen] = useState(false);
   const [descriptionTooltipOpen, setDescriptionTooltipOpen] = useState(false);
 
+  // Mutation til at opdatere en elscooter
   const UPDATE_SCOOTER_BY_ID = gql`
     mutation { 
         updateScooterById(
@@ -133,7 +136,7 @@ function EditScooter(props) {
       }
     }
   `;
-
+  // Anvender mutation
   const [updateScooterById] = useMutation(UPDATE_SCOOTER_BY_ID);
 
   // Håndtér indsendelse af elscooteroplysninger
@@ -171,7 +174,6 @@ function EditScooter(props) {
   const toggleDescription = () =>
     setDescriptionTooltipOpen(!descriptionTooltipOpen);
 
-  //Toggle tooltips ved hver inputfelt
   return (
     <React.Fragment>
       <h3 className="mb-3">Opdatér elscooteren</h3>
@@ -397,13 +399,13 @@ function EditScooter(props) {
             />
           </InputGroup>
         </FormGroup>
-        {/* Vis alert, hvis elscooteren oprettes korrekt */}
+        {/* Vis alert, hvis elscooteren opdateres korrekt */}
         {alertStatus === true && (
-          <Alert color="success">Scooteren blev opdateret.</Alert>
+          <Alert color="success">Elscooteren blev opdateret.</Alert>
         )}
         {/*  Knap til at indsende indtastede data*/}
         <Button type="submit" className="btnStyles">
-          Tilføj elscooter
+          Opdatér elscooteren
         </Button>
       </Form>
     </React.Fragment>
