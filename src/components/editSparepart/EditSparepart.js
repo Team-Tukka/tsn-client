@@ -129,6 +129,11 @@ function EditSparepart(props) {
     }
   };
 
+  // Håndtér klik på sletknappen
+  const handleDelete = () => {
+    alert('Hej!');
+  };
+
   // Toggle tooltips ved hver inputfelt
   const toggleName = () => setNameTooltipOpen(!nameTooltipOpen);
   const toggleItemNo = () => setItemNoTooltipOpen(!itemNoTooltipOpen);
@@ -272,8 +277,12 @@ function EditSparepart(props) {
           <Alert color="success">Reservedelen blev opdateret.</Alert>
         )}
         {/* Knap til at indsende redigerede data */}
-        <Button type="submit" className="btnStyles">
+        <Button type="submit" className="btnStyles mr-2">
           Opdatér reservedelen
+        </Button>
+        {/* Knap til at slette den specifikke reservedel */}
+        <Button onClick={handleDelete} className="dangerBtnStyles">
+          Slet reservedelen
         </Button>
       </Form>
     </React.Fragment>

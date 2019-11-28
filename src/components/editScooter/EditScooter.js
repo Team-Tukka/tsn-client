@@ -164,6 +164,11 @@ function EditScooter(props) {
     }
   };
 
+  // Håndtér klik på sletknappen
+  const handleDelete = () => {
+    alert('Hej!');
+  };
+
   // Toggle tooltips ved hver inputfelt
   const toggleName = () => setNameTooltipOpen(!nameTooltipOpen);
   const toggleItemNo = () => setItemNoTooltipOpen(!itemNoTooltipOpen);
@@ -408,8 +413,12 @@ function EditScooter(props) {
           <Alert color="success">Elscooteren blev opdateret.</Alert>
         )}
         {/* Knap til at indsende redigerede data */}
-        <Button type="submit" className="btnStyles">
+        <Button type="submit" className="btnStyles mr-2">
           Opdatér elscooteren
+        </Button>
+        {/* Knap til at slette den specifikke elscooter */}
+        <Button onClick={handleDelete} className="dangerBtnStyles">
+          Slet elscooteren
         </Button>
       </Form>
     </React.Fragment>
