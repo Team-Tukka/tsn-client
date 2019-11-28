@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { useMutation } from '@apollo/react-hooks';
+import { useParams } from 'react-router';
+import { useMutation, useQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
-import client from '../../config/apolloClient';
-import './AddNewScooter.css';
+import './EditScooter.css';
 
 // Importér Reactstrap komponenter
 import {
@@ -16,22 +15,85 @@ import {
   Tooltip
 } from 'reactstrap';
 
-// Komponent, der håndterer oprettelse af ny elscooter
-function AddNewScooter() {
-  /* Klientens cache ryddes, så vi er sikkre på, at den nye
-  elscooter tilføjes, uden man behøver rerendere hele DOM'en */
-  client.cache.reset();
+export function GetScooterById() {
+  const { id } = useParams();
 
+  // Definér query og mutation til at tilføje ny elscooter
+  const GET_SCOOTER_BY_ID = gql`
+    {
+      getScooterById(_id: "${id}") {
+        _id
+        name
+        price
+        priceVAT
+        sku
+        tags
+        brand
+        description
+        itemNo
+        categoryId
+        subCategoryId
+      }
+    }
+  `;
+
+  // Anvend query
+  const { loading, error, data } = useQuery(GET_SCOOTER_BY_ID);
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p> Error! </p>;
+
+  const scoId = data.getScooterById._id;
+  const scoName = data.getScooterById.name;
+  const scoPrice = data.getScooterById.price;
+  const scoSku = data.getScooterById.sku;
+  const scoTags = data.getScooterById.tags;
+  const scoBrand = data.getScooterById.brand;
+  const scoDescription = data.getScooterById.description;
+  const scoItemNo = data.getScooterById.itemNo;
+  const scoCategoryId = data.getScooterById.categoryId;
+  const scoSubCategoryId = data.getScooterById.subCategoryId;
+
+  return (
+    <EditScooter
+      scoId={scoId}
+      scoName={scoName}
+      scoPrice={scoPrice}
+      scoSku={scoSku}
+      scoTags={scoTags}
+      scoBrand={scoBrand}
+      scoDescription={scoDescription}
+      scoItemNo={scoItemNo}
+      scoCategoryId={scoCategoryId}
+      scoSubCategoryId={scoSubCategoryId}
+    />
+  );
+}
+
+// Komponent, der håndterer oprettelse af ny elscooter
+
+function EditScooter(props) {
   // States med React Hooks
-  const [name, setName] = useState('');
-  const [price, setPrice] = useState('');
-  const [sku, setSku] = useState('');
-  const [tags, setTags] = useState('');
-  const [brand, setBrand] = useState('');
-  const [description, setDescription] = useState('');
-  const [itemNo, setItemNo] = useState('');
-  const [categoryId, setCategoryId] = useState('');
-  const [subCategoryId, setSubCategoryId] = useState('');
+  const scoId = props.scoId;
+  const scoName = props.scoName;
+  const scoPrice = props.scoPrice;
+  const scoSku = props.scoSku;
+  const scoTags = props.scoTags;
+  const scoBrand = props.scoBrand;
+  const scoDescription = props.scoDescription;
+  const scoItemNo = props.scoItemNo;
+  const scoCategoryId = props.scoCategoryId;
+  const scoSubCategoryId = props.scoSubCategoryId;
+
+  const [name, setName] = useState(scoName);
+  const [price, setPrice] = useState(scoPrice);
+  const [sku, setSku] = useState(scoSku);
+  const [tags, setTags] = useState(scoTags);
+  const [brand, setBrand] = useState(scoBrand);
+  const [description, setDescription] = useState(scoDescription);
+  const [itemNo, setItemNo] = useState(scoItemNo);
+  const [categoryId, setCategoryId] = useState(scoCategoryId);
+  const [subCategoryId, setSubCategoryId] = useState(scoSubCategoryId);
   const [alertStatus, setAlertStatus] = useState(false);
 
   // States til tooltips
@@ -43,31 +105,23 @@ function AddNewScooter() {
   const [brandTooltipOpen, setBrandTooltipOpen] = useState(false);
   const [descriptionTooltipOpen, setDescriptionTooltipOpen] = useState(false);
 
-  // Definér mutation til at tilføje ny elscooter
-  const ADD_SCOOTER = gql`
-    mutation addScooter(
-      $name: String!
-      $price: Float!
-      $sku: String
-      $tags: String
-      $brand: String
-      $description: String
-      $itemNo: String!
-      $categoryId: String
-      $subCategoryId: String
+  const UPDATE_SCOOTER_BY_ID = gql`
+    mutation { 
+        updateScooterById(
+        _id: "${scoId}"
+        input: {
+        name: "${name}"
+        price: ${price}
+        sku: "${sku}"
+        tags: "${tags}"
+        brand: "${brand}"
+        description: "${description}"
+        itemNo: "${itemNo}"
+        categoryId: "${categoryId}"
+        subCategoryId: "${subCategoryId}"
+        }
     ) {
-      addScooter(
-        name: $name
-        price: $price
-        sku: $sku
-        tags: $tags
-        brand: $brand
-        description: $description
-        itemNo: $itemNo
-        categoryId: $categoryId
-        subCategoryId: $subCategoryId
-      ) {
-        name
+       name
         price
         sku
         tags
@@ -80,16 +134,16 @@ function AddNewScooter() {
     }
   `;
 
-  // Anvend mutation
-  const [addScooter] = useMutation(ADD_SCOOTER);
+  const [updateScooterById] = useMutation(UPDATE_SCOOTER_BY_ID);
 
   // Håndtér indsendelse af elscooteroplysninger
   const handleSubmit = event => {
     event.preventDefault();
+
     if (name === '') {
       alert('Du skal som minimum udfylde et navn på elscooteren!');
     } else {
-      addScooter({
+      updateScooterById({
         variables: {
           name: name,
           price: price,
@@ -104,16 +158,6 @@ function AddNewScooter() {
       });
       // Sæt 'alertStatus' til at være true (så den vises)
       setAlertStatus(true);
-      // Clear felter, så der kan indtastes nye oplysninger
-      setName('');
-      setPrice('');
-      setSku('');
-      setTags('');
-      setBrand('');
-      setDescription('');
-      setItemNo('');
-      setCategoryId('');
-      setSubCategoryId('');
     }
   };
 
@@ -127,9 +171,10 @@ function AddNewScooter() {
   const toggleDescription = () =>
     setDescriptionTooltipOpen(!descriptionTooltipOpen);
 
+  //Toggle tooltips ved hver inputfelt
   return (
     <React.Fragment>
-      <h3 className="mb-3">Tilføj ny elscooter</h3>
+      <h3 className="mb-3">Opdatér elscooteren</h3>
       <Form className="form" onSubmit={handleSubmit}>
         <FormGroup>
           <InputGroup>
@@ -141,8 +186,7 @@ function AddNewScooter() {
               id="scooterItemNo"
               minLength="1"
               maxLength="20"
-              value={itemNo}
-              placeholder="Enhedsnummer..."
+              defaultValue={itemNo}
               onChange={event => setItemNo(event.target.value)}
             />
             <Tooltip
@@ -170,8 +214,7 @@ function AddNewScooter() {
               id="scooterName"
               minLength="1"
               maxLength="50"
-              value={name}
-              placeholder="Enhedsnavn..."
+              defaultValue={name}
               onChange={event => setName(event.target.value)}
             />
             <Tooltip
@@ -192,15 +235,14 @@ function AddNewScooter() {
         <FormGroup>
           <InputGroup>
             <Input
-              required
               className="inputStyles"
               type="number"
-              name="price"
               step={0.01}
+              name="price"
               id="scooterPrice"
               minLength="1"
               maxLength="10"
-              value={price}
+              defaultValue={price}
               placeholder="Pris uden moms..."
               onChange={event => setPrice(parseFloat(event.target.value))}
             />
@@ -226,7 +268,7 @@ function AddNewScooter() {
               type="text"
               name="sku"
               id="scooterSku"
-              value={sku}
+              defaultValue={sku}
               placeholder="SKU..."
               onChange={event => setSku(event.target.value)}
             />
@@ -253,7 +295,7 @@ function AddNewScooter() {
               type="text"
               name="tags"
               id="scooterTags"
-              value={tags}
+              defaultValue={tags}
               placeholder="Tags..."
               onChange={event => setTags(event.target.value)}
             />
@@ -280,7 +322,7 @@ function AddNewScooter() {
               type="text"
               name="brand"
               id="scooterBrand"
-              value={brand}
+              defaultValue={brand}
               placeholder="Mærke..."
               onChange={event => setBrand(event.target.value)}
             />
@@ -309,7 +351,7 @@ function AddNewScooter() {
               id="scooterDescription"
               minLength="1"
               maxLength="200"
-              value={description}
+              defaultValue={description}
               placeholder="Beskrivelse..."
               onChange={event => setDescription(event.target.value)}
             />
@@ -328,15 +370,15 @@ function AddNewScooter() {
               tegn.
             </Tooltip>
           </InputGroup>
-        </FormGroup>
-        {/* <FormGroup>
+        </FormGroup>{' '}
+        <FormGroup>
           <InputGroup>
             <Input
               className="inputStyles"
               type="text"
               name="categoryId"
               id="scooterCategoryId"
-              value={categoryId}
+              defaultValue={categoryId}
               placeholder="Kategori ID..."
               onChange={event => setCategoryId(event.target.value)}
             />
@@ -349,26 +391,23 @@ function AddNewScooter() {
               type="text"
               name="subCategoryId"
               id="scooterSubCategoryId"
-              value={subCategoryId}
+              defaultValue={subCategoryId}
               placeholder="Underkategori ID..."
               onChange={event => setSubCategoryId(event.target.value)}
             />
           </InputGroup>
-        </FormGroup> */}
+        </FormGroup>
         {/* Vis alert, hvis elscooteren oprettes korrekt */}
         {alertStatus === true && (
-          <Alert color="success">Scooteren blev oprettet.</Alert>
+          <Alert color="success">Scooteren blev opdateret.</Alert>
         )}
-        {/* Knap til at indsende indtastede data */}
+        {/*  Knap til at indsende indtastede data*/}
         <Button type="submit" className="btnStyles">
           Tilføj elscooter
         </Button>
       </Form>
-      <Link to="/addNewSparepart" className="linkStyles">
-        Vil du i stedet tilføje ny reservedel?
-      </Link>
     </React.Fragment>
   );
 }
 
-export default AddNewScooter;
+export default EditScooter;

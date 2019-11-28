@@ -23,7 +23,8 @@ import Welcome from './components/welcome/Welcome';
 import EditTextarea from './components/editTextarea/EditTextarea';
 import Products from './components/products/Products';
 import ShowScooter from './components/showScooter/ShowScooter';
-import ShowSparepart from './components/showSparepart/ShowSparepart';
+import { GetScooterById } from './components/editScooter/EditScooter';
+import { GetSparepartById } from './components/editSparepart/EditSparepart';
 import AddNewScooter from './components/addNewScooter/AddNewScooter';
 import AddNewSparepart from './components/addNewSparepart/AddNewSparepart';
 import AddNewUser from './components/addNewUser/AddNewUser';
@@ -87,10 +88,18 @@ function App() {
             )}
           />
           <Auth
-            path="/products/showSparepart/:id"
+            path="/editScooter/:id"
             render={() => (
               <Container className="contentWrapper">
-                <ShowSparepart />
+                <GetScooterById />
+              </Container>
+            )}
+          />
+          <Auth
+            path="/editSparepart/:id"
+            render={() => (
+              <Container className="contentWrapper">
+                <GetSparepartById />
               </Container>
             )}
           />

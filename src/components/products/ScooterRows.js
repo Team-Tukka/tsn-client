@@ -40,27 +40,27 @@ function ScooterRows() {
     return (
       <tr key={_id} className="tableRowStyles">
         <td>
-          <Link to={`/showScooter/${_id}`} className="linkStyles">
+          <Link to={`/editScooter/${_id}`} className="linkStyles">
             {itemNo}
           </Link>
         </td>
         <td>
-          <Link to="#" className="linkStyles">
+          <Link to={`/editScooter/${_id}`} className="linkStyles">
             {name}
           </Link>
         </td>
         <td>
-          <Link to="#" className="linkStyles">
+          <Link to={`/editScooter/${_id}`} className="linkStyles">
             {price}
           </Link>
         </td>
         <td>
-          <Link to="#" className="linkStyles">
+          <Link to={`/editScooter/${_id}`} className="linkStyles">
             {priceVAT}
           </Link>
         </td>
         <td>
-          <Link to="#" className="linkStyles">
+          <Link to={`/editScooter/${_id}`} className="linkStyles">
             {categoryId}
           </Link>
         </td>
