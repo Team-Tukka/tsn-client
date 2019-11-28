@@ -41,9 +41,9 @@ export function GetScooterById() {
   const { loading, error, data } = useQuery(GET_SCOOTER_BY_ID);
 
   if (loading) return <p>Loading...</p>;
-  if (error) return <p> Error! </p>;
+  if (error) return <p>Error!</p>;
 
-  //Deklarerer konstanter som initialiseres til at være elscooterens data
+  // Deklarér konstanter som initialiseres til at være elscooterens data
   const scoId = data.getScooterById._id;
   const scoName = data.getScooterById.name;
   const scoPrice = data.getScooterById.price;
@@ -55,7 +55,7 @@ export function GetScooterById() {
   const scoCategoryId = data.getScooterById.categoryId;
   const scoSubCategoryId = data.getScooterById.subCategoryId;
 
-  //Retuneren EditScooter komponentet, med konstanterne som props.
+  // Returnér 'EditScooter' komponentet med konstanterne som props
   return (
     <EditScooter
       scoId={scoId}
@@ -74,7 +74,7 @@ export function GetScooterById() {
 
 // Komponent, der håndterer opdatering af en elscooter
 function EditScooter(props) {
-  //Deklarerer konstanter som initialiseres til at være de medsendte props
+  // Deklarér konstanter, som initialiseres til at være de medsendte props
   const scoId = props.scoId;
   const scoName = props.scoName;
   const scoPrice = props.scoPrice;
@@ -136,10 +136,10 @@ function EditScooter(props) {
       }
     }
   `;
-  // Anvender mutation
+  // Anvend mutation
   const [updateScooterById] = useMutation(UPDATE_SCOOTER_BY_ID);
 
-  // Håndtér indsendelse af elscooteroplysninger
+  // Håndtér indsendelse af redigerede elscooteroplysninger
   const handleSubmit = event => {
     event.preventDefault();
 
@@ -176,7 +176,7 @@ function EditScooter(props) {
 
   return (
     <React.Fragment>
-      <h3 className="mb-3">Opdatér elscooteren</h3>
+      <h3 className="mb-3">Opdatér elscooter</h3>
       <Form className="form" onSubmit={handleSubmit}>
         <FormGroup>
           <InputGroup>
