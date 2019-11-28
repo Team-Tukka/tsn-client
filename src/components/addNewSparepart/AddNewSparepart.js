@@ -238,7 +238,7 @@ function AddNewSparepart() {
         </Button>
       </Form>
       <Link to="/addNewScooter" className="linkStyles">
-        Vil du i stedet tilføje ny elscooter?
+        <p className="mb-3">Vil du i stedet tilføje ny elscooter?</p>
       </Link>
     </React.Fragment>
   );

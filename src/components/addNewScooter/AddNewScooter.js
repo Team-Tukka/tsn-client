@@ -367,7 +367,7 @@ function AddNewScooter() {
         </Button>
       </Form>
       <Link to="/addNewSparepart" className="linkStyles">
-        Vil du i stedet tilføje ny reservedel?
+        <p className="mb-3">Vil du i stedet tilføje ny reservedel?</p>
       </Link>
     </React.Fragment>
   );
