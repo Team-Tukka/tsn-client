@@ -12,7 +12,11 @@ import {
   Input,
   Button,
   Alert,
-  Tooltip
+  Tooltip,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter
 } from 'reactstrap';
 
 export function GetSparepartById() {
@@ -77,6 +81,7 @@ function EditSparepart(props) {
   const [scooterId, setScooterId] = useState(spaScooterId);
   const [categoryId, setCategoryId] = useState(spaCategoryId);
   const [alertStatus, setAlertStatus] = useState(false);
+  const [modal, setModal] = useState(false);
 
   // States til tooltips
   const [nameTooltipOpen, setNameTooltipOpen] = useState(false);
@@ -129,9 +134,9 @@ function EditSparepart(props) {
     }
   };
 
-  // Håndtér klik på sletknappen
+  // Slet produktet for evigt
   const handleDelete = () => {
-    alert('Hej!');
+    setModal(!modal);
   };
 
   // Toggle tooltips ved hver inputfelt
@@ -139,6 +144,9 @@ function EditSparepart(props) {
   const toggleItemNo = () => setItemNoTooltipOpen(!itemNoTooltipOpen);
   const togglePrice = () => setPriceTooltipOpen(!priceTooltipOpen);
   const toggleScooterId = () => setScooterIdTooltipOpen(!scooterIdTooltipOpen);
+
+  // Toggle modal vinduet til sletning
+  const toggleModal = () => setModal(!modal);
 
   return (
     <React.Fragment>
@@ -280,10 +288,29 @@ function EditSparepart(props) {
         <Button type="submit" className="btnStyles mr-2">
           Opdatér reservedelen
         </Button>
-        {/* Knap til at slette den specifikke reservedel */}
-        <Button onClick={handleDelete} className="dangerBtnStyles">
+        {/* Knap til at trigge sletfunktion */}
+        <Button onClick={toggleModal} className="dangerBtnStyles">
           Slet reservedelen
         </Button>
+        {/* Modal vindue med mulighed for endegyldig sletning */}
+        <Modal isOpen={modal} toggle={toggleModal}>
+          <ModalHeader toggle={toggleModal}>
+            Du er ved at slette produktet!
+          </ModalHeader>
+          <ModalBody>
+            Det er ikke muligt at genskabe et slettet produkt.
+            <br />
+            Er du sikker på, at du vil fortsætte?
+          </ModalBody>
+          <ModalFooter>
+            <Button color="danger" onClick={handleDelete}>
+              Ja!
+            </Button>{' '}
+            <Button color="secondary" onClick={toggleModal}>
+              Nej!
+            </Button>
+          </ModalFooter>
+        </Modal>
       </Form>
     </React.Fragment>
   );
