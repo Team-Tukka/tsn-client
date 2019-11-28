@@ -37,9 +37,9 @@ export function GetSparepartById() {
   const { loading, error, data } = useQuery(GET_SPAREPART_BY_ID);
 
   if (loading) return <p>Loading...</p>;
-  if (error) return <p> Error! </p>;
+  if (error) return <p>Error!</p>;
 
-  //Deklarerer konstanter som initialiseres til at være reservedelens data
+  // Deklarér konstanter som initialiseres til at være reservedelens data
   const spaId = data.getSparepartById._id;
   const spaName = data.getSparepartById.name;
   const spaPrice = data.getSparepartById.price;
@@ -47,7 +47,7 @@ export function GetSparepartById() {
   const spaScooterId = data.getSparepartById.ScooterId;
   const spaCategoryId = data.getSparepartById.categoryId;
 
-  //Retuneren EditSparepart komponentet, med konstanterne som props.
+  // Returnér 'EditSparepart' komponentet med konstanterne som props
   return (
     <EditSparepart
       spaId={spaId}
@@ -62,7 +62,7 @@ export function GetSparepartById() {
 
 // Komponent, der håndterer opdatering af en reservedel
 function EditSparepart(props) {
-  //Deklarerer konstanter som initialiseres til at være de medsendte props
+  // Deklarér konstanter, som initialiseres til at være de medsendte props
   const spaId = props.spaId;
   const spaName = props.spaName;
   const spaPrice = props.spaPrice;
@@ -107,7 +107,7 @@ function EditSparepart(props) {
   // Anvend mutation
   const [updateSparepartById] = useMutation(UPDATE_SPAREPART_BY_ID);
 
-  // Håndtér indsendelse af reservedeloplysninger
+  // Håndtér indsendelse af ændrede reservedelsoplysninger
   const handleSubmit = event => {
     event.preventDefault();
 
@@ -135,7 +135,7 @@ function EditSparepart(props) {
 
   return (
     <React.Fragment>
-      <h3 className="mb-3">Opdatér reservedelen</h3>
+      <h3 className="mb-3">Opdatér reservedel</h3>
       <Form className="form" onSubmit={handleSubmit}>
         <FormGroup>
           <InputGroup>
@@ -222,7 +222,6 @@ function EditSparepart(props) {
             </Tooltip>
           </InputGroup>
         </FormGroup>
-
         <FormGroup>
           <InputGroup>
             <Input
