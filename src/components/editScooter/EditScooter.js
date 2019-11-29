@@ -142,8 +142,18 @@ function EditScooter(props) {
     }
   `;
 
-  // Anvend mutation
+  // Mutation til at slette en elscooter
+  const DELETE_SCOOTER_BY_ID = gql`
+    mutation {
+      deleteScooterById(_id: "${scoId}") {
+        _id
+      }
+    }
+  `;
+
+  // Anvend mutations
   const [updateScooterById] = useMutation(UPDATE_SCOOTER_BY_ID);
+  const [deleteScooterById] = useMutation(DELETE_SCOOTER_BY_ID);
 
   // Håndtér indsendelse af redigerede elscooteroplysninger
   const handleSubmit = event => {
@@ -172,6 +182,8 @@ function EditScooter(props) {
   // Slet produktet for evigt
   const handleDelete = () => {
     setModal(!modal);
+    deleteScooterById();
+    window.location.replace('/products');
   };
 
   // Toggle tooltips ved hver inputfelt
@@ -426,7 +438,7 @@ function EditScooter(props) {
         </Button>
         {/* Knap til at trigge sletfunktion */}
         <Button onClick={toggleModal} className="dangerBtnStyles">
-          Slet reservedelen
+          Slet elscooteren
         </Button>
         {/* Modal vindue med mulighed for endegyldig sletning */}
         <Modal isOpen={modal} toggle={toggleModal}>

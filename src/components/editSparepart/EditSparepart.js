@@ -111,8 +111,18 @@ function EditSparepart(props) {
     }
   `;
 
-  // Anvend mutation
+  // Mutation til at slette en reservedel
+  const DELETE_SPAREPART_BY_ID = gql`
+    mutation {
+      deleteSparepartById(_id: "${spaId}") {
+        _id
+      }
+    }
+  `;
+
+  // Anvend mutations
   const [updateSparepartById] = useMutation(UPDATE_SPAREPART_BY_ID);
+  const [deleteSparepartById] = useMutation(DELETE_SPAREPART_BY_ID);
 
   // Håndtér indsendelse af redigerede reservedelsoplysninger
   const handleSubmit = event => {
@@ -137,6 +147,8 @@ function EditSparepart(props) {
   // Slet produktet for evigt
   const handleDelete = () => {
     setModal(!modal);
+    deleteSparepartById();
+    window.location.replace('/products');
   };
 
   // Toggle tooltips ved hver inputfelt
