@@ -87,6 +87,7 @@ function AddNewSparepart() {
       setPrice('');
       setScooterId('');
       setCategoryId('');
+      document.getElementById('sparepartPrice').value = '';
     }
   };
 
@@ -164,11 +165,9 @@ function AddNewSparepart() {
               required
               className="inputStyles"
               type="number"
+              step={0.01}
               name="price"
               id="sparepartPrice"
-              minLength="1"
-              maxLength="10"
-              value={price}
               placeholder="Pris uden moms..."
               onChange={event => setPrice(parseFloat(event.target.value))}
             />
