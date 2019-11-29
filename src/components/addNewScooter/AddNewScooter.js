@@ -114,6 +114,7 @@ function AddNewScooter() {
       setItemNo('');
       setCategoryId('');
       setSubCategoryId('');
+      document.getElementById('scooterPrice').value = '';
     }
   };
 
@@ -195,12 +196,9 @@ function AddNewScooter() {
               required
               className="inputStyles"
               type="number"
-              name="price"
               step={0.01}
+              name="price"
               id="scooterPrice"
-              minLength="1"
-              maxLength="10"
-              value={price}
               placeholder="Pris uden moms..."
               onChange={event => setPrice(parseFloat(event.target.value))}
             />
