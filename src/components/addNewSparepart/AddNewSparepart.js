@@ -10,6 +10,7 @@ import {
   Form,
   InputGroup,
   FormGroup,
+  FormText,
   Input,
   Button,
   Alert,
@@ -186,6 +187,11 @@ function AddNewSparepart() {
               Her indtaster du reservedelens pris uden moms i DKK. Fx 99,95.
             </Tooltip>
           </InputGroup>
+          {price > 0 && (
+            <FormText color="muted">
+              Pris inkl. moms vil blive {price * 1.25} DKK.
+            </FormText>
+          )}
         </FormGroup>
         <FormGroup>
           <InputGroup>
