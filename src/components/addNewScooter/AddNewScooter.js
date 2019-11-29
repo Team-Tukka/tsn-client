@@ -10,6 +10,7 @@ import {
   Form,
   InputGroup,
   FormGroup,
+  FormText,
   Input,
   Button,
   Alert,
@@ -216,6 +217,11 @@ function AddNewScooter() {
               Her indtaster du elscooterens pris uden moms i DKK. Fx 22999,95.
             </Tooltip>
           </InputGroup>
+          {price > 0 && (
+            <FormText color="muted">
+              Pris inkl. moms vil blive {price * 1.25} DKK.
+            </FormText>
+          )}
         </FormGroup>
         <FormGroup>
           <InputGroup>
