@@ -48,6 +48,19 @@ h4 {
   background-color: #f6fdf2 !important;
 }
 
+.dangerBtnStyles {
+  margin-bottom: 1.3rem;
+  color: #ffffff !important;
+  background-color: #fc4040 !important;
+  border: 1px #f0f6ea solid !important;
+  border-radius: 0.4rem !important;
+  box-shadow: 1px 1px 2px #ececec;
+}
+
+.dangerBtnStyles:hover {
+  background-color: #960000 !important;
+}
+
 .tableHeaderStyles {
   border-bottom: 1px #f0f6ea solid;
   box-shadow: 0 1px 5px #fafafa !important;

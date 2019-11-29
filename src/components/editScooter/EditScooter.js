@@ -12,7 +12,11 @@ import {
   Input,
   Button,
   Alert,
-  Tooltip
+  Tooltip,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter
 } from 'reactstrap';
 
 export function GetScooterById() {
@@ -97,6 +101,7 @@ function EditScooter(props) {
   const [categoryId, setCategoryId] = useState(scoCategoryId);
   const [subCategoryId, setSubCategoryId] = useState(scoSubCategoryId);
   const [alertStatus, setAlertStatus] = useState(false);
+  const [modal, setModal] = useState(false);
 
   // States til tooltips
   const [nameTooltipOpen, setNameTooltipOpen] = useState(false);
@@ -136,13 +141,23 @@ function EditScooter(props) {
       }
     }
   `;
-  // Anvend mutation
+
+  // Mutation til at slette en elscooter
+  const DELETE_SCOOTER_BY_ID = gql`
+    mutation {
+      deleteScooterById(_id: "${scoId}") {
+        _id
+      }
+    }
+  `;
+
+  // Anvend mutations
   const [updateScooterById] = useMutation(UPDATE_SCOOTER_BY_ID);
+  const [deleteScooterById] = useMutation(DELETE_SCOOTER_BY_ID);
 
   // Håndtér indsendelse af redigerede elscooteroplysninger
   const handleSubmit = event => {
     event.preventDefault();
-
     if (name === '') {
       alert('Du skal som minimum udfylde et navn på elscooteren!');
     } else {
@@ -164,6 +179,13 @@ function EditScooter(props) {
     }
   };
 
+  // Slet produktet for evigt
+  const handleDelete = () => {
+    setModal(!modal);
+    deleteScooterById();
+    window.location.replace('/products');
+  };
+
   // Toggle tooltips ved hver inputfelt
   const toggleName = () => setNameTooltipOpen(!nameTooltipOpen);
   const toggleItemNo = () => setItemNoTooltipOpen(!itemNoTooltipOpen);
@@ -173,6 +195,9 @@ function EditScooter(props) {
   const toggleBrand = () => setBrandTooltipOpen(!brandTooltipOpen);
   const toggleDescription = () =>
     setDescriptionTooltipOpen(!descriptionTooltipOpen);
+
+  // Toggle modal vinduet til sletning
+  const toggleModal = () => setModal(!modal);
 
   return (
     <React.Fragment>
@@ -189,6 +214,7 @@ function EditScooter(props) {
               minLength="1"
               maxLength="20"
               defaultValue={itemNo}
+              placeholder="Enhedsnummer..."
               onChange={event => setItemNo(event.target.value)}
             />
             <Tooltip
@@ -217,6 +243,7 @@ function EditScooter(props) {
               minLength="1"
               maxLength="50"
               defaultValue={name}
+              placeholder="Enhedsnavn..."
               onChange={event => setName(event.target.value)}
             />
             <Tooltip
@@ -372,16 +399,17 @@ function EditScooter(props) {
               tegn.
             </Tooltip>
           </InputGroup>
-        </FormGroup>{' '}
+        </FormGroup>
         <FormGroup>
           <InputGroup>
             <Input
+              readOnly="readonly"
               className="inputStyles"
               type="text"
               name="categoryId"
               id="scooterCategoryId"
               defaultValue={categoryId}
-              placeholder="Kategori ID..."
+              placeholder="Kategori ID (Under udvikling)"
               onChange={event => setCategoryId(event.target.value)}
             />
           </InputGroup>
@@ -389,12 +417,13 @@ function EditScooter(props) {
         <FormGroup>
           <InputGroup>
             <Input
+              readOnly="readonly"
               className="inputStyles"
               type="text"
               name="subCategoryId"
               id="scooterSubCategoryId"
               defaultValue={subCategoryId}
-              placeholder="Underkategori ID..."
+              placeholder="Underkategori ID (Under udvikling)"
               onChange={event => setSubCategoryId(event.target.value)}
             />
           </InputGroup>
@@ -403,10 +432,33 @@ function EditScooter(props) {
         {alertStatus === true && (
           <Alert color="success">Elscooteren blev opdateret.</Alert>
         )}
-        {/*  Knap til at indsende indtastede data*/}
-        <Button type="submit" className="btnStyles">
+        {/* Knap til at indsende redigerede data */}
+        <Button type="submit" className="btnStyles mr-2">
           Opdatér elscooteren
         </Button>
+        {/* Knap til at trigge sletfunktion */}
+        <Button onClick={toggleModal} className="dangerBtnStyles">
+          Slet elscooteren
+        </Button>
+        {/* Modal vindue med mulighed for endegyldig sletning */}
+        <Modal isOpen={modal} toggle={toggleModal}>
+          <ModalHeader toggle={toggleModal}>
+            Du er ved at slette produktet!
+          </ModalHeader>
+          <ModalBody>
+            Det er ikke muligt at genskabe et slettet produkt.
+            <br />
+            Er du sikker på, at du vil fortsætte?
+          </ModalBody>
+          <ModalFooter>
+            <Button color="danger" onClick={handleDelete}>
+              Ja!
+            </Button>{' '}
+            <Button color="secondary" onClick={toggleModal}>
+              Nej!
+            </Button>
+          </ModalFooter>
+        </Modal>
       </Form>
     </React.Fragment>
   );

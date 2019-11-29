@@ -12,7 +12,11 @@ import {
   Input,
   Button,
   Alert,
-  Tooltip
+  Tooltip,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter
 } from 'reactstrap';
 
 export function GetSparepartById() {
@@ -54,8 +58,8 @@ export function GetSparepartById() {
       spaName={spaName}
       spaPrice={spaPrice}
       spaItemNo={spaItemNo}
-      spaCategoryId={spaCategoryId}
       spaScooterId={spaScooterId}
+      spaCategoryId={spaCategoryId}
     />
   );
 }
@@ -67,21 +71,23 @@ function EditSparepart(props) {
   const spaName = props.spaName;
   const spaPrice = props.spaPrice;
   const spaItemNo = props.spaItemNo;
-  const spaCategoryId = props.spaCategoryId;
   const spaScooterId = props.spaScooterId;
+  const spaCategoryId = props.spaCategoryId;
 
   // States med React Hooks
   const [name, setName] = useState(spaName);
   const [price, setPrice] = useState(spaPrice);
   const [itemNo, setItemNo] = useState(spaItemNo);
-  const [categoryId, setCategoryId] = useState(spaCategoryId);
   const [scooterId, setScooterId] = useState(spaScooterId);
+  const [categoryId, setCategoryId] = useState(spaCategoryId);
   const [alertStatus, setAlertStatus] = useState(false);
+  const [modal, setModal] = useState(false);
 
   // States til tooltips
   const [nameTooltipOpen, setNameTooltipOpen] = useState(false);
   const [itemNoTooltipOpen, setItemNoTooltipOpen] = useState(false);
   const [priceTooltipOpen, setPriceTooltipOpen] = useState(false);
+  const [scooterIdTooltipOpen, setScooterIdTooltipOpen] = useState(false);
 
   // Mutation til at opdatere en reservedel
   const UPDATE_SPAREPART_BY_ID = gql`
@@ -92,8 +98,8 @@ function EditSparepart(props) {
         name: "${name}"
         price: ${price}
         itemNo: "${itemNo}"
-        categoryId: "${categoryId}"
         scooterId: "${scooterId}"
+        categoryId: "${categoryId}"
         }
     ) {
        name
@@ -104,13 +110,23 @@ function EditSparepart(props) {
       }
     }
   `;
-  // Anvend mutation
-  const [updateSparepartById] = useMutation(UPDATE_SPAREPART_BY_ID);
 
-  // Håndtér indsendelse af ændrede reservedelsoplysninger
+  // Mutation til at slette en reservedel
+  const DELETE_SPAREPART_BY_ID = gql`
+    mutation {
+      deleteSparepartById(_id: "${spaId}") {
+        _id
+      }
+    }
+  `;
+
+  // Anvend mutations
+  const [updateSparepartById] = useMutation(UPDATE_SPAREPART_BY_ID);
+  const [deleteSparepartById] = useMutation(DELETE_SPAREPART_BY_ID);
+
+  // Håndtér indsendelse af redigerede reservedelsoplysninger
   const handleSubmit = event => {
     event.preventDefault();
-
     if (name === '') {
       alert('Du skal som minimum udfylde et navn på reservedelen!');
     } else {
@@ -128,10 +144,21 @@ function EditSparepart(props) {
     }
   };
 
+  // Slet produktet for evigt
+  const handleDelete = () => {
+    setModal(!modal);
+    deleteSparepartById();
+    window.location.replace('/products');
+  };
+
   // Toggle tooltips ved hver inputfelt
   const toggleName = () => setNameTooltipOpen(!nameTooltipOpen);
   const toggleItemNo = () => setItemNoTooltipOpen(!itemNoTooltipOpen);
   const togglePrice = () => setPriceTooltipOpen(!priceTooltipOpen);
+  const toggleScooterId = () => setScooterIdTooltipOpen(!scooterIdTooltipOpen);
+
+  // Toggle modal vinduet til sletning
+  const toggleModal = () => setModal(!modal);
 
   return (
     <React.Fragment>
@@ -148,6 +175,7 @@ function EditSparepart(props) {
               minLength="1"
               maxLength="20"
               defaultValue={itemNo}
+              placeholder="Enhedsnummer..."
               onChange={event => setItemNo(event.target.value)}
             />
             <Tooltip
@@ -161,7 +189,7 @@ function EditSparepart(props) {
                 minWidth: 'fit-content'
               }}
             >
-              Her indtaster du reservedelens enhedsnummer. Fx AK-3761.
+              Her indtaster du reservedelens enhedsnummer. Fx HL-372761.
             </Tooltip>
           </InputGroup>
         </FormGroup>
@@ -176,6 +204,7 @@ function EditSparepart(props) {
               minLength="1"
               maxLength="50"
               defaultValue={name}
+              placeholder="Enhedsnavn..."
               onChange={event => setName(event.target.value)}
             />
             <Tooltip
@@ -189,7 +218,7 @@ function EditSparepart(props) {
                 minWidth: 'fit-content'
               }}
             >
-              Her indtaster du reservedelens navn. Fx HS-855 Hvid.
+              Her indtaster du reservedelens enhedsnavn. Fx Armlæn Højre.
             </Tooltip>
           </InputGroup>
         </FormGroup>
@@ -218,7 +247,7 @@ function EditSparepart(props) {
                 minWidth: 'fit-content'
               }}
             >
-              Her indtaster du reservedelens pris uden moms i DKK. Fx 22999,95.
+              Her indtaster du reservedelens pris uden moms i DKK. Fx 99,95.
             </Tooltip>
           </InputGroup>
         </FormGroup>
@@ -227,24 +256,39 @@ function EditSparepart(props) {
             <Input
               className="inputStyles"
               type="text"
-              name="categoryId"
-              id="sparepartCategoryId"
-              defaultValue={categoryId}
-              placeholder="Kategori ID..."
-              onChange={event => setCategoryId(event.target.value)}
+              name="scooterId"
+              id="sparepartScooterId"
+              defaultValue={scooterId}
+              placeholder="Elscooter ID..."
+              onChange={event => setScooterId(event.target.value)}
             />
+            <Tooltip
+              placement="top"
+              isOpen={scooterIdTooltipOpen}
+              target="sparepartScooterId"
+              toggle={toggleScooterId}
+              style={{
+                padding: '0.5rem',
+                whiteSpace: 'nowrap',
+                minWidth: 'fit-content'
+              }}
+            >
+              Her indtaster du ID'et på den elscooter, reservedelen tilhører. Fx
+              125.
+            </Tooltip>
           </InputGroup>
         </FormGroup>
         <FormGroup>
           <InputGroup>
             <Input
+              readOnly="readonly"
               className="inputStyles"
               type="text"
-              name="subCategoryId"
-              id="sparepartSubCategoryId"
-              defaultValue={scooterId}
-              placeholder="Elscooter ID..."
-              onChange={event => setScooterId(event.target.value)}
+              name="categoryId"
+              id="sparepartCategoryId"
+              defaultValue={categoryId}
+              placeholder="Kategori ID (Under udvikling)"
+              onChange={event => setCategoryId(event.target.value)}
             />
           </InputGroup>
         </FormGroup>
@@ -252,10 +296,33 @@ function EditSparepart(props) {
         {alertStatus === true && (
           <Alert color="success">Reservedelen blev opdateret.</Alert>
         )}
-        {/*  Knap til at indsende indtastede data*/}
-        <Button type="submit" className="btnStyles">
+        {/* Knap til at indsende redigerede data */}
+        <Button type="submit" className="btnStyles mr-2">
           Opdatér reservedelen
         </Button>
+        {/* Knap til at trigge sletfunktion */}
+        <Button onClick={toggleModal} className="dangerBtnStyles">
+          Slet reservedelen
+        </Button>
+        {/* Modal vindue med mulighed for endegyldig sletning */}
+        <Modal isOpen={modal} toggle={toggleModal}>
+          <ModalHeader toggle={toggleModal}>
+            Du er ved at slette produktet!
+          </ModalHeader>
+          <ModalBody>
+            Det er ikke muligt at genskabe et slettet produkt.
+            <br />
+            Er du sikker på, at du vil fortsætte?
+          </ModalBody>
+          <ModalFooter>
+            <Button color="danger" onClick={handleDelete}>
+              Ja!
+            </Button>{' '}
+            <Button color="secondary" onClick={toggleModal}>
+              Nej!
+            </Button>
+          </ModalFooter>
+        </Modal>
       </Form>
     </React.Fragment>
   );

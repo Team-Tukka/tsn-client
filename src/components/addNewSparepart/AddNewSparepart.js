@@ -214,19 +214,20 @@ function AddNewSparepart() {
             </Tooltip>
           </InputGroup>
         </FormGroup>
-        {/* <FormGroup>
+        <FormGroup>
           <InputGroup>
             <Input
+              readOnly="readonly"
               className="inputStyles"
               type="text"
               name="categoryId"
               id="sparepartCategoryId"
               value={categoryId}
-              placeholder="Kategori ID..."
+              placeholder="Kategori ID (Under udvikling)"
               onChange={event => setCategoryId(event.target.value)}
             />
           </InputGroup>
-        </FormGroup> */}
+        </FormGroup>
         {/* Vis alert, hvis elscooteren oprettes korrekt */}
         {alertStatus === true && (
           <Alert color="success">Reservedelen blev oprettet.</Alert>
@@ -237,7 +238,7 @@ function AddNewSparepart() {
         </Button>
       </Form>
       <Link to="/addNewScooter" className="linkStyles">
-        Vil du i stedet tilføje ny elscooter?
+        <p className="mb-3">Vil du i stedet tilføje ny elscooter?</p>
       </Link>
     </React.Fragment>
   );
