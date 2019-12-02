@@ -9,6 +9,8 @@ import './AddNewSparepart.css';
 import {
   Form,
   InputGroup,
+  InputGroupAddon,
+  InputGroupText,
   FormGroup,
   FormText,
   Input,
@@ -16,6 +18,10 @@ import {
   Alert,
   Tooltip
 } from 'reactstrap';
+
+// Importér Font Awesome komponenter
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
 
 // Komponent, der håndterer oprettelse af ny reservedel
 function AddNewSparepart() {
@@ -116,10 +122,22 @@ function AddNewSparepart() {
               placeholder="Enhedsnummer..."
               onChange={event => setItemNo(event.target.value)}
             />
+            <InputGroupAddon
+              addonType="append"
+              id="itemNoTooltip"
+              style={{ marginLeft: '0.5rem' }}
+            >
+              <InputGroupText className="btnStyles">
+                <FontAwesomeIcon
+                  icon={faQuestionCircle}
+                  id="questionIcon"
+                ></FontAwesomeIcon>
+              </InputGroupText>
+            </InputGroupAddon>
             <Tooltip
               placement="top"
               isOpen={itemNoTooltipOpen}
-              target="sparepartItemNo"
+              target="itemNoTooltip"
               toggle={toggleItemNo}
               style={{
                 padding: '0.5rem',
@@ -145,10 +163,22 @@ function AddNewSparepart() {
               placeholder="Enhedsnavn..."
               onChange={event => setName(event.target.value)}
             />
+            <InputGroupAddon
+              addonType="append"
+              id="nameTooltip"
+              style={{ marginLeft: '0.5rem' }}
+            >
+              <InputGroupText className="btnStyles">
+                <FontAwesomeIcon
+                  icon={faQuestionCircle}
+                  id="questionIcon"
+                ></FontAwesomeIcon>
+              </InputGroupText>
+            </InputGroupAddon>
             <Tooltip
               placement="top"
               isOpen={nameTooltipOpen}
-              target="sparepartName"
+              target="nameTooltip"
               toggle={toggleName}
               style={{
                 padding: '0.5rem',
@@ -172,10 +202,22 @@ function AddNewSparepart() {
               placeholder="Pris uden moms..."
               onChange={event => setPrice(parseFloat(event.target.value))}
             />
+            <InputGroupAddon
+              addonType="append"
+              id="priceTooltip"
+              style={{ marginLeft: '0.5rem' }}
+            >
+              <InputGroupText className="btnStyles">
+                <FontAwesomeIcon
+                  icon={faQuestionCircle}
+                  id="questionIcon"
+                ></FontAwesomeIcon>
+              </InputGroupText>
+            </InputGroupAddon>
             <Tooltip
               placement="top"
               isOpen={priceTooltipOpen}
-              target="sparepartPrice"
+              target="priceTooltip"
               toggle={togglePrice}
               style={{
                 padding: '0.5rem',
@@ -203,10 +245,22 @@ function AddNewSparepart() {
               placeholder="Scooter ID"
               onChange={event => setScooterId(event.target.value)}
             />
+            <InputGroupAddon
+              addonType="append"
+              id="scooterIdTooltip"
+              style={{ marginLeft: '0.5rem' }}
+            >
+              <InputGroupText className="btnStyles">
+                <FontAwesomeIcon
+                  icon={faQuestionCircle}
+                  id="questionIcon"
+                ></FontAwesomeIcon>
+              </InputGroupText>
+            </InputGroupAddon>
             <Tooltip
               placement="top"
               isOpen={scooterIdTooltipOpen}
-              target="sparepartScooterId"
+              target="scooterIdTooltip"
               toggle={toggleScooterId}
               style={{
                 padding: '0.5rem',
