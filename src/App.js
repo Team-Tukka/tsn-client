@@ -20,7 +20,6 @@ import Spareparts from './components/spareparts/Spareparts';
 import Contact from './components/contact/Contact';
 import NotFound from './components/notFound/NotFound';
 
-
 // Importér egne komponenter med auth-beskyttelse
 import AdminNav from './components/adminNav/AdminNav';
 import Welcome from './components/welcome/Welcome';
