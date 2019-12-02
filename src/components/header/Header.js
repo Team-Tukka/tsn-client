@@ -38,12 +38,12 @@ function Header(props) {
               </NavLink>
             </NavItem>
             <NavItem>
-              <NavLink className="linkStyles" href="#">
+              <NavLink className="linkStyles" href="/scooters">
                 Elscootere
               </NavLink>
             </NavItem>
             <NavItem>
-              <NavLink className="linkStyles" href="#">
+              <NavLink className="linkStyles" href="/spareparts">
                 Reservedele
               </NavLink>
             </NavItem>
@@ -52,7 +52,7 @@ function Header(props) {
                 Kontakt
               </NavLink>
             </NavItem>
-            {/* Profil-ikonet vises kun på bredde enheder */}
+            {/* Profil-ikonet vises kun på brede enheder */}
             <NavItem className="profileNavItemStyles">
               <NavLink className="linkStyles" href="/welcome">
                 Profil
@@ -60,7 +60,7 @@ function Header(props) {
             </NavItem>
           </Nav>
         </Collapse>
-        {/* Profil-ikonet vises ikke på mobile enheder, her er bare alm. link */}
+        {/* Profil-ikonet vises ikke på mobile enheder, her vises alm. link */}
         <a className="profileIconStyles" href="/welcome">
           <FontAwesomeIcon
             icon={faUserCircle}
