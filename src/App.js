@@ -17,8 +17,9 @@ import Textarea from './components/textarea/Textarea';
 import LoginForm from './components/loginForm/LoginForm';
 import Scooters from './components/scooters/Scooters';
 import Spareparts from './components/spareparts/Spareparts';
-import NotFound from './components/notFound/NotFound';
 import Contact from './components/contact/Contact';
+import NotFound from './components/notFound/NotFound';
+
 
 // Importér egne komponenter med auth-beskyttelse
 import AdminNav from './components/adminNav/AdminNav';
