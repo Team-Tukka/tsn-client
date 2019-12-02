@@ -6,9 +6,8 @@ function ProductsFooterText() {
   return (
     <React.Fragment>
       <p className="footerTextStyles">
-        Listen viser samtlige enheder i databasen. Enheder uden beskrivelse vil
-        typisk være reservedele. Mere info findes ved at klikke på det enkelte
-        produkt.
+        Listen viser samtlige elscootere og reservedele i databasen. Mere info
+        findes ved at klikke på det enkelte produkt.
       </p>
     </React.Fragment>
   );

@@ -22,7 +22,11 @@ import AdminNav from './components/adminNav/AdminNav';
 import Welcome from './components/welcome/Welcome';
 import EditTextarea from './components/editTextarea/EditTextarea';
 import Products from './components/products/Products';
-import AddNewProduct from './components/addNewProduct/AddNewProduct';
+import ShowScooter from './components/showScooter/ShowScooter';
+import { GetScooterById } from './components/editScooter/EditScooter';
+import { GetSparepartById } from './components/editSparepart/EditSparepart';
+import AddNewScooter from './components/addNewScooter/AddNewScooter';
+import AddNewSparepart from './components/addNewSparepart/AddNewSparepart';
 import AddNewUser from './components/addNewUser/AddNewUser';
 
 // App komponentet indeholder den samlede app, der renderes i index.js
@@ -76,10 +80,42 @@ function App() {
             )}
           />
           <Auth
-            path="/addNewProduct"
+            path="/showScooter/:id"
             render={() => (
               <Container className="contentWrapper">
-                <AddNewProduct />
+                <ShowScooter />
+              </Container>
+            )}
+          />
+          <Auth
+            path="/editScooter/:id"
+            render={() => (
+              <Container className="contentWrapper">
+                <GetScooterById />
+              </Container>
+            )}
+          />
+          <Auth
+            path="/editSparepart/:id"
+            render={() => (
+              <Container className="contentWrapper">
+                <GetSparepartById />
+              </Container>
+            )}
+          />
+          <Auth
+            path="/addNewScooter"
+            render={() => (
+              <Container className="contentWrapper">
+                <AddNewScooter />
+              </Container>
+            )}
+          />
+          <Auth
+            path="/addNewSparepart"
+            render={() => (
+              <Container className="contentWrapper">
+                <AddNewSparepart />
               </Container>
             )}
           />
