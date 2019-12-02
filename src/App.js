@@ -17,6 +17,7 @@ import Textarea from './components/textarea/Textarea';
 import LoginForm from './components/loginForm/LoginForm';
 import Scooters from './components/scooters/Scooters';
 import Spareparts from './components/spareparts/Spareparts';
+import Contact from './components/contact/Contact';
 import NotFound from './components/notFound/NotFound';
 
 // Importér egne komponenter med auth-beskyttelse
@@ -58,6 +59,7 @@ function App() {
           <Route path="/login" exact component={LoginForm} />
           <Route path="/scooters" exact component={Scooters} />
           <Route path="/spareparts" exact component={Spareparts} />
+          <Route path="/contact" exact component={Contact} />
           {/* Routes til adgangsbeskyttet indhold */}
           <Auth
             path="/welcome"
