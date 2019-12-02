@@ -9,6 +9,8 @@ import './AddNewScooter.css';
 import {
   Form,
   InputGroup,
+  InputGroupAddon,
+  InputGroupText,
   FormGroup,
   FormText,
   Input,
@@ -16,6 +18,10 @@ import {
   Alert,
   Tooltip
 } from 'reactstrap';
+
+// Importér Font Awesome komponenter
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
 
 // Komponent, der håndterer oprettelse af ny elscooter
 function AddNewScooter() {
@@ -147,10 +153,22 @@ function AddNewScooter() {
               placeholder="Enhedsnummer..."
               onChange={event => setItemNo(event.target.value)}
             />
+            <InputGroupAddon
+              addonType="append"
+              id="itemNoTooltip"
+              style={{ marginLeft: '0.5rem' }}
+            >
+              <InputGroupText className="btnStyles">
+                <FontAwesomeIcon
+                  icon={faQuestionCircle}
+                  id="questionIcon"
+                ></FontAwesomeIcon>
+              </InputGroupText>
+            </InputGroupAddon>
             <Tooltip
               placement="top"
               isOpen={itemNoTooltipOpen}
-              target="scooterItemNo"
+              target="itemNoTooltip"
               toggle={toggleItemNo}
               style={{
                 padding: '0.5rem',
@@ -176,10 +194,22 @@ function AddNewScooter() {
               placeholder="Enhedsnavn..."
               onChange={event => setName(event.target.value)}
             />
+            <InputGroupAddon
+              addonType="append"
+              id="nameTooltip"
+              style={{ marginLeft: '0.5rem' }}
+            >
+              <InputGroupText className="btnStyles">
+                <FontAwesomeIcon
+                  icon={faQuestionCircle}
+                  id="questionIcon"
+                ></FontAwesomeIcon>
+              </InputGroupText>
+            </InputGroupAddon>
             <Tooltip
               placement="top"
               isOpen={nameTooltipOpen}
-              target="scooterName"
+              target="nameTooltip"
               toggle={toggleName}
               style={{
                 padding: '0.5rem',
@@ -203,10 +233,22 @@ function AddNewScooter() {
               placeholder="Pris uden moms..."
               onChange={event => setPrice(parseFloat(event.target.value))}
             />
+            <InputGroupAddon
+              addonType="append"
+              id="priceTooltip"
+              style={{ marginLeft: '0.5rem' }}
+            >
+              <InputGroupText className="btnStyles">
+                <FontAwesomeIcon
+                  icon={faQuestionCircle}
+                  id="questionIcon"
+                ></FontAwesomeIcon>
+              </InputGroupText>
+            </InputGroupAddon>
             <Tooltip
               placement="top"
               isOpen={priceTooltipOpen}
-              target="scooterPrice"
+              target="priceTooltip"
               toggle={togglePrice}
               style={{
                 padding: '0.5rem',
@@ -234,10 +276,22 @@ function AddNewScooter() {
               placeholder="SKU..."
               onChange={event => setSku(event.target.value)}
             />
+            <InputGroupAddon
+              addonType="append"
+              id="skuTooltip"
+              style={{ marginLeft: '0.5rem' }}
+            >
+              <InputGroupText className="btnStyles">
+                <FontAwesomeIcon
+                  icon={faQuestionCircle}
+                  id="questionIcon"
+                ></FontAwesomeIcon>
+              </InputGroupText>
+            </InputGroupAddon>
             <Tooltip
               placement="top"
               isOpen={skuTooltipOpen}
-              target="scooterSku"
+              target="skuTooltip"
               toggle={toggleSku}
               style={{
                 padding: '0.5rem',
@@ -261,10 +315,22 @@ function AddNewScooter() {
               placeholder="Tags..."
               onChange={event => setTags(event.target.value)}
             />
+            <InputGroupAddon
+              addonType="append"
+              id="tagsTooltip"
+              style={{ marginLeft: '0.5rem' }}
+            >
+              <InputGroupText className="btnStyles">
+                <FontAwesomeIcon
+                  icon={faQuestionCircle}
+                  id="questionIcon"
+                ></FontAwesomeIcon>
+              </InputGroupText>
+            </InputGroupAddon>
             <Tooltip
               placement="top"
               isOpen={tagsTooltipOpen}
-              target="scooterTags"
+              target="tagsTooltip"
               toggle={toggleTags}
               style={{
                 padding: '0.5rem',
@@ -288,10 +354,22 @@ function AddNewScooter() {
               placeholder="Mærke..."
               onChange={event => setBrand(event.target.value)}
             />
+            <InputGroupAddon
+              addonType="append"
+              id="brandTooltip"
+              style={{ marginLeft: '0.5rem' }}
+            >
+              <InputGroupText className="btnStyles">
+                <FontAwesomeIcon
+                  icon={faQuestionCircle}
+                  id="questionIcon"
+                ></FontAwesomeIcon>
+              </InputGroupText>
+            </InputGroupAddon>
             <Tooltip
               placement="top"
               isOpen={brandTooltipOpen}
-              target="scooterBrand"
+              target="brandTooltip"
               toggle={toggleBrand}
               style={{
                 padding: '0.5rem',
@@ -317,10 +395,22 @@ function AddNewScooter() {
               placeholder="Beskrivelse..."
               onChange={event => setDescription(event.target.value)}
             />
+            <InputGroupAddon
+              addonType="append"
+              id="descriptionTooltip"
+              style={{ marginLeft: '0.5rem' }}
+            >
+              <InputGroupText className="btnStyles">
+                <FontAwesomeIcon
+                  icon={faQuestionCircle}
+                  id="questionIcon"
+                ></FontAwesomeIcon>
+              </InputGroupText>
+            </InputGroupAddon>
             <Tooltip
               placement="top"
               isOpen={descriptionTooltipOpen}
-              target="scooterDescription"
+              target="descriptionTooltip"
               toggle={toggleDescription}
               style={{
                 padding: '0.5rem',
