@@ -48,7 +48,7 @@ function Header(props) {
               </NavLink>
             </NavItem>
             <NavItem>
-              <NavLink className="linkStyles" href="#">
+              <NavLink className="linkStyles" href="/contact">
                 Kontakt
               </NavLink>
             </NavItem>

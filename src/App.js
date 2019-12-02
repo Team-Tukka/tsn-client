@@ -18,6 +18,7 @@ import LoginForm from './components/loginForm/LoginForm';
 import Scooters from './components/scooters/Scooters';
 import Spareparts from './components/spareparts/Spareparts';
 import NotFound from './components/notFound/NotFound';
+import Contact from './components/contact/Contact';
 
 // Importér egne komponenter med auth-beskyttelse
 import AdminNav from './components/adminNav/AdminNav';
@@ -58,6 +59,7 @@ function App() {
           <Route path="/login" exact component={LoginForm} />
           <Route path="/scooters" exact component={Scooters} />
           <Route path="/spareparts" exact component={Spareparts} />
+          <Route path="/contact" exact component={Contact} />
           {/* Routes til adgangsbeskyttet indhold */}
           <Auth
             path="/welcome"
