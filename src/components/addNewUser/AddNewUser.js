@@ -12,10 +12,12 @@ import {
   Button,
   Alert,
   CustomInput,
-  Collapse,
-  CardBody,
-  Card
+  Tooltip
 } from 'reactstrap';
+
+// Importér Font Awesome komponenter
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
 
 // Komponent, der håndterer oprettelse af ny bruger
 function AddNewUser() {
@@ -29,7 +31,9 @@ function AddNewUser() {
   const [zipCode, setZipCode] = useState('');
   const [phone, setPhone] = useState('');
   const [alertStatus, setAlertStatus] = useState(false);
-  const [HelpIsOpen, setHelpIsOpen] = useState(false);
+
+  // State til tooltip ved administrator checkbox
+  const [adminRoleTooltipOpen, setAdminRoleTooltipOpen] = useState(false);
 
   // Opsætter addUser mutation
   const ADD_USER = gql`
@@ -74,8 +78,6 @@ function AddNewUser() {
   // Håndtér indsendelse af brugeroplysninger
   const handleSubmit = event => {
     event.preventDefault();
-    // setErrorAlert(false);
-    // setAlert(false);
     addUser({
       variables: {
         firstName: firstName,
@@ -88,56 +90,24 @@ function AddNewUser() {
         phone: phone
       }
     });
-
-    // if (!error) {
     setAlertStatus(true);
-
-    //   setFirstName('');
-    //   setLastName('');
-    //   setMail('');
-    //   setPassword('');
-    //   setAddress('');
-    //   setZipCode('');
-    //   setPhone('');
-    // }
-
-    // if ({ error }) {
-    //   setErrorAlert(true);
-    //   console.log({ error });
-    //   console.log('fejl?');
-    // } else {
-    // setAlert(true);
-    //   setFirstName('');
-    //   setLastName('');
-    //   setMail('');
-    //   setPassword('');
-    //   setAddress('');
-    //   setZipCode('');
-    //   setPhone('');
-    // }
-
-    // console.log(error.graphQLErrors.map(({ message }) == "Mailen er allerede i brug"));
+    // Clear felter, så der kan indtastes nye oplysninger
+    setFirstName('');
+    setLastName('');
+    setMail('');
+    setPassword('');
+    setAdminRole(false);
+    setAddress('');
+    setZipCode('');
+    setPhone('');
   };
 
-  // Toggle til at åbne og lukke boksen med hjælp
-  const toggle = () => setHelpIsOpen(!HelpIsOpen);
+  // Toggle tooltip ved administrator checkbox
+  const toggleAdminRole = () => setAdminRoleTooltipOpen(!adminRoleTooltipOpen);
 
   return (
     <React.Fragment>
       <h3 className="mb-3">Opret ny bruger</h3>
-      {/* Box der vises, hvis der klikkes på hjælp */}
-      <Collapse isOpen={HelpIsOpen}>
-        <Card className="mb-4">
-          <CardBody>
-            Du kan som administrator oprette både administrator- og
-            forhandlerprofiler. Den adgangskode, du indtaster, er kun
-            midlertidig og skal ændres af forhandleren, når de logger ind første
-            gang. Vær opmærksom på, at hvis du checker af i boksen ud for
-            "Administrator", så vil den oprettede bruger have fuld adgang til
-            systemet!
-          </CardBody>
-        </Card>
-      </Collapse>
       <Form className="form" onSubmit={handleSubmit}>
         <FormGroup>
           <InputGroup>
@@ -206,7 +176,7 @@ function AddNewUser() {
               className="inputStyles"
               type="text"
               name="address"
-              minLength="2"
+              minLength="5"
               maxLength="50"
               value={address}
               placeholder="Adresse..."
@@ -221,8 +191,8 @@ function AddNewUser() {
               className="inputStyles"
               type="number"
               name="zipCode"
-              minLength="2"
-              maxLength="50"
+              minLength="1"
+              maxLength="10"
               value={zipCode}
               placeholder="Postnummer..."
               onChange={event => setZipCode(parseInt(event.target.value))}
@@ -232,11 +202,12 @@ function AddNewUser() {
         <FormGroup>
           <InputGroup>
             <Input
+              required
               className="inputStyles"
               type="number"
               name="phone"
               minLength="2"
-              maxLength="50"
+              maxLength="20"
               value={phone}
               placeholder="Telefonnummer..."
               onChange={event => setPhone(parseInt(event.target.value))}
@@ -253,6 +224,24 @@ function AddNewUser() {
               checked={adminRole}
               onChange={event => setAdminRole(event.target.checked)}
             />
+            <FontAwesomeIcon
+              icon={faQuestionCircle}
+              className="questionIconStyles"
+              id="questionIcon"
+            ></FontAwesomeIcon>
+            <Tooltip
+              placement="right-end"
+              isOpen={adminRoleTooltipOpen}
+              target="questionIcon"
+              toggle={toggleAdminRole}
+              style={{
+                whiteSpace: 'nowrap',
+                minWidth: 'fit-content'
+              }}
+            >
+              Bemærk! Hvis du checker af i dette felt, så bliver brugeren
+              administrator og har derfor fuld adgang til hele systemet!
+            </Tooltip>
           </InputGroup>
         </FormGroup>
         {/* Vis alert, hvis brugeren oprettes korrekt */}
@@ -267,12 +256,8 @@ function AddNewUser() {
             </Alert>
           ))}
         {/* Knap til at indsende indtastede data */}
-        <Button type="submit" className="btnStyles mr-2">
+        <Button type="submit" className="btnStyles">
           Opret bruger
-        </Button>
-        {/* Knap til at toggle box med hjælp */}
-        <Button onClick={toggle} className="btnStyles">
-          Hjælp mig!
         </Button>
       </Form>
     </React.Fragment>
