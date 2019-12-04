@@ -1,4 +1,5 @@
 @import url("../../assets/css/fadeInStyles.css");
+@import url("../../assets/css/priceStyles.css");
 @import url("../../assets/css/scrollbarStyles.css");
 
 h1,
@@ -77,4 +78,8 @@ h4 {
 .tableScrollView {
   max-height: 54vh;
   overflow: auto;
+}
+
+.cardHover:hover {
+  background-color: #f6fdf2 !important;
 }
