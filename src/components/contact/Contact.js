@@ -1,5 +1,8 @@
-import React from 'react';
-import useForm from 'react-hook-form';
+import React, { useState } from 'react';
+import { useMutation } from '@apollo/react-hooks';
+import { gql } from 'apollo-boost';
+import './Contact.css';
+
 // Importér Reactstrap komponenter
 import {
   Col,
@@ -8,48 +11,103 @@ import {
   Container,
   Row,
   FormGroup,
-  Form
+  Form,
+  Alert
 } from 'reactstrap';
 
 // Komponent som indeholder kontaktform
 function Contact() {
-  const {
-    handleSubmit, // Submit handler wrapper
-    register, // Register form fields
-    errors // Errors object including error messages
-  } = useForm();
+  // States med React Hooks
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [mail, setMail] = useState('');
+  const [phone, setPhone] = useState('');
+  const [title, setTitle] = useState('');
+  const [message, setMessage] = useState('');
+  const [alertStatus, setAlertStatus] = useState(false);
 
-  const onSubmit = data => {
-    console.log(data); // email & password input's values in an object.
+  // Definér mutation til at tilføje ny reservedel
+  const ADD_MAIL = gql`
+    mutation addMail(
+      $firstName: String!
+      $lastName: String!
+      $mail: String!
+      $phone: Int
+      $title: String!
+      $message: String!
+    ) {
+      addMail(
+        firstName: $firstName
+        lastName: $lastName
+        mail: $mail
+        phone: $phone
+        title: $title
+        message: $message
+      ) {
+        firstName
+        lastName
+        mail
+        phone
+        title
+        message
+      }
+    }
+  `;
+
+  const [addMail] = useMutation(ADD_MAIL);
+
+  const handleSubmit = event => {
+    event.preventDefault();
+
+    addMail({
+      variables: {
+        firstName: firstName,
+        lastName: lastName,
+        mail: mail,
+        phone: phone,
+        title: title,
+        message: message
+      }
+    });
+    // Sæt 'alertStatus' til at være true (så den vises)
+    setAlertStatus(true);
+    // Clear felter, så der kan indtastes nye oplysninger
+    setFirstName('');
+    setLastName('');
+    setMail('');
+    setPhone('');
+    setTitle('');
+    setMessage('');
   };
-  console.log(errors);
 
   return (
     <Container className="contentWrapper">
       <h3 className="mb-3">Kontakt os</h3>
-      <Form className="form" onSubmit={handleSubmit(onSubmit)}>
+      <Form className="form" onSubmit={handleSubmit}>
         <Row form>
           <Col md={6}>
             <FormGroup>
-              {/* <Label for="exampleName">Fornavn</Label> */}
               <Input
+                required
                 className="inputStyles"
                 type="text"
                 placeholder="Indtast dit fornavn..."
-                name="Fornavn"
-                ref={register({ required: true })}
+                name="firstName"
+                value={firstName}
+                onChange={event => setFirstName(event.target.value)}
               />
             </FormGroup>
           </Col>
           <Col md={6}>
             <FormGroup>
-              {/* <Label for="exampleLastName">Efternavn</Label> */}
               <Input
+                required
                 className="inputStyles"
                 type="text"
                 placeholder="Indtast dit efternavn..."
-                name="Efternavn"
-                ref={register({ required: true, maxLength: 80 })}
+                name="lastName"
+                value={lastName}
+                onChange={event => setLastName(event.target.value)}
               />
             </FormGroup>
           </Col>
@@ -57,45 +115,67 @@ function Contact() {
         <Row form>
           <Col md={6}>
             <FormGroup>
-              {/* <Label for="exampleMail">Email</Label> */}
               <Input
+                required
                 className="inputStyles"
                 type="email"
                 placeholder="Indast din email adresse..."
-                name="Email"
-                ref={register({ required: true, pattern: /^\S+@\S+$/i })}
+                name="mail"
+                value={mail}
+                onChange={event => setMail(event.target.value)}
               />
             </FormGroup>
           </Col>
           <Col md={6}>
             <FormGroup>
-              {/* <Label for="exampleLastName">Efternavn</Label> */}
               <Input
                 className="inputStyles"
                 type="tel"
+                pattern="^[0-9]*$"
+                maxLength="8"
+                minLength="8"
                 placeholder="Indtast dit mobil nummer..."
-                name="Mobile number"
-                ref={register({ required: true, minLength: 6, maxLength: 12 })}
+                name="phone"
+                value={phone}
+                onChange={event => setPhone(event.target.value)}
               />
             </FormGroup>
           </Col>
         </Row>
-
+        <Row>
+          <Col sm={12}>
+            <FormGroup>
+              <Input
+                required
+                className="inputStyles"
+                type="text"
+                placeholder="Indtast en titel her..."
+                name="title"
+                value={title}
+                onChange={event => setTitle(event.target.value)}
+              />
+            </FormGroup>
+          </Col>
+        </Row>
         <FormGroup row>
           <Col sm={12}>
             <Input
+              required
               className="inputStyles"
               type="textarea"
               placeholder="Skriv din besked her..."
-              name="Besked"
-              ref={register({ required: true })}
+              name="message"
+              value={message}
+              onChange={event => setMessage(event.target.value)}
             />
           </Col>
         </FormGroup>
-
         <Button type="submit" className="btnStyles">
           Send besked
         </Button>
+        {alertStatus === true && (
+          <Alert color="success">Reservedelen blev oprettet.</Alert>
+        )}
       </Form>
     </Container>
   );
