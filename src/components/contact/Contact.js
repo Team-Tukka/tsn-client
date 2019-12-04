@@ -26,7 +26,7 @@ function Contact() {
   const [message, setMessage] = useState('');
   const [alertStatus, setAlertStatus] = useState(false);
 
-  // Definér mutation til at tilføje ny reservedel
+  // Definér mutation til at komponere mail
   const ADD_MAIL = gql`
     mutation addMail(
       $firstName: String!
