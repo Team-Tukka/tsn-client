@@ -174,7 +174,7 @@ function Contact() {
           Send besked
         </Button>
         {alertStatus === true && (
-          <Alert color="success">Reservedelen blev oprettet.</Alert>
+          <Alert color="success">Beskeden er blevet sendt.</Alert>
         )}
       </Form>
     </Container>
