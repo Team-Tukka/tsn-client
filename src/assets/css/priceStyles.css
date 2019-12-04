@@ -1,0 +1,18 @@
+.priceGlow {
+  color: #4b713d !important;
+  font-size: 1.8rem;
+  text-shadow: 2px 1px 6px #cee9b9 !important;
+}
+
+.priceVAT {
+  color: #969696 !important;
+  font-size: 0.9rem;
+  text-shadow: 2px 1px 6px #cee9b9 !important;
+}
+
+.priceSale {
+  color: #b42727 !important;
+  font-size: 1.8rem;
+  text-decoration: line-through;
+  text-shadow: 2px 1px 6px #cee9b9 !important;
+}

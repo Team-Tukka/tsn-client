@@ -11,7 +11,7 @@ function Scooters() {
     <Container className="contentWrapper">
       <h3 className="mb-3">Elscootere</h3>
       <Row>
-        <CardDeck>
+        <CardDeck className="fadeIn">
           <ScooterCards />
         </CardDeck>
       </Row>

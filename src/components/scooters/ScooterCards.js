@@ -1,5 +1,8 @@
 import React from 'react';
-import dummyImgSparepart from '../../assets/images/dummyImgSparepart.png';
+import { Link } from 'react-router-dom';
+import { useQuery } from '@apollo/react-hooks';
+import { gql } from 'apollo-boost';
+import dummyImgScooter from '../../assets/images/dummyImgScooter.png';
 
 // Importér Reactstrap komponenter
 import {
@@ -10,34 +13,83 @@ import {
   CardBody,
   CardTitle,
   CardSubtitle,
-  CardText,
+  CardFooter,
   Button
 } from 'reactstrap';
 
 // Komponent der renderer alle elscooterkortene (hvert item)
 function ScooterCards() {
-  return (
-    <React.Fragment>
-      <Col className="col-sm-6 col-md-4 col-lg-4">
-        <Card className="mb-3">
-          <CardHeader className="veryLightGreenBg">Enhedsnavn</CardHeader>
-          <CardImg width="100%" src={dummyImgSparepart} alt="Dummy image" />
+  // Definér først query til at hente array med alle elscootere
+  const GET_SCOOTERS = gql`
+    {
+      getScooters {
+        _id
+        itemNo
+        name
+        description
+        price
+        priceVAT
+        categoryId
+      }
+    }
+  `;
+
+  // Anvend query
+  const { loading, error, data } = useQuery(GET_SCOOTERS);
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error!</p>;
+
+  // Returnér nu alle props for hvert enkel scooter i et card
+  return data.getScooters.map((scooter, index) => {
+    const {
+      _id,
+      itemNo,
+      name,
+      description,
+      price,
+      priceVAT,
+      categoryId
+    } = scooter; // Destructuring
+    return (
+      <Col
+        key={_id}
+        className="col-sm-6 col-md-4 col-lg-4 d-flex align-items-stretch"
+      >
+        <Card className="mb-4 cardHover">
+          <CardHeader className="veryLightGreenBg">{name}</CardHeader>
+          <Link to={`/showScooter/${_id}`}>
+            <CardImg
+              width="100%"
+              className="p-2"
+              src={dummyImgScooter}
+              alt={description}
+            />
+          </Link>
           <CardBody>
             <CardTitle>
-              <small className="text-muted">Enhedsnummer</small>
+              <small className="text-muted">{itemNo}</small>
             </CardTitle>
-            <CardSubtitle>24589,99 DKK</CardSubtitle>
-            <CardText>
-              Dette er en dummy tekst, som ikke mening give, men sådan er det i
-              dette ganske danske land, hvor folk råber og skriger i StudentHub
-              på må og få, ja hallo, vi kraner den ind over begyggelse.
-            </CardText>
-            <Button className="btnStyles">Køb</Button>
+            <CardSubtitle>
+              <span className="priceGlow">{price} DKK</span>
+            </CardSubtitle>
+            <CardSubtitle className="priceVAT mb-4">
+              {priceVAT} DKK inkl. moms
+            </CardSubtitle>
+            <Link to={`/showScooter/${_id}`}>
+              <Button className="btnStyles">Læs mere</Button>
+            </Link>
           </CardBody>
+          <CardFooter className="veryLightGreenBg">
+            Kategori:{' '}
+            <Link to="#" className="linkStyles">
+              {categoryId}
+            </Link>
+          </CardFooter>
         </Card>
       </Col>
-    </React.Fragment>
-  );
+    );
+  });
 }
 
 export default ScooterCards;
