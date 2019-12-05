@@ -31,7 +31,7 @@ function Contact() {
     mutation addMail(
       $firstName: String!
       $lastName: String!
-      $mail: String!
+      $email: String!
       $phone: Int
       $title: String!
       $message: String!
@@ -39,14 +39,14 @@ function Contact() {
       addMail(
         firstName: $firstName
         lastName: $lastName
-        mail: $mail
+        email: $email
         phone: $phone
         title: $title
         message: $message
       ) {
         firstName
         lastName
-        mail
+        email
         phone
         title
         message
@@ -63,7 +63,7 @@ function Contact() {
       variables: {
         firstName: firstName,
         lastName: lastName,
-        mail: mail,
+        email: mail,
         phone: phone,
         title: title,
         message: message
@@ -78,6 +78,7 @@ function Contact() {
     setPhone('');
     setTitle('');
     setMessage('');
+    document.getElementById('contactPhone').value = '';
   };
 
   return (
@@ -130,14 +131,14 @@ function Contact() {
             <FormGroup>
               <Input
                 className="inputStyles"
+                id="contactPhone"
                 type="tel"
                 pattern="^[0-9]*$"
                 maxLength="8"
                 minLength="8"
                 placeholder="Indtast dit mobil nummer..."
                 name="phone"
-                value={phone}
-                onChange={event => setPhone(event.target.value)}
+                onChange={event => setPhone(parseInt(event.target.value))}
               />
             </FormGroup>
           </Col>
