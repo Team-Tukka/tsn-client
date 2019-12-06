@@ -23,6 +23,7 @@ import NotFound from './components/notFound/NotFound';
 // Importér egne komponenter med auth-beskyttelse
 import AdminNav from './components/adminNav/AdminNav';
 import Welcome from './components/welcome/Welcome';
+import Mail from './components/mails/Mail';
 import EditTextarea from './components/editTextarea/EditTextarea';
 import Products from './components/products/Products';
 import ShowScooter from './components/showScooter/ShowScooter';
@@ -66,6 +67,7 @@ function App() {
             render={() => (
               <Container className="contentWrapper">
                 <Welcome />
+                <Mail />
               </Container>
             )}
           />
