@@ -4,7 +4,7 @@ import './Mail.css';
 // Importér Reactstrap komponenter
 import { Container } from 'reactstrap';
 
-// Komponent til indbakken med mails.
+// Komponent der renderer indbakken med mails
 function Mail() {
   return (
     <React.Fragment>
