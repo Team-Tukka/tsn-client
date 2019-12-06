@@ -58,6 +58,7 @@ function App() {
           <Route path="/" exact component={Textarea} />
           <Route path="/login" exact component={LoginForm} />
           <Route path="/scooters" exact component={Scooters} />
+          <Route path="/showScooter/:id" exact component={ShowScooter} />
           <Route path="/spareparts" exact component={ChooseModel} />
           <Route path="/contact" exact component={Contact} />
           {/* Routes til adgangsbeskyttet indhold */}
@@ -82,14 +83,6 @@ function App() {
             render={() => (
               <Container className="contentWrapper">
                 <Products />
-              </Container>
-            )}
-          />
-          <Auth
-            path="/showScooter/:id"
-            render={() => (
-              <Container className="contentWrapper">
-                <ShowScooter />
               </Container>
             )}
           />

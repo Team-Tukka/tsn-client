@@ -37,8 +37,8 @@ function ScooterCards() {
   // Anvend query
   const { loading, error, data } = useQuery(GET_SCOOTERS);
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error!</p>;
+  if (loading) return <p className="text-center m-3">Loading...</p>;
+  if (error) return <p className="text-center m-3">Error!</p>;
 
   // Returnér nu alle props for hvert enkel scooter i et card
   return data.getScooters.map((scooter, index) => {
