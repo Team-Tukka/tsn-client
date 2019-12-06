@@ -17,6 +17,7 @@ import Textarea from './components/textarea/Textarea';
 import LoginForm from './components/loginForm/LoginForm';
 import Scooters from './components/scooters/Scooters';
 import ChooseModel from './components/chooseModel/ChooseModel';
+import ChooseSubCategory from './components/chooseSubCategory/ChooseSubCategory';
 import Contact from './components/contact/Contact';
 import NotFound from './components/notFound/NotFound';
 
@@ -58,7 +59,12 @@ function App() {
           <Route path="/" exact component={Textarea} />
           <Route path="/login" exact component={LoginForm} />
           <Route path="/scooters" exact component={Scooters} />
-          <Route path="/spareparts" exact component={ChooseModel} />
+          <Route path="/chooseModel" exact component={ChooseModel} />
+          <Route
+            path="/chooseSubCategory/:id"
+            exact
+            component={ChooseSubCategory}
+          />
           <Route path="/contact" exact component={Contact} />
           {/* Routes til adgangsbeskyttet indhold */}
           <Auth

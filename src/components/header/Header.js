@@ -43,7 +43,7 @@ function Header(props) {
               </NavLink>
             </NavItem>
             <NavItem>
-              <NavLink className="linkStyles" href="/spareparts">
+              <NavLink className="linkStyles" href="/chooseModel">
                 Reservedele
               </NavLink>
             </NavItem>
