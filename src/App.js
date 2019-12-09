@@ -62,18 +62,19 @@ function App() {
           <Route path="/" exact component={Textarea} />
           <Route path="/login" exact component={LoginForm} />
           <Route path="/scooters" exact component={Scooters} />
+          <Route path="/showScooter/:id" exact component={ShowScooter} />
           <Route path="/chooseModel" exact component={ChooseModel} />
-          <Route path="/showSparepart/:id" exact component={ShowSparepart} />
+          <Route
+            path="/chooseSubCategory/:id"
+            exact
+            component={ChooseSubCategory}
+          />      
           <Route
             path="/showSubCategory/:id"
             exact
             component={ShowSubCategory}
           />
-          <Route
-            path="/chooseSubCategory/:id"
-            exact
-            component={ChooseSubCategory}
-          />
+          <Route path="/showSparepart/:id" exact component={ShowSparepart} />
           <Route path="/contact" exact component={Contact} />
           {/* Routes til adgangsbeskyttet indhold */}
           <Auth
@@ -98,14 +99,6 @@ function App() {
             render={() => (
               <Container className="contentWrapper">
                 <Products />
-              </Container>
-            )}
-          />
-          <Auth
-            path="/showScooter/:id"
-            render={() => (
-              <Container className="contentWrapper">
-                <ShowScooter />
               </Container>
             )}
           />
