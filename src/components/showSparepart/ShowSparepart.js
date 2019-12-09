@@ -34,7 +34,7 @@ function ShowSparepart() {
 
   return (
     <Container>
-      <img src={dummyImgSparepart} width="50%" alt="Splitetegning" />
+      <img src={dummyImgSparepart} width="50%" alt="Splittegning" />
       <p>{data.getSparepartById.name}</p>
       <p>{data.getSparepartById.itemNo}</p>
       <p>{data.getSparepartById.price}</p>
