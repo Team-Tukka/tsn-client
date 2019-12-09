@@ -19,6 +19,8 @@ import Scooters from './components/scooters/Scooters';
 import ChooseModel from './components/chooseModel/ChooseModel';
 import ChooseSubCategory from './components/chooseSubCategory/ChooseSubCategory';
 import Contact from './components/contact/Contact';
+import ShowSubCategory from './components/showSubCategory/ShowSubCategory';
+import ShowSparepart from './components/showSparepart/ShowSparepart';
 import NotFound from './components/notFound/NotFound';
 
 // Importér egne komponenter med auth-beskyttelse
@@ -60,6 +62,12 @@ function App() {
           <Route path="/login" exact component={LoginForm} />
           <Route path="/scooters" exact component={Scooters} />
           <Route path="/chooseModel" exact component={ChooseModel} />
+          <Route path="/showSparepart/:id" exact component={ShowSparepart} />
+          <Route
+            path="/showSubCategory/:id"
+            exact
+            component={ShowSubCategory}
+          />
           <Route
             path="/chooseSubCategory/:id"
             exact

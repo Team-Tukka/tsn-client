@@ -12,7 +12,7 @@ function SubCategories() {
   const { id } = useParams();
   const GET_SUB_CATEGORIES_BY_CATEGORY_ID = gql`
     {
-        getSubCategoriesByCategoryId(_id: "${id}") {
+        getSubCategoriesByCategoryId(categoryId: "${id}") {
         _id
         name
     
@@ -33,7 +33,7 @@ function SubCategories() {
         className="col-sm-6 col-md-4 my-3 col-lg-4 d-flex align-items-stretch "
       >
         <Card>
-          <Link to="#" className="linkStyles">
+          <Link to={`/showSubCategory/${_id}`} className="linkStyles">
             <CardHeader className="veryLightGreenBg">{name}</CardHeader>
           </Link>
         </Card>
