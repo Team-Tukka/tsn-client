@@ -35,6 +35,7 @@ import { GetSparepartById } from './components/editSparepart/EditSparepart';
 import AddNewScooter from './components/addNewScooter/AddNewScooter';
 import AddNewSparepart from './components/addNewSparepart/AddNewSparepart';
 import AddNewUser from './components/addNewUser/AddNewUser';
+import Categories from './components/categories/Categories';
 
 // App komponentet indeholder den samlede app, der renderes i index.js
 function App() {
@@ -68,7 +69,7 @@ function App() {
             path="/chooseSubCategory/:id"
             exact
             component={ChooseSubCategory}
-          />      
+          />
           <Route
             path="/showSubCategory/:id"
             exact
@@ -139,6 +140,14 @@ function App() {
             render={() => (
               <Container className="contentWrapper">
                 <AddNewUser />
+              </Container>
+            )}
+          />
+          <Auth
+            path="/categories"
+            render={() => (
+              <Container className="contentWrapper">
+                <Categories />
               </Container>
             )}
           />
