@@ -2,21 +2,11 @@ import React from 'react';
 import { useParams } from 'react-router';
 import { useQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
+import dummyImgScooter from '../../assets/images/dummyImgScooter.png';
 import './ShowScooter.css';
 
 // Importér Reactstrap komponenter
-import {
-  Container,
-  Row,
-  Col
-  //   Form,
-  //   InputGroup,
-  //   FormGroup,
-  //   Input,
-  //   Button,
-  //   Alert,
-  //   Tooltip
-} from 'reactstrap';
+import { Container, Row, Col } from 'reactstrap';
 
 function ShowScooter() {
   const { id } = useParams();
@@ -48,6 +38,7 @@ function ShowScooter() {
   // Initialiserer alle data til konstanter
   const scoName = data.getScooterById.name;
   const scoPrice = data.getScooterById.price;
+  const scoPriceVAT = data.getScooterById.priceVAT;
   const scoSku = data.getScooterById.sku;
   const scoTagsArray = data.getScooterById.tagsArray;
   const scoBrand = data.getScooterById.brand;
@@ -57,30 +48,42 @@ function ShowScooter() {
 
   // Løber gennem alle tags og udskriver hvert enkelt som et list item
   const tagCloudItems = scoTagsArray.map(tag => (
-    <div>
-      <li key={tag} className="tagCloudItemStyles">
-        {tag}
-      </li>
-      <br />
-    </div>
+    <li key={tag} className="tagCloudItemStyles my-2 mr-2">
+      {tag}
+    </li>
   ));
-  console.log(scoTagsArray);
 
   return (
     <Container className="contentWrapper">
       <h3 className="mb-3">{scoName}</h3>
       <Row className="fadeIn">
-        <Col>img</Col>
-        <Col>
-          <ul>
-            <li>Enhedsnummer: {scoItemNo}</li>
-            <li>Mærke: {scoBrand}</li>
-            <li>SKU: {scoSku}</li>
-            <li>Kategori: {scoCategoryId}</li>
-            <li>Beskrivelse: {scoDescription}</li>
-            <li className="priceGlow">{scoPrice}</li>
+        <Col lg="4" md="3" className="mb-4 mr-5">
+          <img
+            className="img-fluid"
+            src={dummyImgScooter}
+            alt={scoName}
+            title={scoName}
+          />
+        </Col>
+        <Col lg="7" md="8 ">
+          <ul className="list-unstyled textStyles">
+            <li>
+              <b>Enhedsnummer:</b> {scoItemNo}
+            </li>
+            <li>
+              <b>Mærke:</b> {scoBrand}
+            </li>
+            <li>
+              <b>SKU:</b> {scoSku}
+            </li>
+            <li>
+              <b>Kategori:</b> {scoCategoryId}
+            </li>
+            <li className="my-4">{scoDescription}</li>
+            <li className="priceGlow">{scoPrice} DKK</li>
+            <li className="priceVAT">{scoPriceVAT} DKK inkl. moms</li>
           </ul>
-          <ul>{tagCloudItems}</ul>
+          <ul className="list-unstyled">{tagCloudItems}</ul>
         </Col>
       </Row>
     </Container>
