@@ -8,10 +8,8 @@ import dummyImgSparepart from '../../assets/images/dummyImgSparepart.png';
 
 // Importér Reactstrap komponenter
 import {
-  Row,
   Col,
   Button,
-  CardDeck,
   Card,
   CardHeader,
   CardImg,
@@ -23,7 +21,7 @@ import {
 function ShowSpareparts() {
   const { id } = useParams();
 
-  // Definér query og mutation til at tilføje ny elscooter
+  // Definér query til at hente en specifik reservedel ud fra en underkategori-id
   const GET_SPAREPARTS_BY_SUB_CATEGORY = gql`
     {
         getSparepartsBySubCategory(subCategoryId: "${id}") {
@@ -44,15 +42,7 @@ function ShowSpareparts() {
   if (loading) return <p>Loading...</p>;
   if (error) return <p> Error! </p>;
   return data.getSparepartsBySubCategory.map((sparepart, index) => {
-    const {
-      _id,
-      itemNo,
-      name,
-      price,
-      priceVAT,
-      categoryId,
-      subCategoryId
-    } = sparepart;
+    const { _id, itemNo, name, price, priceVAT } = sparepart;
     return (
       <Col
         key={_id}

@@ -6,21 +6,12 @@ import './ShowSparepart.css';
 import dummyImgSparepart from '../../assets/images/dummyImgSparepart.png';
 
 // Importér Reactstrap komponenter
-import {
-  Container
-  //   Form,
-  //   InputGroup,
-  //   FormGroup,
-  //   Input,
-  //   Button,
-  //   Alert,
-  //   Tooltip
-} from 'reactstrap';
+import { Container } from 'reactstrap';
 
 function ShowSparepart() {
   const { id } = useParams();
 
-  // Definér query og mutation til at tilføje ny elscooter
+  // Definér query til at hente en specific reservedel
   const GET_SPAREPART_BY_ID = gql`
     {
       getSparepartById(_id: "${id}") {

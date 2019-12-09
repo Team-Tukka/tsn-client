@@ -6,7 +6,7 @@ import { gql } from 'apollo-boost';
 import './ChooseSubCategory.css';
 
 // Importér Reactstrap komponenter
-import { Container, Row, Col, Card, CardHeader } from 'reactstrap';
+import { Col, Card, CardHeader } from 'reactstrap';
 
 function SubCategories() {
   const { id } = useParams();

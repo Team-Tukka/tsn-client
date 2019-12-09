@@ -12,7 +12,7 @@ import { Container, Row, CardDeck } from 'reactstrap';
 function ShowSubCategory() {
   const { id } = useParams();
 
-  // Definér query og mutation til at tilføje ny elscooter
+  // Definér query til at hente en specifik underkategori
   const GET_SUB_CATEGORY_BY_ID = gql`
     {
       getSubCategoryById(_id: "${id}") {
