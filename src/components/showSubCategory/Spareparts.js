@@ -18,7 +18,7 @@ import {
   CardSubtitle
 } from 'reactstrap';
 
-function ShowSpareparts() {
+function Spareparts() {
   const { id } = useParams();
 
   // Definér query til at hente en specifik reservedel ud fra en underkategori-id
@@ -77,4 +77,4 @@ function ShowSpareparts() {
     );
   });
 }
-export default ShowSpareparts;
+export default Spareparts;
