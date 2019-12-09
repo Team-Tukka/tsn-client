@@ -8,7 +8,7 @@ import './Categories.css';
 // Importér Reactstrap komponenter
 import { Col, Row } from 'reactstrap';
 
-// Komponent, der renderer alle kategorier i et table-view
+// Komponent, der renderer alle kategorier i rækker og kolonner!
 function Categories() {
   return (
     <React.Fragment>
