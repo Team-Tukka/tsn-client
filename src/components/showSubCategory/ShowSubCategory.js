@@ -3,7 +3,7 @@ import { useParams } from 'react-router';
 import { useQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
 import './ShowSubCategory.css';
-import ShowSpareparts from './Spareparts.js';
+import Spareparts from './Spareparts.js';
 import dummyImgDrawing from '../../assets/images/dummyImgDrawing.jpg';
 
 // Importér Reactstrap komponenter
@@ -37,7 +37,7 @@ function ShowSubCategory() {
       <h3>Reservedele</h3>
       <Row>
         <CardDeck className="fadeIn">
-          <ShowSpareparts />
+          <Spareparts />
         </CardDeck>
       </Row>
     </Container>
