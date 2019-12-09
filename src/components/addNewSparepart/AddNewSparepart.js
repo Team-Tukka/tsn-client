@@ -249,6 +249,7 @@ function AddNewSparepart() {
         <FormGroup>
           <InputGroup>
             <Input
+              readOnly="readonly"
               className="inputStyles"
               type="text"
               name="subCategoryId"

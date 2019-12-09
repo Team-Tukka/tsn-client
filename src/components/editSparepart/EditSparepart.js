@@ -299,6 +299,7 @@ function EditSparepart(props) {
         <FormGroup>
           <InputGroup>
             <Input
+              readOnly="readonly"
               className="inputStyles"
               type="text"
               name="categoryId"
@@ -312,6 +313,7 @@ function EditSparepart(props) {
         <FormGroup>
           <InputGroup>
             <Input
+              readOnly="readonly"
               className="inputStyles"
               type="text"
               name="subCategoryId"
