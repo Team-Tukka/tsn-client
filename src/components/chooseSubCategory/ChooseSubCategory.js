@@ -5,7 +5,7 @@ import './ChooseSubCategory.css';
 // Importér Reactstrap komponenter
 import { Container, Row, CardDeck } from 'reactstrap';
 
-// Komponent der via sub-komponent renderer alle elscootere
+// Komponent der gør brug af SubCategories-komponentet
 function ChooseSubCategory() {
   return (
     <Container className="contentWrapper">
