@@ -5,7 +5,7 @@ import './ChooseSubCategory.css';
 // Importér Reactstrap komponenter
 import { Container, Row, CardDeck } from 'reactstrap';
 
-// Komponent der gør brug af SubCategories-komponentet
+// Komponent hvori SubCategories-komponentet renderes
 function ChooseSubCategory() {
   return (
     <Container className="contentWrapper">

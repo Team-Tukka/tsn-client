@@ -1,9 +1,9 @@
 import React from 'react';
+import dummyImgSparepart from '../../assets/images/dummyImgSparepart.png';
 import { useParams } from 'react-router';
 import { Link } from 'react-router-dom';
 import { useQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
-import dummyImgSparepart from '../../assets/images/dummyImgSparepart.png';
 
 // Importér Reactstrap komponenter
 import {
@@ -23,7 +23,7 @@ function Spareparts() {
   // Definér query til at hente en specifik reservedel ud fra en underkategori-id
   const GET_SPAREPARTS_BY_SUB_CATEGORY = gql`
     {
-        getSparepartsBySubCategory(subCategoryId: "${id}") {
+      getSparepartsBySubCategory(subCategoryId: "${id}") {
        _id
        itemNo
        name
@@ -38,8 +38,19 @@ function Spareparts() {
   // Anvend query
   const { loading, error, data } = useQuery(GET_SPAREPARTS_BY_SUB_CATEGORY);
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p> Error! </p>;
+  if (loading)
+    return (
+      <Col>
+        <p className="text-center m-3">Loading...</p>
+      </Col>
+    );
+  if (error)
+    return (
+      <Col>
+        <p className="text-center m-3">Error!</p>
+      </Col>
+    );
+
   return data.getSparepartsBySubCategory.map((sparepart, index) => {
     const { _id, itemNo, name, price, priceVAT } = sparepart;
     return (
@@ -49,14 +60,12 @@ function Spareparts() {
       >
         <Card className="mb-4 cardHover">
           <CardHeader className="veryLightGreenBg">{name}</CardHeader>
-          <Link to={`/showSparepart/${_id}`}>
-            <CardImg
-              width="100%"
-              className="p-2"
-              src={dummyImgSparepart}
-              alt="Splittegning"
-            />
-          </Link>
+          <CardImg
+            width="100%"
+            className="p-2"
+            src={dummyImgSparepart}
+            alt={name}
+          />
           <CardBody>
             <CardTitle>
               <small className="text-muted">{itemNo}</small>
@@ -76,4 +85,5 @@ function Spareparts() {
     );
   });
 }
+
 export default Spareparts;

@@ -20,16 +20,25 @@ function SubCategories() {
   `;
   const { loading, error, data } = useQuery(GET_SUB_CATEGORIES_BY_CATEGORY_ID);
 
-  if (loading) return <p className="text-center m-3">Loading...</p>;
-  if (error) return <p className="text-center m-3">Error!</p>;
+  if (loading)
+    return (
+      <Col>
+        <p className="text-center m-3">Loading...</p>
+      </Col>
+    );
+  if (error)
+    return (
+      <Col>
+        <p className="text-center m-3">Error!</p>
+      </Col>
+    );
 
   return data.getSubCategoriesByCategoryId.map(subCategory => {
     const { _id, name } = subCategory; // Destructuring
-
     return (
       <Col
         key={_id}
-        className="col-sm-6 col-md-4 my-3 col-lg-4 d-flex align-items-stretch "
+        className="col-sm-6 col-md-4 my-3 col-lg-4 d-flex align-items-stretch"
       >
         <Card>
           <Link to={`/showSubCategory/${_id}`} className="linkStyles">
