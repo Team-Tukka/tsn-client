@@ -37,8 +37,8 @@ export function GetSparepartById() {
         name
         price
         itemNo
-        scooterId
         categoryId
+        subCategoryId
       }
     }
   `;
@@ -54,8 +54,8 @@ export function GetSparepartById() {
   const spaName = data.getSparepartById.name;
   const spaPrice = data.getSparepartById.price;
   const spaItemNo = data.getSparepartById.itemNo;
-  const spaScooterId = data.getSparepartById.ScooterId;
   const spaCategoryId = data.getSparepartById.categoryId;
+  const spaSubCategoryId = data.getSparepartById.SubCategoryId;
 
   // Returnér 'EditSparepart' komponentet med konstanterne som props
   return (
@@ -64,8 +64,8 @@ export function GetSparepartById() {
       spaName={spaName}
       spaPrice={spaPrice}
       spaItemNo={spaItemNo}
-      spaScooterId={spaScooterId}
       spaCategoryId={spaCategoryId}
+      spaSubCategoryId={spaSubCategoryId}
     />
   );
 }
@@ -77,15 +77,15 @@ function EditSparepart(props) {
   const spaName = props.spaName;
   const spaPrice = props.spaPrice;
   const spaItemNo = props.spaItemNo;
-  const spaScooterId = props.spaScooterId;
   const spaCategoryId = props.spaCategoryId;
+  const spaSubCategoryId = props.spaSubCategoryId;
 
   // States med React Hooks
   const [name, setName] = useState(spaName);
   const [price, setPrice] = useState(spaPrice);
   const [itemNo, setItemNo] = useState(spaItemNo);
-  const [scooterId, setScooterId] = useState(spaScooterId);
   const [categoryId, setCategoryId] = useState(spaCategoryId);
+  const [subCategoryId, setSubCategoryId] = useState(spaSubCategoryId);
   const [alertStatus, setAlertStatus] = useState(false);
   const [modal, setModal] = useState(false);
 
@@ -93,7 +93,6 @@ function EditSparepart(props) {
   const [nameTooltipOpen, setNameTooltipOpen] = useState(false);
   const [itemNoTooltipOpen, setItemNoTooltipOpen] = useState(false);
   const [priceTooltipOpen, setPriceTooltipOpen] = useState(false);
-  const [scooterIdTooltipOpen, setScooterIdTooltipOpen] = useState(false);
 
   // Mutation til at opdatere en reservedel
   const UPDATE_SPAREPART_BY_ID = gql`
@@ -104,15 +103,15 @@ function EditSparepart(props) {
         name: "${name}"
         price: ${price}
         itemNo: "${itemNo}"
-        scooterId: "${scooterId}"
         categoryId: "${categoryId}"
+        subCategoryId: "${subCategoryId}"
         }
     ) {
        name
         price
         itemNo
          categoryId
-       scooterId
+       subCategoryId
       }
     }
   `;
@@ -142,7 +141,7 @@ function EditSparepart(props) {
           price: price,
           itemNo: itemNo,
           categoryId: categoryId,
-          scooterId: scooterId
+          subCategoryId: subCategoryId
         }
       });
       // Sæt 'alertStatus' til at være true (så den vises)
@@ -161,7 +160,6 @@ function EditSparepart(props) {
   const toggleName = () => setNameTooltipOpen(!nameTooltipOpen);
   const toggleItemNo = () => setItemNoTooltipOpen(!itemNoTooltipOpen);
   const togglePrice = () => setPriceTooltipOpen(!priceTooltipOpen);
-  const toggleScooterId = () => setScooterIdTooltipOpen(!scooterIdTooltipOpen);
 
   // Toggle modal vinduet til sletning
   const toggleModal = () => setModal(!modal);
@@ -301,40 +299,15 @@ function EditSparepart(props) {
         <FormGroup>
           <InputGroup>
             <Input
+              readOnly="readonly"
               className="inputStyles"
               type="text"
-              name="scooterId"
-              id="sparepartScooterId"
-              defaultValue={scooterId}
-              placeholder="Elscooter ID..."
-              onChange={event => setScooterId(event.target.value)}
+              name="categoryId"
+              id="sparepartCategoryId"
+              defaultValue={categoryId}
+              placeholder="Kategori ID"
+              onChange={event => setCategoryId(event.target.value)}
             />
-            <InputGroupAddon
-              addonType="append"
-              id="scooterIdTooltip"
-              style={{ marginLeft: '0.5rem' }}
-            >
-              <InputGroupText className="btnStyles">
-                <FontAwesomeIcon
-                  icon={faQuestionCircle}
-                  id="questionIcon"
-                ></FontAwesomeIcon>
-              </InputGroupText>
-            </InputGroupAddon>
-            <Tooltip
-              placement="top"
-              isOpen={scooterIdTooltipOpen}
-              target="scooterIdTooltip"
-              toggle={toggleScooterId}
-              style={{
-                padding: '0.5rem',
-                whiteSpace: 'nowrap',
-                minWidth: 'fit-content'
-              }}
-            >
-              Her indtaster du ID'et på den elscooter, reservedelen tilhører. Fx
-              125.
-            </Tooltip>
           </InputGroup>
         </FormGroup>
         <FormGroup>
@@ -343,11 +316,11 @@ function EditSparepart(props) {
               readOnly="readonly"
               className="inputStyles"
               type="text"
-              name="categoryId"
-              id="sparepartCategoryId"
-              defaultValue={categoryId}
-              placeholder="Kategori ID (Under udvikling)"
-              onChange={event => setCategoryId(event.target.value)}
+              name="subCategoryId"
+              id="sparepartSubCategoryId"
+              defaultValue={subCategoryId}
+              placeholder="Underkategori ID..."
+              onChange={event => setSubCategoryId(event.target.value)}
             />
           </InputGroup>
         </FormGroup>
