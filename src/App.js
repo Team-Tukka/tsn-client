@@ -17,12 +17,16 @@ import Textarea from './components/textarea/Textarea';
 import LoginForm from './components/loginForm/LoginForm';
 import Scooters from './components/scooters/Scooters';
 import ChooseModel from './components/chooseModel/ChooseModel';
+import ChooseSubCategory from './components/chooseSubCategory/ChooseSubCategory';
 import Contact from './components/contact/Contact';
+import ShowSubCategory from './components/showSubCategory/ShowSubCategory';
+import ShowSparepart from './components/showSparepart/ShowSparepart';
 import NotFound from './components/notFound/NotFound';
 
 // Importér egne komponenter med auth-beskyttelse
 import AdminNav from './components/adminNav/AdminNav';
 import Welcome from './components/welcome/Welcome';
+import Mail from './components/mails/Mail';
 import EditTextarea from './components/editTextarea/EditTextarea';
 import Products from './components/products/Products';
 import ShowScooter from './components/showScooter/ShowScooter';
@@ -59,7 +63,18 @@ function App() {
           <Route path="/login" exact component={LoginForm} />
           <Route path="/scooters" exact component={Scooters} />
           <Route path="/showScooter/:id" exact component={ShowScooter} />
-          <Route path="/spareparts" exact component={ChooseModel} />
+          <Route path="/chooseModel" exact component={ChooseModel} />
+          <Route
+            path="/chooseSubCategory/:id"
+            exact
+            component={ChooseSubCategory}
+          />      
+          <Route
+            path="/showSubCategory/:id"
+            exact
+            component={ShowSubCategory}
+          />
+          <Route path="/showSparepart/:id" exact component={ShowSparepart} />
           <Route path="/contact" exact component={Contact} />
           {/* Routes til adgangsbeskyttet indhold */}
           <Auth
@@ -67,6 +82,7 @@ function App() {
             render={() => (
               <Container className="contentWrapper">
                 <Welcome />
+                <Mail />
               </Container>
             )}
           />
