@@ -55,7 +55,7 @@ function ShowSpareparts() {
               width="100%"
               className="p-2"
               src={dummyImgSparepart}
-              alt="Splittening"
+              alt="Splittegning"
             />
           </Link>
           <CardBody>
