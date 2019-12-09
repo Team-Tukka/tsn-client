@@ -11,7 +11,7 @@ import { Container } from 'reactstrap';
 function ShowSparepart() {
   const { id } = useParams();
 
-  // Definér query til at hente en specific reservedel
+  // Definér query til at hente en specifik reservedel
   const GET_SPAREPART_BY_ID = gql`
     {
       getSparepartById(_id: "${id}") {
