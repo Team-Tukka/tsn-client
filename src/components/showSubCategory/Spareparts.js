@@ -3,7 +3,6 @@ import { useParams } from 'react-router';
 import { Link } from 'react-router-dom';
 import { useQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
-import './ShowSubCategory.css';
 import dummyImgSparepart from '../../assets/images/dummyImgSparepart.png';
 
 // Importér Reactstrap komponenter
