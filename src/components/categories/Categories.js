@@ -6,7 +6,7 @@ import EditSubCategory from './EditSubCategory';
 import './Categories.css';
 
 // Importér Reactstrap komponenter
-import { Table, Col, Row } from 'reactstrap';
+import { Col, Row } from 'reactstrap';
 
 // Komponent, der renderer alle kategorier i et table-view
 function Categories() {
