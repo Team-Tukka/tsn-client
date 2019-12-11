@@ -7,6 +7,8 @@ import client from '../../config/apolloClient';
 import { Form, InputGroup, FormGroup, Input, Button, Alert } from 'reactstrap';
 
 function AddNewCategory() {
+  /* Klientens cache ryddes, så vi er sikkre på, at den nye
+  kategori tilføjes, uden man behøver rerendere hele DOM'en */
   client.cache.reset();
 
   const [name, setName] = useState('');

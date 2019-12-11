@@ -8,7 +8,7 @@ import { Form, InputGroup, FormGroup, Input, Button, Alert } from 'reactstrap';
 
 function AddNewSubCategory() {
   /* Klientens cache ryddes, så vi er sikkre på, at den nye
-  elscooter tilføjes, uden man behøver rerendere hele DOM'en */
+  underkategori tilføjes, uden man behøver rerendere hele DOM'en */
   client.cache.reset();
 
   const [name, setName] = useState('');
