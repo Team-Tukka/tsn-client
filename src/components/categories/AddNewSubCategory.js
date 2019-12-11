@@ -111,11 +111,11 @@ function AddNewSubCategory() {
         </FormGroup>
         {/* Vis alert, hvis underkategorien oprettes korrekt */}
         {alertStatus === true && (
-          <Alert color="success">Underkategorien blev oprettet.</Alert>
+          <Alert color="success">Splittegningen blev oprettet.</Alert>
         )}
         {/* Knap til at indsende indtastede data */}
         <Button type="submit" className="btnStyles">
-          Tilføj underkategori
+          Tilføj splittegning
         </Button>
       </Form>
     </React.Fragment>

@@ -43,7 +43,7 @@ function Categories() {
           <Row>
             <Col>
               <div className="flexElements">
-                <h3 className="mb-3">Tilføj underkategori</h3>
+                <h3 className="mb-3">Tilføj splittegning</h3>
               </div>
               <AddNewSubCategory />
             </Col>
