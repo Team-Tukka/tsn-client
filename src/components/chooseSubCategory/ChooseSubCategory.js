@@ -10,7 +10,7 @@ function ChooseSubCategory() {
   return (
     <Container className="contentWrapper">
       <h3 className="mb-3">Vælg splittegning</h3>
-      <ListGroup className="fadeIn">
+      <ListGroup className="fadeIn mb-3">
         <SubCategories />
       </ListGroup>
     </Container>

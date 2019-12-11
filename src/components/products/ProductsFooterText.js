@@ -6,8 +6,8 @@ function ProductsFooterText() {
   return (
     <React.Fragment>
       <p className="footerTextStyles">
-        Listen viser samtlige elscootere og reservedele i databasen. Mere info
-        findes ved at klikke på det enkelte produkt.
+        Listen viser samtlige elscootere og reservedele i databasen. Klik på det
+        enkelte produkt for at se mere info, redigere eller slette.
       </p>
     </React.Fragment>
   );
