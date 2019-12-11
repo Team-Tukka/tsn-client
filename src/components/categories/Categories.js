@@ -10,6 +10,9 @@ import { Col, Row } from 'reactstrap';
 
 // Komponent, der renderer alle kategorier i rækker og kolonner!
 function Categories() {
+  /* Klientens cache ryddes, så vi er sikkre på, at den nye
+  elscooter tilføjes, uden man behøver rerendere hele DOM'en */
+
   return (
     <React.Fragment>
       <Row>
