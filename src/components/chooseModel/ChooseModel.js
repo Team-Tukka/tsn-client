@@ -20,8 +20,9 @@ import {
   Button
 } from 'reactstrap';
 
-// Komponent der renderer modelvælger ifm. reservedele
+// Komponent der renderer kategorier (modelvælger) ifm. reservedele
 function ChooseModel() {
+  // Definér query til at hente kategorier ud fra ID'er
   const GET_CATEGORIES_BY_IDS = gql`
     {
       getCategoriesByIds(
@@ -36,6 +37,7 @@ function ChooseModel() {
     }
   `;
 
+  // Anvend query
   const { loading, error, data } = useQuery(GET_CATEGORIES_BY_IDS);
 
   if (loading) return <p className="text-center m-3">Loading...</p>;

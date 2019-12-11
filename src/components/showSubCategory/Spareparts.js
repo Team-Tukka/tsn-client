@@ -1,5 +1,5 @@
 import React from 'react';
-import dummyImgSparepart from '../../assets/images/dummyImgSparepart.png';
+import imgPlaceholder from '../../assets/images/sparepartImgPlaceholder.png';
 import { useParams } from 'react-router';
 import { Link } from 'react-router-dom';
 import { useQuery } from '@apollo/react-hooks';
@@ -20,7 +20,7 @@ import {
 function Spareparts() {
   const { id } = useParams();
 
-  // Definér query til at hente en specifik reservedel ud fra en underkategori-id
+  // Definér query til at hente reservedele ud fra en underkategoris ID
   const GET_SPAREPARTS_BY_SUB_CATEGORY = gql`
     {
       getSparepartsBySubCategory(subCategoryId: "${id}") {
@@ -51,39 +51,44 @@ function Spareparts() {
       </Col>
     );
 
-  return data.getSparepartsBySubCategory.map((sparepart, index) => {
-    const { _id, itemNo, name, price, priceVAT } = sparepart;
+  if (data.getSparepartsBySubCategory.length > 0) {
+    return data.getSparepartsBySubCategory.map((sparepart, index) => {
+      const { _id, itemNo, name, price, priceVAT } = sparepart;
+      return (
+        <Col
+          key={_id}
+          className="col-sm-6 col-md-4 col-lg-4 d-flex align-items-stretch"
+        >
+          <Card className="mb-4 cardHover">
+            <CardHeader className="veryLightGreenBg">{name}</CardHeader>
+            <CardImg width="100%" src={imgPlaceholder} alt="" />
+            <CardBody>
+              <CardTitle>
+                <small className="text-muted">{itemNo}</small>
+              </CardTitle>
+              <CardSubtitle>
+                <span className="priceGlow">{price} DKK</span>
+              </CardSubtitle>
+              <CardSubtitle className="priceVAT mb-4">
+                {priceVAT} DKK inkl. moms
+              </CardSubtitle>
+              <Link to={`/showSparepart/${_id}`}>
+                <Button className="btnStyles">Læs mere</Button>
+              </Link>
+            </CardBody>
+          </Card>
+        </Col>
+      );
+    });
+  } else {
     return (
-      <Col
-        key={_id}
-        className="col-sm-6 col-md-4 col-lg-4 d-flex align-items-stretch"
-      >
-        <Card className="mb-4 cardHover">
-          <CardHeader className="veryLightGreenBg">{name}</CardHeader>
-          <CardImg
-            width="100%"
-            className="p-2"
-            src={dummyImgSparepart}
-            alt={name}
-          />
-          <CardBody>
-            <CardTitle>
-              <small className="text-muted">{itemNo}</small>
-            </CardTitle>
-            <CardSubtitle>
-              <span className="priceGlow">{price} DKK</span>
-            </CardSubtitle>
-            <CardSubtitle className="priceVAT mb-4">
-              {priceVAT} DKK inkl. moms
-            </CardSubtitle>
-            <Link to={`/showSparepart/${_id}`}>
-              <Button className="btnStyles">Læs mere</Button>
-            </Link>
-          </CardBody>
-        </Card>
+      <Col>
+        <span className="text-center m-3 pb-4">
+          Der findes i øjeblikket ingen reservedele for denne splittegning.
+        </span>
       </Col>
     );
-  });
+  }
 }
 
 export default Spareparts;
