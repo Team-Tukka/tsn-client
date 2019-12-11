@@ -49,10 +49,10 @@ function ShowSparepart() {
               <b>Enhedsnummer:</b> {spaItemNo}
             </li>
             <li>
-              <b>Kategori:</b> {spaCategoryId}
+              <b>Kategori/model:</b> {spaCategoryId}
             </li>
             <li className="mb-4">
-              <b>Underkategori:</b> {spaSubCategoryId}
+              <b>Underkategori/splittegning:</b> {spaSubCategoryId}
             </li>
             <li className="priceGlow">{spaPrice} DKK</li>
             <li className="priceVAT">{spaPriceVAT} DKK inkl. moms</li>
