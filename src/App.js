@@ -72,6 +72,15 @@ function App() {
             )}
           />
           <Auth
+            path="/welcome/:id"
+            render={() => (
+              <Container className="contentWrapper">
+                <Welcome />
+                <Mail />
+              </Container>
+            )}
+          />
+          <Auth
             path="/editTextarea"
             render={() => (
               <Container className="contentWrapper">

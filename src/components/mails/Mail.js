@@ -1,5 +1,6 @@
 import React from 'react';
 import { useQuery } from '@apollo/react-hooks';
+import { useParams } from 'react-router';
 import { gql } from 'apollo-boost';
 import Inbox from './Inbox';
 import Message from './Message';
