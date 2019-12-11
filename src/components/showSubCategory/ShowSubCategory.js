@@ -1,9 +1,9 @@
 import React from 'react';
+import Spareparts from './Spareparts.js';
 import { useParams } from 'react-router';
 import { useQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
 import './ShowSubCategory.css';
-import Spareparts from './Spareparts.js';
 import dummyImgDrawing from '../../assets/images/dummyImgDrawing.jpg';
 
 // Importér Reactstrap komponenter
@@ -27,14 +27,19 @@ function ShowSubCategory() {
   // Anvend query
   const { loading, error, data } = useQuery(GET_SUB_CATEGORY_BY_ID);
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p> Error! </p>;
+  if (loading) return <p className="text-center m-3">Loading...</p>;
+  if (error) return <p className="text-center m-3">Error!</p>;
 
   return (
     <Container className="contentWrapper">
       <h3>{data.getSubCategoryById.name}</h3>
-      <img src={dummyImgDrawing} width="100%" alt="Splittegning" />
-      <h3>Reservedele</h3>
+      <img
+        className="fadeIn"
+        src={dummyImgDrawing}
+        width="100%"
+        alt="Splittegning"
+      />
+      <h3 className="mb-3">Reservedele</h3>
       <Row>
         <CardDeck className="fadeIn">
           <Spareparts />
@@ -43,4 +48,5 @@ function ShowSubCategory() {
     </Container>
   );
 }
+
 export default ShowSubCategory;

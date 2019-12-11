@@ -5,10 +5,12 @@ import { useParams } from 'react-router';
 import { gql } from 'apollo-boost';
 
 // Importér Reactstrap komponenter
-import { Col, Card, CardHeader } from 'reactstrap';
+import { ListGroupItem } from 'reactstrap';
 
 function SubCategories() {
   const { id } = useParams();
+
+  // Definér query til at hente underkategorier ud fra kategoriens ID
   const GET_SUB_CATEGORIES_BY_CATEGORY_ID = gql`
     {
         getSubCategoriesByCategoryId(categoryId: "${id}") {
@@ -18,25 +20,22 @@ function SubCategories() {
       }
     }
   `;
+
+  // Anvend query
   const { loading, error, data } = useQuery(GET_SUB_CATEGORIES_BY_CATEGORY_ID);
 
   if (loading) return <p className="text-center m-3">Loading...</p>;
   if (error) return <p className="text-center m-3">Error!</p>;
 
+  // Returnér alle underkategorier (splittegninger)
   return data.getSubCategoriesByCategoryId.map(subCategory => {
     const { _id, name } = subCategory; // Destructuring
-
     return (
-      <Col
-        key={_id}
-        className="col-sm-6 col-md-4 my-3 col-lg-4 d-flex align-items-stretch "
-      >
-        <Card>
-          <Link to={`/showSubCategory/${_id}`} className="linkStyles">
-            <CardHeader className="veryLightGreenBg">{name}</CardHeader>
-          </Link>
-        </Card>
-      </Col>
+      <ListGroupItem key={_id} className="listGroupItem">
+        <Link to={`/showSubCategory/${_id}`} className="linkStyles">
+          {name}
+        </Link>
+      </ListGroupItem>
     );
   });
 }

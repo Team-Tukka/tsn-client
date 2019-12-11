@@ -1,0 +1,5 @@
+@import url("../../assets/css/globalStyles.css");
+
+.listGroupItem:hover {
+  background-color: #f6fdf2;
+}
