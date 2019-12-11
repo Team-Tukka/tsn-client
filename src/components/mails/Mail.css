@@ -3,7 +3,6 @@
 .mailContainer {
   border-style: solid;
   border-color: #e2eed8;
-  overflow: hidden;
   border-radius: 15px;
   position: relative;
 }
@@ -20,6 +19,10 @@
   border-bottom: 0.1rem;
   border-bottom-style: solid;
   border-color: #f6fdf2;
+}
+
+.mailLinks {
+  text-decoration: none !important;
 }
 
 .mailCol:hover {
@@ -57,4 +60,10 @@
   margin-bottom: 0;
   font-size: 0.9rem;
   color: #4b713d;
+}
+
+.fontAwesomeAtStyle {
+  color: #4b713d;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
 }

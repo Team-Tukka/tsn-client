@@ -4,9 +4,6 @@ import { Link } from 'react-router-dom';
 import { gql } from 'apollo-boost';
 import './Mail.css';
 
-// Importér Reactstrap komponenter
-import { Row } from 'reactstrap';
-
 // Komponent til indbakken med mails.
 function Inbox() {
   const GET_MAILS = gql`
@@ -32,11 +29,10 @@ function Inbox() {
   return data.getMails.map((mail, index) => {
     const { _id, firstName, lastName, title, message } = mail; // Destructuring
     return (
-      <Link to={`/welcome/${_id}`} className="linkStyles">
-        <div className="mailCol" key={_id}>
+      <Link to={`/mail/${_id}`} className="mailLinks" key={_id}>
+        <div className="mailCol">
           <h4 className="name">
-            {firstName}
-            {lastName} <small className="date">15:45</small>
+            {firstName} {lastName} <small className="date">15:45</small>
           </h4>
           <p className="subject">
             <strong>{title}</strong>
