@@ -18,17 +18,18 @@ function EditCategory() {
       }
     }
   `;
+  
   const UPDATE_CATEGORY_BY_ID = gql`
-  mutation {
-    updateCategoryById(
-      _id: "${inputId}"
-      input: {
-        name: "${inputName}"
+    mutation {
+      updateCategoryById(
+        _id: "${inputId}"
+        input: {
+          name: "${inputName}"
+        }
+      ){
+        name
       }
-    ){
-      name
     }
-  }
   `;
 
   const { loading, error, data } = useQuery(GET_CATEGORIES);
@@ -50,10 +51,11 @@ function EditCategory() {
             name: inputName
           }
         });
+        // Nulstil 'inputName'
         setInputName('');
         // Sæt 'alertStatus' til at være true (så den vises)
         setAlertStatus(true);
-        // Sæt 'alertStatus' til at være false efter 3 sekunder
+        // Sæt 'alertStatus' til at være false efter 3 sekunder (så den forsvinder)
         setTimeout(function() {
           setAlertStatus(false);
         }, 3000);
@@ -66,7 +68,7 @@ function EditCategory() {
       setInputId(_id);
     };
 
-    //Håndterer statens name
+    // Håndterer statens name
     const handleName = event => {
       event.preventDefault();
       if (inputId !== '' && inputName !== '' && inputId !== _id) {
@@ -91,7 +93,6 @@ function EditCategory() {
             placeholder="Navn..."
             onChange={handleName}
           />
-
           {/* Knap til at indsende indtastede data */}
           <Button type="submit" className="btnStylesCategory">
             Gem
