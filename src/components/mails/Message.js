@@ -14,6 +14,9 @@ import { faPhoneAlt } from '@fortawesome/free-solid-svg-icons';
 
 function Message() {
   const { id } = useParams();
+  
+  // States med React Hooks
+  const [modal, setModal] = useState(false);
 
   // Query til at hente en specifik mail ud fra ID
   const GET_MAIL_BY_ID = gql`
@@ -32,24 +35,20 @@ function Message() {
 
   // Mutation til at slette en mail
   const DELETE_MAIL_BY_ID = gql`
-mutation {
-  deleteMailById(_id: "${id}") {
-    _id
-  }
-}
-`;
-
+    mutation {
+      deleteMailById(_id: "${id}") {
+        _id
+      }
+    }
+  `;
+  
   // Anvend query & mutations
   const { loading, error, data } = useQuery(GET_MAIL_BY_ID);
   const [deleteMailById] = useMutation(DELETE_MAIL_BY_ID);
 
-  // States med React Hooks
-  const [modal, setModal] = useState(false);
-
   if (loading) return <p>Loading...</p>;
   if (error) return <p></p>;
 
-  // const mailId = data.getMailById._id;
   const mailFirstName = data.getMailById.firstName;
   const mailLastName = data.getMailById.lastName;
   const mailTitle = data.getMailById.title;
@@ -73,7 +72,6 @@ mutation {
         {mailFirstName} {mailLastName}
       </h4>
       <p>
-        {' '}
         <FontAwesomeIcon
           icon={faAt}
           className="fontAwesomeAtStyle"
@@ -85,9 +83,8 @@ mutation {
           icon={faPhoneAlt}
           className="fontAwesomeAtStyle"
         ></FontAwesomeIcon>
-        {mailPhone}{' '}
+        {mailPhone}
       </p>
-
       <Button onClick={toggleModal} className="dangerBtnStylesMail">
         Slet mailen
       </Button>
@@ -104,7 +101,7 @@ mutation {
         <ModalFooter>
           <Button color="danger" onClick={handleDelete}>
             Ja!
-          </Button>{' '}
+          </Button>
           <Button color="secondary" onClick={toggleModal}>
             Nej!
           </Button>
@@ -114,7 +111,6 @@ mutation {
       <p className="subject">
         <strong>{mailTitle}</strong>
       </p>
-
       <p>{mailMessage}</p>
     </div>
   );
