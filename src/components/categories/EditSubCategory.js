@@ -46,7 +46,7 @@ function EditSubCategory() {
   if (error) return <p>Error...</p>;
 
   return data.getSubCategories.map(subCategory => {
-    const { _id, name, categoryId, imagePath } = subCategory;
+    const { _id, name, categoryId, imagePath } = subCategory; //Destructoring
 
     const handleSubmit = event => {
       event.preventDefault();
@@ -67,13 +67,19 @@ function EditSubCategory() {
       setInputImagePath('');
       // Sæt 'alertStatus' til at være true (så den vises)
       setAlertStatus(true);
+      // Sæt 'alertStatus' til at være false efter 3 sekunder
+      setTimeout(function() {
+        setAlertStatus(false);
+      }, 3000);
     };
 
+    // Håndterer statens _id
     const handleId = event => {
       event.preventDefault();
       setInputId(_id);
     };
 
+    // Håndterer statens name
     const handleName = event => {
       event.preventDefault();
       if (
@@ -85,7 +91,6 @@ function EditSubCategory() {
       ) {
         document.getElementById(inputId).reset();
       }
-
       setInputName(event.target.value);
       if (inputCategoryId !== '' || inputId !== _id) {
         setInputCategoryId(categoryId);
@@ -94,7 +99,9 @@ function EditSubCategory() {
         setInputImagePath(imagePath);
       }
     };
-    const handleCategory = event => {
+
+    // Håndterer statens categoryId
+    const handleCategoryId = event => {
       event.preventDefault();
       if (
         inputId !== '' &&
@@ -113,6 +120,8 @@ function EditSubCategory() {
         setInputImagePath(imagePath);
       }
     };
+
+    // Håndterer statens imagePath
     const handleImagePath = event => {
       event.preventDefault();
       if (
@@ -132,6 +141,7 @@ function EditSubCategory() {
         setInputCategoryId(categoryId);
       }
     };
+
     return (
       <Form
         id={_id}
@@ -153,7 +163,7 @@ function EditSubCategory() {
             defaultValue={categoryId}
             id="subCategoryCategoryId"
             placeholder="Kategori ID..."
-            onChange={handleCategory}
+            onChange={handleCategoryId}
           />
           <Input
             className="inputStylesSubCategory"
@@ -162,7 +172,12 @@ function EditSubCategory() {
             placeholder="Billedesti..."
             onChange={handleImagePath}
           />
-
+          {/* Vis alert, hvis underkategorien opdateres korrekt */}
+          {alertStatus === true && inputId === _id && (
+            <Alert color="success" id={inputId}>
+              Underkategorien blev opdateret.
+            </Alert>
+          )}
           {/* Knap til at indsende indtastede data */}
           <Button type="submit" className="btnStylesSubCategory">
             Gem

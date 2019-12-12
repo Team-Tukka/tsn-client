@@ -38,7 +38,7 @@ function EditCategory() {
   if (error) return <p>Error...</p>;
 
   return data.getCategories.map(category => {
-    const { _id, name } = category;
+    const { _id, name } = category; //Destructoring
 
     const handleSubmit = event => {
       event.preventDefault();
@@ -53,20 +53,25 @@ function EditCategory() {
         setInputName('');
         // Sæt 'alertStatus' til at være true (så den vises)
         setAlertStatus(true);
+        // Sæt 'alertStatus' til at være false efter 3 sekunder
+        setTimeout(function() {
+          setAlertStatus(false);
+        }, 3000);
       }
     };
 
+    // Håndterer statens _id
     const handleId = event => {
       event.preventDefault();
       setInputId(_id);
     };
 
+    //Håndterer statens name
     const handleName = event => {
       event.preventDefault();
       if (inputId !== '' && inputName !== '' && inputId !== _id) {
         document.getElementById(inputId).reset();
       }
-
       setInputName(event.target.value);
     };
 
@@ -91,6 +96,12 @@ function EditCategory() {
           <Button type="submit" className="btnStylesCategory">
             Gem
           </Button>
+          {/* Vis alert, hvis kategorien opdateres korrekt */}
+          {alertStatus === true && inputId === _id && (
+            <Alert color="success" id={inputId}>
+              Kategorien blev opdateret.
+            </Alert>
+          )}
         </div>
       </Form>
     );
