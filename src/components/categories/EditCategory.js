@@ -1,11 +1,9 @@
-import React, { useState } from 'react';
-import { useParams } from 'react-router';
+import React, { useState, useEffect } from 'react';
 import { useMutation, useQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
 
 // Importér Reactstrap komponenter
-import { Form, Button, Alert } from 'reactstrap';
-import { access } from 'fs';
+import { Form, Button, Alert, Input } from 'reactstrap';
 
 function EditCategory() {
   const [inputId, setInputId] = useState('');
@@ -39,39 +37,58 @@ function EditCategory() {
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error...</p>;
 
-  const handleSubmit = event => {
-    console.log(inputName, inputId);
-    event.preventDefault();
-    if (inputName === '') {
-      alert('Du skal som minimum udfylde et navn på elscooteren!');
-    } else {
-      updateCategoryById({
-        variables: {
-          name: inputName
-        }
-      });
-      // Sæt 'alertStatus' til at være true (så den vises)
-      setAlertStatus(true);
-    }
-  };
   return data.getCategories.map(category => {
     const { _id, name } = category;
+
+    const handleSubmit = event => {
+      event.preventDefault();
+      if (inputName === '') {
+        alert('Du har ikke lavet nogle ændringer!');
+      } else {
+        updateCategoryById({
+          variables: {
+            name: inputName
+          }
+        });
+        setInputName('');
+        // Sæt 'alertStatus' til at være true (så den vises)
+        setAlertStatus(true);
+      }
+    };
+
+    const handleId = event => {
+      event.preventDefault();
+      setInputId(_id);
+    };
+
+    const handleName = event => {
+      event.preventDefault();
+      if (inputId !== '' && inputName !== '' && inputId !== _id) {
+        document.getElementById(inputId).reset();
+      }
+
+      setInputName(event.target.value);
+    };
+
     return (
       <Form
+        id={_id}
         className="form"
         onSubmit={handleSubmit}
         key={_id}
-        onChange={event => setInputId(_id)}
+        onChange={handleId}
       >
         <div>
-          <input
-            className="inputStyles"
+          <Input
+            className="inputStylesCategory"
             defaultValue={name}
-            onChange={event => setInputName(event.target.value)}
+            id="categoryName"
+            placeholder="Navn..."
+            onChange={handleName}
           />
 
           {/* Knap til at indsende indtastede data */}
-          <Button type="submit" className="btnStyles">
+          <Button type="submit" className="btnStylesCategory">
             Gem
           </Button>
         </div>

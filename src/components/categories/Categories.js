@@ -6,7 +6,7 @@ import EditSubCategory from './EditSubCategory';
 import './Categories.css';
 
 // Importér Reactstrap komponenter
-import { Table, Col, Row } from 'reactstrap';
+import { Col, Row } from 'reactstrap';
 
 // Komponent, der renderer alle kategorier i rækker og kolonner!
 function Categories() {
@@ -19,17 +19,14 @@ function Categories() {
               <div className="flexElements">
                 <h3 className="mb-3">Kategorier</h3>
               </div>
-              {/* <Table responsive borderless>
-                <tbody> */}
+
               <EditCategory />
-              {/* </tbody>
-              </Table> */}
             </Col>
           </Row>
           <Row>
             <Col>
               <div className="flexElements">
-                <h3 className="mb-3">Underkategorier</h3>
+                <h3 className="mb-3">Splittegninger</h3>
               </div>
               <EditSubCategory />
             </Col>
