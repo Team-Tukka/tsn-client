@@ -89,7 +89,7 @@ function App() {
           />
           <Auth
             path="/mail/:id"
-            children={() => (
+            render={() => (
               <Container className="contentWrapper">
                 <Welcome />
                 <Mail />
