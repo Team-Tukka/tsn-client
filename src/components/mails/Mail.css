@@ -61,7 +61,7 @@
 }
 
 .subject {
-  display: inline-block;
+  display: block;
   margin-bottom: 1rem;
   color: #4b713d;
 }
