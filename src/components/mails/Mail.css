@@ -10,15 +10,23 @@
   position: relative;
   transition: 0.3s;
   cursor: pointer;
-  border-right: 0.1rem;
-  border-right-style: solid;
   padding-right: 0.2rem;
-  padding-left: 1rem;
   padding-top: 0.2rem;
   padding-bottom: 1rem;
   border-bottom: 0.1rem;
   border-bottom-style: solid;
   border-color: #f6fdf2;
+}
+
+.dangerBtnStylesMail {
+  position: absolute;
+  right: 0.8rem;
+  top: 0.6rem;
+  color: #ffffff !important;
+  background-color: #fc4040 !important;
+  border: 1px #f0f6ea solid !important;
+  border-radius: 0.4rem !important;
+  box-shadow: 1px 1px 2px #ececec;
 }
 
 .mailLinks {
@@ -57,7 +65,6 @@
 }
 
 .description {
-  margin-bottom: 0;
   font-size: 0.9rem;
   color: #4b713d;
 }

@@ -1,9 +1,11 @@
-import React from 'react';
-import { useQuery } from '@apollo/react-hooks';
+import React, { useState } from 'react';
+import { useQuery, useMutation } from '@apollo/react-hooks';
 import { useParams } from 'react-router';
 import { gql } from 'apollo-boost';
-
 import './Mail.css';
+
+// Importér Reactstrap komponenter
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
 // Importér Font Awesome komponenter
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -12,6 +14,8 @@ import { faPhoneAlt } from '@fortawesome/free-solid-svg-icons';
 
 function Message() {
   const { id } = useParams();
+
+  // Query til at hente en specifik mail ud fra ID
   const GET_MAIL_BY_ID = gql`
     {
       getMailById(_id: "${id}") {
@@ -26,11 +30,23 @@ function Message() {
     }
   `;
 
-  // Anvend query
+  // Mutation til at slette en mail
+  const DELETE_MAIL_BY_ID = gql`
+mutation {
+  deleteMailById(_id: "${id}") {
+    _id
+  }
+}
+`;
+
+  // Anvend query & mutations
   const { loading, error, data } = useQuery(GET_MAIL_BY_ID);
+  const [deleteMailById] = useMutation(DELETE_MAIL_BY_ID);
+
+  // States med React Hooks
+  const [modal, setModal] = useState(false);
 
   if (loading) return <p>Loading...</p>;
-
   if (error) return <p></p>;
 
   // const mailId = data.getMailById._id;
@@ -41,7 +57,15 @@ function Message() {
   const mailPhone = data.getMailById.phone;
   const mailMessage = data.getMailById.message;
 
-  // Returnér nu alle props for hvert enkel scooter som en tabel-række
+  // Slet mailen for evigt
+  const handleDelete = () => {
+    setModal(!modal);
+    deleteMailById();
+    window.location.replace('/welcome');
+  };
+
+  // Toggle modal vinduet til sletning
+  const toggleModal = () => setModal(!modal);
 
   return (
     <div className="messageCon">
@@ -63,6 +87,29 @@ function Message() {
         ></FontAwesomeIcon>
         {mailPhone}{' '}
       </p>
+
+      <Button onClick={toggleModal} className="dangerBtnStylesMail">
+        Slet mailen
+      </Button>
+      {/* Modal vindue med mulighed for endegyldig sletning */}
+      <Modal isOpen={modal} toggle={toggleModal}>
+        <ModalHeader toggle={toggleModal}>
+          Du er ved at slette mailen!
+        </ModalHeader>
+        <ModalBody>
+          Det er ikke muligt at genskabe en slettet mail.
+          <br />
+          Er du sikker på, at du vil fortsætte?
+        </ModalBody>
+        <ModalFooter>
+          <Button color="danger" onClick={handleDelete}>
+            Ja!
+          </Button>{' '}
+          <Button color="secondary" onClick={toggleModal}>
+            Nej!
+          </Button>
+        </ModalFooter>
+      </Modal>
       <hr></hr>
       <p className="subject">
         <strong>{mailTitle}</strong>
