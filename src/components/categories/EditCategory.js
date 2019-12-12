@@ -35,9 +35,6 @@ function EditCategory() {
   const { loading, error, data } = useQuery(GET_CATEGORIES);
   const [updateCategoryById] = useMutation(UPDATE_CATEGORY_BY_ID);
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error...</p>;
-
   const handleSubmit = event => {
     event.preventDefault();
     if (inputName === '') {
@@ -57,6 +54,9 @@ function EditCategory() {
       }, 3000);
     }
   };
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error...</p>;
 
   return data.getCategories.map(category => {
     const { _id, name } = category; //Destructoring

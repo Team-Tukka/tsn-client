@@ -43,9 +43,6 @@ function EditSubCategory() {
   const { loading, error, data } = useQuery(GET_SUB_CATEGORIES);
   const [updateSubCategoryById] = useMutation(UPDATE_SUB_CATEGORY_BY_ID);
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error...</p>;
-
   const handleSubmit = event => {
     event.preventDefault();
     if (inputName === '') {
@@ -70,6 +67,9 @@ function EditSubCategory() {
       setAlertStatus(false);
     }, 3000);
   };
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error...</p>;
 
   return data.getSubCategories.map(subCategory => {
     const { _id, name, categoryId, imagePath } = subCategory; //Destructoring
