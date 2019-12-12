@@ -45,33 +45,33 @@ function EditSubCategory() {
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error...</p>;
 
+  const handleSubmit = event => {
+    event.preventDefault();
+    if (inputName === '') {
+      alert('Du skal som minimum udfylde et navn på underkategorien!');
+    } else {
+      updateSubCategoryById({
+        variables: {
+          name: inputName,
+          categoryId: inputCategoryId,
+          imagePath: inputImagePath
+        }
+      });
+    }
+
+    setInputName('');
+    setInputCategoryId('');
+    setInputImagePath('');
+    // Sæt 'alertStatus' til at være true (så den vises)
+    setAlertStatus(true);
+    // Sæt 'alertStatus' til at være false efter 3 sekunder
+    setTimeout(function() {
+      setAlertStatus(false);
+    }, 3000);
+  };
+
   return data.getSubCategories.map(subCategory => {
     const { _id, name, categoryId, imagePath } = subCategory; //Destructoring
-
-    const handleSubmit = event => {
-      event.preventDefault();
-      if (inputName === '') {
-        alert('Du skal som minimum udfylde et navn på underkategorien!');
-      } else {
-        updateSubCategoryById({
-          variables: {
-            name: inputName,
-            categoryId: inputCategoryId,
-            imagePath: inputImagePath
-          }
-        });
-      }
-
-      setInputName('');
-      setInputCategoryId('');
-      setInputImagePath('');
-      // Sæt 'alertStatus' til at være true (så den vises)
-      setAlertStatus(true);
-      // Sæt 'alertStatus' til at være false efter 3 sekunder
-      setTimeout(function() {
-        setAlertStatus(false);
-      }, 3000);
-    };
 
     // Håndterer statens _id
     const handleId = event => {

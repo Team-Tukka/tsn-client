@@ -37,28 +37,28 @@ function EditCategory() {
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error...</p>;
 
+  const handleSubmit = event => {
+    event.preventDefault();
+    if (inputName === '') {
+      alert('Du har ikke lavet nogle ændringer!');
+    } else {
+      updateCategoryById({
+        variables: {
+          name: inputName
+        }
+      });
+      setInputName('');
+      // Sæt 'alertStatus' til at være true (så den vises)
+      setAlertStatus(true);
+      // Sæt 'alertStatus' til at være false efter 3 sekunder
+      setTimeout(function() {
+        setAlertStatus(false);
+      }, 3000);
+    }
+  };
+
   return data.getCategories.map(category => {
     const { _id, name } = category; //Destructoring
-
-    const handleSubmit = event => {
-      event.preventDefault();
-      if (inputName === '') {
-        alert('Du har ikke lavet nogle ændringer!');
-      } else {
-        updateCategoryById({
-          variables: {
-            name: inputName
-          }
-        });
-        setInputName('');
-        // Sæt 'alertStatus' til at være true (så den vises)
-        setAlertStatus(true);
-        // Sæt 'alertStatus' til at være false efter 3 sekunder
-        setTimeout(function() {
-          setAlertStatus(false);
-        }, 3000);
-      }
-    };
 
     // Håndterer statens _id
     const handleId = event => {
