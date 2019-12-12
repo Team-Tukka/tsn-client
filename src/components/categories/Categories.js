@@ -19,7 +19,6 @@ function Categories() {
               <div className="flexElements">
                 <h3 className="mb-3">Kategorier</h3>
               </div>
-
               <EditCategory />
             </Col>
           </Row>
