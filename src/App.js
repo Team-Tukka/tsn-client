@@ -71,7 +71,6 @@ function App() {
               </Container>
             )}
           />
-
           <Auth
             path="/mail/:id"
             children={() => (
@@ -81,7 +80,6 @@ function App() {
               </Container>
             )}
           />
-
           <Auth
             path="/editTextarea"
             render={() => (
