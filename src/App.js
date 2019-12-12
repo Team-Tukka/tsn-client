@@ -17,7 +17,10 @@ import Textarea from './components/textarea/Textarea';
 import LoginForm from './components/loginForm/LoginForm';
 import Scooters from './components/scooters/Scooters';
 import ChooseModel from './components/chooseModel/ChooseModel';
+import ChooseSubCategory from './components/chooseSubCategory/ChooseSubCategory';
 import Contact from './components/contact/Contact';
+import ShowSubCategory from './components/showSubCategory/ShowSubCategory';
+import ShowSparepart from './components/showSparepart/ShowSparepart';
 import NotFound from './components/notFound/NotFound';
 
 // Importér egne komponenter med auth-beskyttelse
@@ -32,6 +35,7 @@ import { GetSparepartById } from './components/editSparepart/EditSparepart';
 import AddNewScooter from './components/addNewScooter/AddNewScooter';
 import AddNewSparepart from './components/addNewSparepart/AddNewSparepart';
 import AddNewUser from './components/addNewUser/AddNewUser';
+import Categories from './components/categories/Categories';
 
 // App komponentet indeholder den samlede app, der renderes i index.js
 function App() {
@@ -59,7 +63,19 @@ function App() {
           <Route path="/" exact component={Textarea} />
           <Route path="/login" exact component={LoginForm} />
           <Route path="/scooters" exact component={Scooters} />
-          <Route path="/spareparts" exact component={ChooseModel} />
+          <Route path="/showScooter/:id" exact component={ShowScooter} />
+          <Route path="/chooseModel" exact component={ChooseModel} />
+          <Route
+            path="/chooseSubCategory/:id"
+            exact
+            component={ChooseSubCategory}
+          />
+          <Route
+            path="/showSubCategory/:id"
+            exact
+            component={ShowSubCategory}
+          />
+          <Route path="/showSparepart/:id" exact component={ShowSparepart} />
           <Route path="/contact" exact component={Contact} />
           {/* Routes til adgangsbeskyttet indhold */}
           <Auth
@@ -93,14 +109,6 @@ function App() {
             render={() => (
               <Container className="contentWrapper">
                 <Products />
-              </Container>
-            )}
-          />
-          <Auth
-            path="/showScooter/:id"
-            render={() => (
-              <Container className="contentWrapper">
-                <ShowScooter />
               </Container>
             )}
           />
@@ -141,6 +149,14 @@ function App() {
             render={() => (
               <Container className="contentWrapper">
                 <AddNewUser />
+              </Container>
+            )}
+          />
+          <Auth
+            path="/categories"
+            render={() => (
+              <Container className="contentWrapper">
+                <Categories />
               </Container>
             )}
           />

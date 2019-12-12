@@ -42,7 +42,6 @@ export function GetScooterById() {
         description
         itemNo
         categoryId
-        subCategoryId
       }
     }
   `;
@@ -63,7 +62,6 @@ export function GetScooterById() {
   const scoDescription = data.getScooterById.description;
   const scoItemNo = data.getScooterById.itemNo;
   const scoCategoryId = data.getScooterById.categoryId;
-  const scoSubCategoryId = data.getScooterById.subCategoryId;
 
   // Returnér 'EditScooter' komponentet med konstanterne som props
   return (
@@ -77,7 +75,6 @@ export function GetScooterById() {
       scoDescription={scoDescription}
       scoItemNo={scoItemNo}
       scoCategoryId={scoCategoryId}
-      scoSubCategoryId={scoSubCategoryId}
     />
   );
 }
@@ -94,7 +91,6 @@ function EditScooter(props) {
   const scoDescription = props.scoDescription;
   const scoItemNo = props.scoItemNo;
   const scoCategoryId = props.scoCategoryId;
-  const scoSubCategoryId = props.scoSubCategoryId;
 
   // States med React Hooks
   const [name, setName] = useState(scoName);
@@ -105,7 +101,6 @@ function EditScooter(props) {
   const [description, setDescription] = useState(scoDescription);
   const [itemNo, setItemNo] = useState(scoItemNo);
   const [categoryId, setCategoryId] = useState(scoCategoryId);
-  const [subCategoryId, setSubCategoryId] = useState(scoSubCategoryId);
   const [alertStatus, setAlertStatus] = useState(false);
   const [modal, setModal] = useState(false);
 
@@ -132,7 +127,6 @@ function EditScooter(props) {
         description: "${description}"
         itemNo: "${itemNo}"
         categoryId: "${categoryId}"
-        subCategoryId: "${subCategoryId}"
         }
     ) {
        name
@@ -143,7 +137,6 @@ function EditScooter(props) {
         description
         itemNo
         categoryId
-        subCategoryId
       }
     }
   `;
@@ -176,8 +169,7 @@ function EditScooter(props) {
           brand: brand,
           description: description,
           itemNo: itemNo,
-          categoryId: categoryId,
-          subCategoryId: subCategoryId
+          categoryId: categoryId
         }
       });
       // Sæt 'alertStatus' til at være true (så den vises)
@@ -509,20 +501,7 @@ function EditScooter(props) {
             />
           </InputGroup>
         </FormGroup>
-        <FormGroup>
-          <InputGroup>
-            <Input
-              readOnly="readonly"
-              className="inputStyles"
-              type="text"
-              name="subCategoryId"
-              id="scooterSubCategoryId"
-              defaultValue={subCategoryId}
-              placeholder="Underkategori ID (Under udvikling)"
-              onChange={event => setSubCategoryId(event.target.value)}
-            />
-          </InputGroup>
-        </FormGroup>
+
         {/* Vis alert, hvis elscooteren opdateres korrekt */}
         {alertStatus === true && (
           <Alert color="success">Elscooteren blev opdateret.</Alert>

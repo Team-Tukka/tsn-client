@@ -33,15 +33,14 @@ function AddNewSparepart() {
   const [itemNo, setItemNo] = useState('');
   const [name, setName] = useState('');
   const [price, setPrice] = useState('');
-  const [scooterId, setScooterId] = useState('');
   const [categoryId, setCategoryId] = useState('');
+  const [subCategoryId, setSubCategoryId] = useState('');
   const [alertStatus, setAlertStatus] = useState(false);
 
   // States til tooltips
   const [itemNoTooltipOpen, setItemNoTooltipOpen] = useState(false);
   const [nameTooltipOpen, setNameTooltipOpen] = useState(false);
   const [priceTooltipOpen, setPriceTooltipOpen] = useState(false);
-  const [scooterIdTooltipOpen, setScooterIdTooltipOpen] = useState(false);
 
   // Definér mutation til at tilføje ny reservedel
   const ADD_SPAREPART = gql`
@@ -49,20 +48,20 @@ function AddNewSparepart() {
       $itemNo: String!
       $name: String!
       $price: Float!
-      $scooterId: String
       $categoryId: String
+      $subcategoryId: String
     ) {
       addSparepart(
         itemNo: $itemNo
         name: $name
         price: $price
-        scooterId: $scooterId
         categoryId: $categoryId
+        subCategoryId: $subCategoryId
       ) {
         itemNo
         name
         price
-        scooterId
+        subCategoryId
         categoryId
       }
     }
@@ -82,8 +81,8 @@ function AddNewSparepart() {
           itemNo: itemNo,
           name: name,
           price: price,
-          scooterId: scooterId,
-          categoryId: categoryId
+          categoryId: categoryId,
+          subCategoryId: subCategoryId
         }
       });
       // Sæt 'alertStatus' til at være true (så den vises)
@@ -92,8 +91,8 @@ function AddNewSparepart() {
       setItemNo('');
       setName('');
       setPrice('');
-      setScooterId('');
       setCategoryId('');
+      setSubCategoryId('');
       document.getElementById('sparepartPrice').value = '';
     }
   };
@@ -102,7 +101,6 @@ function AddNewSparepart() {
   const toggleItemNo = () => setItemNoTooltipOpen(!itemNoTooltipOpen);
   const toggleName = () => setNameTooltipOpen(!nameTooltipOpen);
   const togglePrice = () => setPriceTooltipOpen(!priceTooltipOpen);
-  const toggleScooterId = () => setScooterIdTooltipOpen(!scooterIdTooltipOpen);
 
   return (
     <React.Fragment>
@@ -237,45 +235,6 @@ function AddNewSparepart() {
         <FormGroup>
           <InputGroup>
             <Input
-              className="inputStyles"
-              type="text"
-              name="scooterId"
-              id="sparepartScooterId"
-              value={scooterId}
-              placeholder="Scooter ID"
-              onChange={event => setScooterId(event.target.value)}
-            />
-            <InputGroupAddon
-              addonType="append"
-              id="scooterIdTooltip"
-              style={{ marginLeft: '0.5rem' }}
-            >
-              <InputGroupText className="btnStyles">
-                <FontAwesomeIcon
-                  icon={faQuestionCircle}
-                  id="questionIcon"
-                ></FontAwesomeIcon>
-              </InputGroupText>
-            </InputGroupAddon>
-            <Tooltip
-              placement="top"
-              isOpen={scooterIdTooltipOpen}
-              target="scooterIdTooltip"
-              toggle={toggleScooterId}
-              style={{
-                padding: '0.5rem',
-                whiteSpace: 'nowrap',
-                minWidth: 'fit-content'
-              }}
-            >
-              Her indtaster du ID'et på den elscooter, reservedelen tilhører. Fx
-              125.
-            </Tooltip>
-          </InputGroup>
-        </FormGroup>
-        <FormGroup>
-          <InputGroup>
-            <Input
               readOnly="readonly"
               className="inputStyles"
               type="text"
@@ -284,6 +243,20 @@ function AddNewSparepart() {
               value={categoryId}
               placeholder="Kategori ID (Under udvikling)"
               onChange={event => setCategoryId(event.target.value)}
+            />
+          </InputGroup>
+        </FormGroup>
+        <FormGroup>
+          <InputGroup>
+            <Input
+              readOnly="readonly"
+              className="inputStyles"
+              type="text"
+              name="subCategoryId"
+              id="sparepartSubCategoryId"
+              value={subCategoryId}
+              placeholder="Underkateori ID"
+              onChange={event => setSubCategoryId(event.target.value)}
             />
           </InputGroup>
         </FormGroup>

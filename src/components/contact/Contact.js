@@ -54,11 +54,12 @@ function Contact() {
     }
   `;
 
+  // Anvend mutation
   const [addMail] = useMutation(ADD_MAIL);
 
+  // Bestem hvad der skal ske, når der submittes
   const handleSubmit = event => {
     event.preventDefault();
-
     addMail({
       variables: {
         firstName: firstName,
@@ -120,7 +121,7 @@ function Contact() {
                 required
                 className="inputStyles"
                 type="email"
-                placeholder="Indast din email adresse..."
+                placeholder="Indast din emailadresse..."
                 name="mail"
                 value={mail}
                 onChange={event => setMail(event.target.value)}
@@ -136,7 +137,7 @@ function Contact() {
                 pattern="^[0-9]*$"
                 maxLength="8"
                 minLength="8"
-                placeholder="Indtast dit mobil nummer..."
+                placeholder="Indtast dit mobilnummer..."
                 name="phone"
                 onChange={event => setPhone(parseInt(event.target.value))}
               />
@@ -171,12 +172,12 @@ function Contact() {
             />
           </Col>
         </FormGroup>
-        <Button type="submit" className="btnStyles">
-          Send besked
-        </Button>
         {alertStatus === true && (
           <Alert color="success">Beskeden er blevet sendt.</Alert>
         )}
+        <Button type="submit" className="btnStyles">
+          Send besked
+        </Button>
       </Form>
     </Container>
   );

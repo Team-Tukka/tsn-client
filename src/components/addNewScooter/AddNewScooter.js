@@ -38,7 +38,6 @@ function AddNewScooter() {
   const [description, setDescription] = useState('');
   const [itemNo, setItemNo] = useState('');
   const [categoryId, setCategoryId] = useState('');
-  const [subCategoryId, setSubCategoryId] = useState('');
   const [alertStatus, setAlertStatus] = useState(false);
 
   // States til tooltips
@@ -61,7 +60,6 @@ function AddNewScooter() {
       $description: String
       $itemNo: String!
       $categoryId: String
-      $subCategoryId: String
     ) {
       addScooter(
         name: $name
@@ -72,7 +70,6 @@ function AddNewScooter() {
         description: $description
         itemNo: $itemNo
         categoryId: $categoryId
-        subCategoryId: $subCategoryId
       ) {
         name
         price
@@ -82,7 +79,6 @@ function AddNewScooter() {
         description
         itemNo
         categoryId
-        subCategoryId
       }
     }
   `;
@@ -105,8 +101,7 @@ function AddNewScooter() {
           brand: brand,
           description: description,
           itemNo: itemNo,
-          categoryId: categoryId,
-          subCategoryId: subCategoryId
+          categoryId: categoryId
         }
       });
       // Sæt 'alertStatus' til at være true (så den vises)
@@ -120,7 +115,6 @@ function AddNewScooter() {
       setDescription('');
       setItemNo('');
       setCategoryId('');
-      setSubCategoryId('');
       document.getElementById('scooterPrice').value = '';
     }
   };
@@ -434,20 +428,6 @@ function AddNewScooter() {
               value={categoryId}
               placeholder="Kategori ID (Under udvikling)"
               onChange={event => setCategoryId(event.target.value)}
-            />
-          </InputGroup>
-        </FormGroup>
-        <FormGroup>
-          <InputGroup>
-            <Input
-              readOnly="readonly"
-              className="inputStyles"
-              type="text"
-              name="subCategoryId"
-              id="scooterSubCategoryId"
-              value={subCategoryId}
-              placeholder="Underkategori ID (Under udvikling)"
-              onChange={event => setSubCategoryId(event.target.value)}
             />
           </InputGroup>
         </FormGroup>
