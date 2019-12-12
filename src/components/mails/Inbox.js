@@ -25,7 +25,6 @@ function Inbox() {
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error!</p>;
 
-  // Returnér nu alle props for hvert enkel scooter som en tabel-række
   return data.getMails.map((mail, index) => {
     const { _id, firstName, lastName, title, message } = mail; // Destructuring
     return (
