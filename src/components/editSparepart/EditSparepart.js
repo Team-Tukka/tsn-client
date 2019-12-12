@@ -37,7 +37,6 @@ export function GetSparepartById() {
         name
         price
         itemNo
-        categoryId
         subCategoryId
       }
     }
@@ -54,8 +53,7 @@ export function GetSparepartById() {
   const spaName = data.getSparepartById.name;
   const spaPrice = data.getSparepartById.price;
   const spaItemNo = data.getSparepartById.itemNo;
-  const spaCategoryId = data.getSparepartById.categoryId;
-  const spaSubCategoryId = data.getSparepartById.SubCategoryId;
+  const spaSubCategoryId = data.getSparepartById.subCategoryId;
 
   // Returnér 'EditSparepart' komponentet med konstanterne som props
   return (
@@ -64,7 +62,6 @@ export function GetSparepartById() {
       spaName={spaName}
       spaPrice={spaPrice}
       spaItemNo={spaItemNo}
-      spaCategoryId={spaCategoryId}
       spaSubCategoryId={spaSubCategoryId}
     />
   );
@@ -77,15 +74,12 @@ function EditSparepart(props) {
   const spaName = props.spaName;
   const spaPrice = props.spaPrice;
   const spaItemNo = props.spaItemNo;
-  const spaCategoryId = props.spaCategoryId;
   const spaSubCategoryId = props.spaSubCategoryId;
 
   // States med React Hooks
   const [name, setName] = useState(spaName);
   const [price, setPrice] = useState(spaPrice);
   const [itemNo, setItemNo] = useState(spaItemNo);
-  const [categoryId, setCategoryId] = useState(spaCategoryId);
-  const [subCategoryId, setSubCategoryId] = useState(spaSubCategoryId);
   const [alertStatus, setAlertStatus] = useState(false);
   const [modal, setModal] = useState(false);
 
@@ -97,21 +91,17 @@ function EditSparepart(props) {
   // Mutation til at opdatere en reservedel
   const UPDATE_SPAREPART_BY_ID = gql`
     mutation { 
-        updateSparepartById(
-        _id: "${spaId}"
-        input: {
+      updateSparepartById(
+      _id: "${spaId}"
+      input: {
         name: "${name}"
         price: ${price}
         itemNo: "${itemNo}"
-        categoryId: "${categoryId}"
-        subCategoryId: "${subCategoryId}"
-        }
-    ) {
-       name
+      }
+      ){
+        name
         price
         itemNo
-         categoryId
-       subCategoryId
       }
     }
   `;
@@ -139,9 +129,7 @@ function EditSparepart(props) {
         variables: {
           name: name,
           price: price,
-          itemNo: itemNo,
-          categoryId: categoryId,
-          subCategoryId: subCategoryId
+          itemNo: itemNo
         }
       });
       // Sæt 'alertStatus' til at være true (så den vises)
@@ -296,34 +284,9 @@ function EditSparepart(props) {
             </FormText>
           )}
         </FormGroup>
-        <FormGroup>
-          <InputGroup>
-            <Input
-              readOnly="readonly"
-              className="inputStyles"
-              type="text"
-              name="categoryId"
-              id="sparepartCategoryId"
-              defaultValue={categoryId}
-              placeholder="Kategori ID"
-              onChange={event => setCategoryId(event.target.value)}
-            />
-          </InputGroup>
-        </FormGroup>
-        <FormGroup>
-          <InputGroup>
-            <Input
-              readOnly="readonly"
-              className="inputStyles"
-              type="text"
-              name="subCategoryId"
-              id="sparepartSubCategoryId"
-              defaultValue={subCategoryId}
-              placeholder="Underkategori ID..."
-              onChange={event => setSubCategoryId(event.target.value)}
-            />
-          </InputGroup>
-        </FormGroup>
+        <FormText color="muted" className="mb-3">
+          Oprettet under splittegningen: {spaSubCategoryId}
+        </FormText>
         {/* Vis alert, hvis reservedelen opdateres korrekt */}
         {alertStatus === true && (
           <Alert color="success">Reservedelen blev opdateret.</Alert>
@@ -349,7 +312,7 @@ function EditSparepart(props) {
           <ModalFooter>
             <Button color="danger" onClick={handleDelete}>
               Ja!
-            </Button>{' '}
+            </Button>
             <Button color="secondary" onClick={toggleModal}>
               Nej!
             </Button>

@@ -77,7 +77,7 @@ function Products() {
               <th className="font-weight-normal">Enhedsnavn</th>
               <th className="font-weight-normal">Pris u. moms</th>
               <th className="font-weight-normal">Pris m. moms</th>
-              <th className="font-weight-normal">Kategori</th>
+              <th className="font-weight-normal">Kategori/model</th>
             </tr>
           </thead>
           <tbody>

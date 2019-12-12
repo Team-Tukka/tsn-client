@@ -100,7 +100,6 @@ function EditScooter(props) {
   const [brand, setBrand] = useState(scoBrand);
   const [description, setDescription] = useState(scoDescription);
   const [itemNo, setItemNo] = useState(scoItemNo);
-  const [categoryId, setCategoryId] = useState(scoCategoryId);
   const [alertStatus, setAlertStatus] = useState(false);
   const [modal, setModal] = useState(false);
 
@@ -116,27 +115,25 @@ function EditScooter(props) {
   // Mutation til at opdatere en elscooter
   const UPDATE_SCOOTER_BY_ID = gql`
     mutation { 
-        updateScooterById(
+      updateScooterById(
         _id: "${scoId}"
         input: {
-        name: "${name}"
-        price: ${price}
-        sku: "${sku}"
-        tags: "${tags}"
-        brand: "${brand}"
-        description: "${description}"
-        itemNo: "${itemNo}"
-        categoryId: "${categoryId}"
+          name: "${name}"
+          price: ${price}
+          sku: "${sku}"
+          tags: "${tags}"
+          brand: "${brand}"
+          description: "${description}"
+          itemNo: "${itemNo}"
         }
-    ) {
-       name
+      ){
+        name
         price
         sku
         tags
         brand
         description
         itemNo
-        categoryId
       }
     }
   `;
@@ -168,8 +165,7 @@ function EditScooter(props) {
           tags: tags,
           brand: brand,
           description: description,
-          itemNo: itemNo,
-          categoryId: categoryId
+          itemNo: itemNo
         }
       });
       // Sæt 'alertStatus' til at være true (så den vises)
@@ -487,21 +483,9 @@ function EditScooter(props) {
             </Tooltip>
           </InputGroup>
         </FormGroup>
-        <FormGroup>
-          <InputGroup>
-            <Input
-              readOnly="readonly"
-              className="inputStyles"
-              type="text"
-              name="categoryId"
-              id="scooterCategoryId"
-              defaultValue={categoryId}
-              placeholder="Kategori ID (Under udvikling)"
-              onChange={event => setCategoryId(event.target.value)}
-            />
-          </InputGroup>
-        </FormGroup>
-
+        <FormText color="muted" className="mb-3">
+          Oprettet i kategorien: {scoCategoryId}
+        </FormText>
         {/* Vis alert, hvis elscooteren opdateres korrekt */}
         {alertStatus === true && (
           <Alert color="success">Elscooteren blev opdateret.</Alert>
@@ -527,7 +511,7 @@ function EditScooter(props) {
           <ModalFooter>
             <Button color="danger" onClick={handleDelete}>
               Ja!
-            </Button>{' '}
+            </Button>
             <Button color="secondary" onClick={toggleModal}>
               Nej!
             </Button>
