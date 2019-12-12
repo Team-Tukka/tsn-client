@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { gql } from 'apollo-boost';
 import './Mail.css';
 
-// Komponent til indbakken med mails.
+// Komponent der renderer indbakken med mails
 function Inbox() {
   const GET_MAILS = gql`
     {
@@ -22,6 +22,7 @@ function Inbox() {
 
   // Anvend query
   const { loading, error, data } = useQuery(GET_MAILS);
+  
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error!</p>;
 
@@ -43,4 +44,5 @@ function Inbox() {
     );
   });
 }
+
 export default Inbox;
