@@ -37,7 +37,6 @@ function Inbox() {
           <p className="subject">
             <strong>{title.slice(0, 38) + ''}</strong>
           </p>
-          <br></br>
           <span className="description">{message.slice(0, 30) + '...'}</span>
         </div>
       </Link>
