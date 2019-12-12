@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useMutation } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
 import client from '../../config/apolloClient';
+import GetSubCategories from '../categories/GetSubCategories';
 import './AddNewSparepart.css';
 
 // Importér Reactstrap komponenter
@@ -33,8 +34,6 @@ function AddNewSparepart() {
   const [itemNo, setItemNo] = useState('');
   const [name, setName] = useState('');
   const [price, setPrice] = useState('');
-  const [categoryId, setCategoryId] = useState('');
-  const [subCategoryId, setSubCategoryId] = useState('');
   const [alertStatus, setAlertStatus] = useState(false);
 
   // States til tooltips
@@ -48,21 +47,18 @@ function AddNewSparepart() {
       $itemNo: String!
       $name: String!
       $price: Float!
-      $categoryId: String
-      $subcategoryId: String
+      $subCategoryId: String
     ) {
       addSparepart(
         itemNo: $itemNo
         name: $name
         price: $price
-        categoryId: $categoryId
         subCategoryId: $subCategoryId
       ) {
         itemNo
         name
         price
         subCategoryId
-        categoryId
       }
     }
   `;
@@ -81,8 +77,7 @@ function AddNewSparepart() {
           itemNo: itemNo,
           name: name,
           price: price,
-          categoryId: categoryId,
-          subCategoryId: subCategoryId
+          subCategoryId: document.getElementById('chosenSubCategoryId').value
         }
       });
       // Sæt 'alertStatus' til at være true (så den vises)
@@ -91,9 +86,8 @@ function AddNewSparepart() {
       setItemNo('');
       setName('');
       setPrice('');
-      setCategoryId('');
-      setSubCategoryId('');
       document.getElementById('sparepartPrice').value = '';
+      document.getElementById('chosenSubCategoryId').value = '';
     }
   };
 
@@ -234,30 +228,7 @@ function AddNewSparepart() {
         </FormGroup>
         <FormGroup>
           <InputGroup>
-            <Input
-              readOnly="readonly"
-              className="inputStyles"
-              type="text"
-              name="categoryId"
-              id="sparepartCategoryId"
-              value={categoryId}
-              placeholder="Kategori ID (Under udvikling)"
-              onChange={event => setCategoryId(event.target.value)}
-            />
-          </InputGroup>
-        </FormGroup>
-        <FormGroup>
-          <InputGroup>
-            <Input
-              readOnly="readonly"
-              className="inputStyles"
-              type="text"
-              name="subCategoryId"
-              id="sparepartSubCategoryId"
-              value={subCategoryId}
-              placeholder="Underkateori ID"
-              onChange={event => setSubCategoryId(event.target.value)}
-            />
+            <GetSubCategories />
           </InputGroup>
         </FormGroup>
         {/* Vis alert, hvis elscooteren oprettes korrekt */}
