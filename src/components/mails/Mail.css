@@ -6,6 +6,7 @@
   border-radius: 15px;
   position: relative;
 }
+
 .mailCol {
   position: relative;
   transition: 0.3s;
@@ -36,6 +37,7 @@
 .mailCol:hover {
   background: #f6fdf2;
 }
+
 .mailCol:active {
   background: #fafafa;
 }
