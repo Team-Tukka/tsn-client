@@ -28,7 +28,7 @@ function ChooseModel() {
       getCategoriesByIds(
         input: [
           { _id: "5dea20b6452dd0511c74b87e" }
-          { _id: "5dea20a9452dd0511c74b87d" }
+          { _id: "5df2477a78d789095038b548" }
         ]
       ) {
         _id

@@ -5,8 +5,8 @@ import './Mail.css';
 
 /**
  * Dette komponent er et parent-komponent, som indeholder
- * to child komponenter; "Inbox" og "Message".
- * Inbox er det komponent som indeholder alle mails,
+ * to child komponenter kaldet "Inbox" og "Message".
+ * Inbox er det komponent, som indeholder alle mails.
  * Message indeholder beskeden fra den specifikke mail.
  **/
 

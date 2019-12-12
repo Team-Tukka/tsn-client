@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useMutation } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
 import client from '../../config/apolloClient';
+import GetCategories from '../categories/GetCategories';
 import './AddNewScooter.css';
 
 // Importér Reactstrap komponenter
@@ -37,7 +38,6 @@ function AddNewScooter() {
   const [brand, setBrand] = useState('');
   const [description, setDescription] = useState('');
   const [itemNo, setItemNo] = useState('');
-  const [categoryId, setCategoryId] = useState('');
   const [alertStatus, setAlertStatus] = useState(false);
 
   // States til tooltips
@@ -101,7 +101,7 @@ function AddNewScooter() {
           brand: brand,
           description: description,
           itemNo: itemNo,
-          categoryId: categoryId
+          categoryId: document.getElementById('chosenCategoryId').value
         }
       });
       // Sæt 'alertStatus' til at være true (så den vises)
@@ -114,8 +114,8 @@ function AddNewScooter() {
       setBrand('');
       setDescription('');
       setItemNo('');
-      setCategoryId('');
       document.getElementById('scooterPrice').value = '';
+      document.getElementById('chosenCategoryId').value = '';
     }
   };
 
@@ -419,16 +419,7 @@ function AddNewScooter() {
         </FormGroup>
         <FormGroup>
           <InputGroup>
-            <Input
-              readOnly="readonly"
-              className="inputStyles"
-              type="text"
-              name="categoryId"
-              id="scooterCategoryId"
-              value={categoryId}
-              placeholder="Kategori ID (Under udvikling)"
-              onChange={event => setCategoryId(event.target.value)}
-            />
+            <GetCategories />
           </InputGroup>
         </FormGroup>
         {/* Vis alert, hvis elscooteren oprettes korrekt */}
