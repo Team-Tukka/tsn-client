@@ -22,21 +22,22 @@ function EditSubCategory() {
       }
     }
   `;
+
   const UPDATE_SUB_CATEGORY_BY_ID = gql`
-  mutation {
-    updateSubCategoryById(
-      _id: "${inputId}"
-      input: {
-        name: "${inputName}"
-        categoryId: "${inputCategoryId}"
-        imagePath: "${inputImagePath}"
+    mutation {
+      updateSubCategoryById(
+        _id: "${inputId}"
+        input: {
+          name: "${inputName}"
+          categoryId: "${inputCategoryId}"
+          imagePath: "${inputImagePath}"
+        }
+      ){
+        name
+        categoryId
+        imagePath
       }
-    ){
-      name
-      categoryId
-      imagePath
     }
-  }
   `;
 
   const { loading, error, data } = useQuery(GET_SUB_CATEGORIES);

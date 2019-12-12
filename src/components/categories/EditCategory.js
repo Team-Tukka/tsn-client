@@ -18,17 +18,18 @@ function EditCategory() {
       }
     }
   `;
+  
   const UPDATE_CATEGORY_BY_ID = gql`
-  mutation {
-    updateCategoryById(
-      _id: "${inputId}"
-      input: {
-        name: "${inputName}"
+    mutation {
+      updateCategoryById(
+        _id: "${inputId}"
+        input: {
+          name: "${inputName}"
+        }
+      ){
+        name
       }
-    ){
-      name
     }
-  }
   `;
 
   const { loading, error, data } = useQuery(GET_CATEGORIES);
@@ -60,13 +61,37 @@ function EditCategory() {
   return data.getCategories.map(category => {
     const { _id, name } = category; //Destructoring
 
+<<<<<<< HEAD
+=======
+    const handleSubmit = event => {
+      event.preventDefault();
+      if (inputName === '') {
+        alert('Du har ikke lavet nogle ændringer!');
+      } else {
+        updateCategoryById({
+          variables: {
+            name: inputName
+          }
+        });
+        // Nulstil 'inputName'
+        setInputName('');
+        // Sæt 'alertStatus' til at være true (så den vises)
+        setAlertStatus(true);
+        // Sæt 'alertStatus' til at være false efter 3 sekunder (så den forsvinder)
+        setTimeout(function() {
+          setAlertStatus(false);
+        }, 3000);
+      }
+    };
+
+>>>>>>> 50e72337e40bb5a5e39910c2efe0b7fba6fb879d
     // Håndterer statens _id
     const handleId = event => {
       event.preventDefault();
       setInputId(_id);
     };
 
-    //Håndterer statens name
+    // Håndterer statens name
     const handleName = event => {
       event.preventDefault();
       if (inputId !== '' && inputName !== '' && inputId !== _id) {
@@ -91,7 +116,6 @@ function EditCategory() {
             placeholder="Navn..."
             onChange={handleName}
           />
-
           {/* Knap til at indsende indtastede data */}
           <Button type="submit" className="btnStylesCategory">
             Gem
