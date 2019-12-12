@@ -1,1 +1,78 @@
 @import url('../../assets/css/globalStyles.css');
+
+.mailContainer {
+  border-style: solid;
+  border-color: #e2eed8;
+  border-radius: 15px;
+  position: relative;
+}
+
+.mailCol {
+  position: relative;
+  transition: 0.3s;
+  cursor: pointer;
+  padding-right: 0.2rem;
+  padding-top: 0.2rem;
+  padding-bottom: 1rem;
+  border-bottom: 0.1rem;
+  border-bottom-style: solid;
+  border-color: #f6fdf2;
+}
+
+.dangerBtnStylesMail {
+  position: absolute;
+  right: 0.8rem;
+  top: 0.6rem;
+  color: #ffffff !important;
+  background-color: #fc4040 !important;
+  border: 1px #f0f6ea solid !important;
+  border-radius: 0.4rem !important;
+  box-shadow: 1px 1px 2px #ececec;
+}
+
+.mailLinks {
+  text-decoration: none !important;
+}
+
+.mailCol:hover {
+  background: #f6fdf2;
+}
+
+.mailCol:active {
+  background: #fafafa;
+}
+
+.name {
+  color: #373a3c;
+}
+
+.date {
+  position: absolute;
+  right: 0.8rem;
+  top: 0.6rem;
+  color: #4b713d;
+  font-size: 0.9rem;
+}
+
+@media only screen and (max-width: 968px) {
+  .date {
+    display: none;
+  }
+}
+
+.subject {
+  display: block;
+  margin-bottom: 1rem;
+  color: #4b713d;
+}
+
+.description {
+  font-size: 0.9rem;
+  color: #4b713d;
+}
+
+.fontAwesomeAtStyle {
+  color: #4b713d;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+}
