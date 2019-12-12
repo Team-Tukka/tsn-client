@@ -43,6 +43,7 @@ function EditSubCategory() {
   const { loading, error, data } = useQuery(GET_SUB_CATEGORIES);
   const [updateSubCategoryById] = useMutation(UPDATE_SUB_CATEGORY_BY_ID);
 
+  // Håndter indsendelse af data
   const handleSubmit = event => {
     event.preventDefault();
     if (inputName === '') {
@@ -56,13 +57,12 @@ function EditSubCategory() {
         }
       });
     }
-
     setInputName('');
     setInputCategoryId('');
     setInputImagePath('');
     // Sæt 'alertStatus' til at være true (så den vises)
     setAlertStatus(true);
-    // Sæt 'alertStatus' til at være false efter 3 sekunder
+    // Sæt 'alertStatus' til at være false efter 3 sekunder (så den forsvinder)
     setTimeout(function() {
       setAlertStatus(false);
     }, 3000);
@@ -72,7 +72,7 @@ function EditSubCategory() {
   if (error) return <p>Error...</p>;
 
   return data.getSubCategories.map(subCategory => {
-    const { _id, name, categoryId, imagePath } = subCategory; //Destructoring
+    const { _id, name, categoryId, imagePath } = subCategory; // Destructoring
 
     // Håndterer statens _id
     const handleId = event => {
