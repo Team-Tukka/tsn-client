@@ -35,6 +35,7 @@ function EditCategory() {
   const { loading, error, data } = useQuery(GET_CATEGORIES);
   const [updateCategoryById] = useMutation(UPDATE_CATEGORY_BY_ID);
 
+  // Håndter indsendelse af data
   const handleSubmit = event => {
     event.preventDefault();
     if (inputName === '') {
@@ -48,7 +49,7 @@ function EditCategory() {
       setInputName('');
       // Sæt 'alertStatus' til at være true (så den vises)
       setAlertStatus(true);
-      // Sæt 'alertStatus' til at være false efter 3 sekunder
+      // Sæt 'alertStatus' til at være false efter 3 sekunder (så den forsvinder)
       setTimeout(function() {
         setAlertStatus(false);
       }, 3000);
