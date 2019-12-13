@@ -5,7 +5,14 @@ import { gql } from 'apollo-boost';
 import './Mail.css';
 
 // Importér Reactstrap komponenter
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import {
+  Button,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  Alert
+} from 'reactstrap';
 
 // Importér Font Awesome komponenter
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -43,11 +50,22 @@ function Message() {
   `;
 
   // Anvend query & mutations
-  const { loading, error, data } = useQuery(GET_MAIL_BY_ID);
+  const { loading, error, data } = useQuery(GET_MAIL_BY_ID, {
+    errorPolicy: 'all'
+  });
   const [deleteMailById] = useMutation(DELETE_MAIL_BY_ID);
 
   if (loading) return <p>Loading...</p>;
-  if (error) return <p></p>;
+  if (error)
+    return (
+      <React.Fragment>
+        {error.graphQLErrors.map(({ message }, i) => (
+          <Alert color="danger" className="mt-3" key={i}>
+            {message}
+          </Alert>
+        ))}
+      </React.Fragment>
+    );
 
   const mailFirstName = data.getMailById.firstName;
   const mailLastName = data.getMailById.lastName;
