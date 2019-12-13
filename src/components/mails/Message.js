@@ -101,7 +101,8 @@ function Message() {
           icon={faPhoneAlt}
           className="fontAwesomeAtStyle"
         ></FontAwesomeIcon>
-        {mailPhone}
+        {mailPhone > 0 && mailPhone}
+        {mailPhone === null && <span>Intet nummer angivet.</span>}
       </p>
       <Button onClick={toggleModal} className="dangerBtnStylesMail">
         Slet mailen
