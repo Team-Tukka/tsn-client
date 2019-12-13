@@ -1,9 +1,9 @@
 import React from 'react';
+import GetSubCategoryById from '../categories/GetSubCategoryById';
 import { useParams } from 'react-router';
 import { useQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
 import './ShowSparepart.css';
-import GetSubCategoryById from '../categories/GetSubCategoryById';
 
 // Importér Reactstrap komponenter
 import { Container, Row, Col } from 'reactstrap';
