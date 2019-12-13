@@ -21,7 +21,7 @@ function Contact() {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [mail, setMail] = useState('');
-  const [phone, setPhone] = useState('');
+  const [phone, setPhone] = useState(parseInt(''));
   const [title, setTitle] = useState('');
   const [message, setMessage] = useState('');
   const [alertStatus, setAlertStatus] = useState(false);
@@ -66,7 +66,7 @@ function Contact() {
         firstName: firstName,
         lastName: lastName,
         email: mail,
-        phone: phone,
+        phone: parseInt(phone),
         title: title,
         message: message
       }

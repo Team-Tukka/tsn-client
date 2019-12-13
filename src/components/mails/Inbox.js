@@ -35,11 +35,11 @@ function Inbox() {
       return (
         <Link to={`/mail/${_id}`} className="mailLinks" key={_id}>
           <div className="mailCol">
-            <h4 className="name">
+            <h5 className="name">
               {firstName} {lastName}
               <small className="date">{created.slice(0, 5)}</small>
-            </h4>
-            <p className="subject">
+            </h5>
+            <p className="subject mb-2">
               <strong>{title.slice(0, 38)}</strong>
             </p>
             <span className="description">{message.slice(0, 30) + '...'}</span>

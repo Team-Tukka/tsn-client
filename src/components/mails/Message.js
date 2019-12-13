@@ -5,7 +5,14 @@ import { gql } from 'apollo-boost';
 import './Mail.css';
 
 // Importér Reactstrap komponenter
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import {
+  Button,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  Alert
+} from 'reactstrap';
 
 // Importér Font Awesome komponenter
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -14,7 +21,7 @@ import { faPhoneAlt } from '@fortawesome/free-solid-svg-icons';
 
 function Message() {
   const { id } = useParams();
-  
+
   // States med React Hooks
   const [modal, setModal] = useState(false);
 
@@ -41,13 +48,24 @@ function Message() {
       }
     }
   `;
-  
+
   // Anvend query & mutations
-  const { loading, error, data } = useQuery(GET_MAIL_BY_ID);
+  const { loading, error, data } = useQuery(GET_MAIL_BY_ID, {
+    errorPolicy: 'all'
+  });
   const [deleteMailById] = useMutation(DELETE_MAIL_BY_ID);
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p></p>;
+  if (loading) return <p className="mt-2">Loading...</p>;
+  if (error)
+    return (
+      <React.Fragment>
+        {error.graphQLErrors.map(({ message }, i) => (
+          <Alert color="danger" className="mt-3" key={i}>
+            {message}
+          </Alert>
+        ))}
+      </React.Fragment>
+    );
 
   const mailFirstName = data.getMailById.firstName;
   const mailLastName = data.getMailById.lastName;
@@ -67,10 +85,10 @@ function Message() {
   const toggleModal = () => setModal(!modal);
 
   return (
-    <div className="messageCon">
-      <h4 className="name">
+    <div className="messageCon fadeIn">
+      <h5 className="name">
         {mailFirstName} {mailLastName}
-      </h4>
+      </h5>
       <p>
         <FontAwesomeIcon
           icon={faAt}
@@ -83,10 +101,14 @@ function Message() {
           icon={faPhoneAlt}
           className="fontAwesomeAtStyle"
         ></FontAwesomeIcon>
-        {mailPhone}
+        {mailPhone > 0 && mailPhone}
+        {mailPhone === null && <span>Intet nummer angivet.</span>}
       </p>
       <Button onClick={toggleModal} className="dangerBtnStylesMail">
         Slet mailen
+      </Button>
+      <Button onClick={toggleModal} className="smallDangerBtnStylesMail">
+        X
       </Button>
       {/* Modal vindue med mulighed for endegyldig sletning */}
       <Modal isOpen={modal} toggle={toggleModal}>
