@@ -27,17 +27,23 @@ function SubCategories() {
   if (loading) return <p className="text-center m-3">Loading...</p>;
   if (error) return <p className="text-center m-3">Error!</p>;
 
-  // Returnér alle underkategorier (splittegninger)
-  return data.getSubCategoriesByCategoryId.map(subCategory => {
-    const { _id, name } = subCategory; // Destructuring
+  // Returnér alle underkategorier, hvis der findes nogen
+  if (data.getSubCategoriesByCategoryId.length > 0) {
+    return data.getSubCategoriesByCategoryId.map(subCategory => {
+      const { _id, name } = subCategory; // Destructuring
+      return (
+        <ListGroupItem key={_id} className="listGroupItem">
+          <Link to={`/showSubCategory/${_id}`} className="linkStyles">
+            {name}
+          </Link>
+        </ListGroupItem>
+      );
+    });
+  } else {
     return (
-      <ListGroupItem key={_id} className="listGroupItem">
-        <Link to={`/showSubCategory/${_id}`} className="linkStyles">
-          {name}
-        </Link>
-      </ListGroupItem>
+      <p>Der findes i øjeblikket ingen splittegninger for den valgte model.</p>
     );
-  });
+  }
 }
 
 export default SubCategories;

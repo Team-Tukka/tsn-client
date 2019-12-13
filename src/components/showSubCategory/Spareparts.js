@@ -51,6 +51,7 @@ function Spareparts() {
       </Col>
     );
 
+  // Returnér alle reservedele, hvis der findes nogen
   if (data.getSparepartsBySubCategory.length > 0) {
     return data.getSparepartsBySubCategory.map((sparepart, index) => {
       const { _id, itemNo, name, price, priceVAT } = sparepart;
