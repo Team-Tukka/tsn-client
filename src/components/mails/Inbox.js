@@ -36,11 +36,11 @@ function Inbox() {
         <Link to={`/mail/${_id}`} className="mailLinks" key={_id}>
           <div className="mailCol">
             <h4 className="name">
-              {firstName} {lastName}{' '}
+              {firstName} {lastName}
               <small className="date">{created.slice(0, 5)}</small>
             </h4>
             <p className="subject">
-              <strong>{title.slice(0, 38) + ''}</strong>
+              <strong>{title.slice(0, 38)}</strong>
             </p>
             <span className="description">{message.slice(0, 30) + '...'}</span>
           </div>
