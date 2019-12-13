@@ -4,6 +4,7 @@ import { useQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
 import dummyImgScooter from '../../assets/images/dummyImgScooter.png';
 import './ShowScooter.css';
+import GetCategoryById from '../categories/GetCategoryById';
 
 // Importér Reactstrap komponenter
 import { Container, Row, Col } from 'reactstrap';
@@ -77,7 +78,7 @@ function ShowScooter() {
               <b>SKU:</b> {scoSku}
             </li>
             <li>
-              <b>Kategori:</b> {scoCategoryId}
+              <b>Kategori:</b> <GetCategoryById categoryId={scoCategoryId} />
             </li>
             <li className="my-4">{scoDescription}</li>
             <li className="priceGlow">{scoPrice} DKK</li>

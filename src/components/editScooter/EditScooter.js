@@ -3,6 +3,7 @@ import { useParams } from 'react-router';
 import { useMutation, useQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
 import './EditScooter.css';
+import GetCategoryById from '../categories/GetCategoryById';
 
 // Importér Reactstrap komponenter
 import {
@@ -484,7 +485,7 @@ function EditScooter(props) {
           </InputGroup>
         </FormGroup>
         <FormText color="muted" className="mb-3">
-          Oprettet i kategorien: {scoCategoryId}
+          Oprettet i kategorien: <GetCategoryById categoryId={scoCategoryId} />
         </FormText>
         {/* Vis alert, hvis elscooteren opdateres korrekt */}
         {alertStatus === true && (

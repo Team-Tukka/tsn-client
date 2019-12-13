@@ -3,6 +3,7 @@ import { useParams } from 'react-router';
 import { useMutation, useQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
 import './EditSparepart.css';
+import GetSubCategoryById from '../categories/GetSubCategoryById';
 
 // Importér Reactstrap komponenter
 import {
@@ -285,7 +286,8 @@ function EditSparepart(props) {
           )}
         </FormGroup>
         <FormText color="muted" className="mb-3">
-          Oprettet under splittegningen: {spaSubCategoryId}
+          Oprettet under splittegningen:{' '}
+          <GetSubCategoryById subCategoryId={spaSubCategoryId} />
         </FormText>
         {/* Vis alert, hvis reservedelen opdateres korrekt */}
         {alertStatus === true && (
