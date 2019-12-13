@@ -1,4 +1,5 @@
 import React from 'react';
+import GetCategoryById from '../categories/GetCategoryById';
 import { useParams } from 'react-router';
 import { useQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
@@ -77,7 +78,7 @@ function ShowScooter() {
               <b>SKU:</b> {scoSku}
             </li>
             <li>
-              <b>Kategori:</b> {scoCategoryId}
+              <b>Kategori:</b> <GetCategoryById categoryId={scoCategoryId} />
             </li>
             <li className="my-4">{scoDescription}</li>
             <li className="priceGlow">{scoPrice} DKK</li>

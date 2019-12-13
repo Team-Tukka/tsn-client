@@ -1,4 +1,5 @@
 import React from 'react';
+import GetSubCategoryById from '../categories/GetSubCategoryById';
 import { useParams } from 'react-router';
 import { useQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
@@ -19,7 +20,6 @@ function ShowSparepart() {
         name,
         price,
         priceVAT,
-        categoryId,
         subCategoryId
       }
     }
@@ -36,7 +36,6 @@ function ShowSparepart() {
   const spaPrice = data.getSparepartById.price;
   const spaPriceVAT = data.getSparepartById.priceVAT;
   const spaItemNo = data.getSparepartById.itemNo;
-  const spaCategoryId = data.getSparepartById.categoryId;
   const spaSubCategoryId = data.getSparepartById.subCategoryId;
 
   return (
@@ -48,11 +47,9 @@ function ShowSparepart() {
             <li>
               <b>Enhedsnummer:</b> {spaItemNo}
             </li>
-            <li>
-              <b>Kategori/model:</b> {spaCategoryId}
-            </li>
             <li className="mb-4">
-              <b>Underkategori/splittegning:</b> {spaSubCategoryId}
+              <b>Underkategori/splittegning:</b>{' '}
+              <GetSubCategoryById subCategoryId={spaSubCategoryId} />
             </li>
             <li className="priceGlow">{spaPrice} DKK</li>
             <li className="priceVAT">{spaPriceVAT} DKK inkl. moms</li>

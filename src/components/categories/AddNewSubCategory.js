@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useMutation } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
 import client from '../../config/apolloClient';
+import GetCategories from './GetCategories';
 
 // Importér Reactstrap komponenter
 import { Form, InputGroup, FormGroup, Input, Button, Alert } from 'reactstrap';
@@ -12,7 +13,6 @@ function AddNewSubCategory() {
   client.cache.reset();
 
   const [name, setName] = useState('');
-  const [categoryId, setCategoryId] = useState('');
   const [imagePath, setImagePath] = useState('');
   const [alertStatus, setAlertStatus] = useState(false);
 
@@ -46,7 +46,7 @@ function AddNewSubCategory() {
       addSubCategory({
         variables: {
           name: name,
-          categoryId: categoryId,
+          categoryId: document.getElementById('chosenCategoryId').value,
           imagePath: imagePath
         }
       });
@@ -54,7 +54,7 @@ function AddNewSubCategory() {
       setAlertStatus(true);
       // Clear feltet, så der kan indtastes nye oplysninger
       setName('');
-      setCategoryId('');
+      document.getElementById('chosenCategoryId').value = '';
       setImagePath('');
     }
   };
@@ -80,18 +80,7 @@ function AddNewSubCategory() {
         </FormGroup>
         <FormGroup>
           <InputGroup>
-            <Input
-              required
-              className="inputStyles"
-              type="text"
-              name="categoryId"
-              id="subCategoryCategoryId"
-              minLength="1"
-              maxLength="50"
-              value={categoryId}
-              placeholder="Kategori ID..."
-              onChange={event => setCategoryId(event.target.value)}
-            />
+            <GetCategories />
           </InputGroup>
         </FormGroup>
         <FormGroup>

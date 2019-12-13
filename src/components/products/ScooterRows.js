@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
+import GetCategoryById from '../categories/GetCategoryById';
 
 function ScooterRows() {
   // Definér først query til at hente array med alle elscootere
@@ -61,7 +62,7 @@ function ScooterRows() {
         </td>
         <td>
           <Link to={`/editScooter/${_id}`} className="linkStyles">
-            {categoryId}
+            <GetCategoryById categoryId={categoryId} />
           </Link>
         </td>
       </tr>

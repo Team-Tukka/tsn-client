@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
 import dummyImgScooter from '../../assets/images/dummyImgScooter.png';
+import GetCategoryById from '../categories/GetCategoryById';
 
 // Importér Reactstrap komponenter
 import {
@@ -83,7 +84,7 @@ function ScooterCards() {
           <CardFooter className="veryLightGreenBg">
             Kategori:{' '}
             <Link to="#" className="linkStyles">
-              {categoryId}
+              <GetCategoryById categoryId={categoryId} />
             </Link>
           </CardFooter>
         </Card>
