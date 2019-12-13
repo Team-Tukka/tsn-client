@@ -20,7 +20,7 @@ function Mail() {
         <Col className="tableScrollView" xs="4">
           <Inbox />
         </Col>
-        <Col>
+        <Col className="tableScrollView">
           <Message />
         </Col>
       </Row>

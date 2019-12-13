@@ -14,7 +14,7 @@ import { faPhoneAlt } from '@fortawesome/free-solid-svg-icons';
 
 function Message() {
   const { id } = useParams();
-  
+
   // States med React Hooks
   const [modal, setModal] = useState(false);
 
@@ -41,7 +41,7 @@ function Message() {
       }
     }
   `;
-  
+
   // Anvend query & mutations
   const { loading, error, data } = useQuery(GET_MAIL_BY_ID);
   const [deleteMailById] = useMutation(DELETE_MAIL_BY_ID);
@@ -68,9 +68,9 @@ function Message() {
 
   return (
     <div className="messageCon">
-      <h4 className="name">
+      <h5 className="name">
         {mailFirstName} {mailLastName}
-      </h4>
+      </h5>
       <p>
         <FontAwesomeIcon
           icon={faAt}
@@ -87,6 +87,9 @@ function Message() {
       </p>
       <Button onClick={toggleModal} className="dangerBtnStylesMail">
         Slet mailen
+      </Button>
+      <Button onClick={toggleModal} className="smallDangerBtnStylesMail">
+        X
       </Button>
       {/* Modal vindue med mulighed for endegyldig sletning */}
       <Modal isOpen={modal} toggle={toggleModal}>
