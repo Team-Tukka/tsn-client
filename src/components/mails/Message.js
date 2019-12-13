@@ -55,7 +55,7 @@ function Message() {
   });
   const [deleteMailById] = useMutation(DELETE_MAIL_BY_ID);
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <p className="mt-2">Loading...</p>;
   if (error)
     return (
       <React.Fragment>
@@ -85,7 +85,7 @@ function Message() {
   const toggleModal = () => setModal(!modal);
 
   return (
-    <div className="messageCon">
+    <div className="messageCon fadeIn">
       <h5 className="name">
         {mailFirstName} {mailLastName}
       </h5>
