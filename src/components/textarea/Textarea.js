@@ -35,9 +35,10 @@ function Textarea() {
       </Row>
       <Row>
         <Col md={10}>
-          <pre className="frontpageText">
-            {data.getTextareaById.text.replace(/<br\s*\/?>/gi, '\r\n')}
-          </pre>
+          <pre
+            className="frontpageText"
+            dangerouslySetInnerHTML={{ __html: data.getTextareaById.text }}
+          />
         </Col>
         <Col md={2}>
           <img src={cityElf} className="img-fluid mb-4" alt="City Elf" />
