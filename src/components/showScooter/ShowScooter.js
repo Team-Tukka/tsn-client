@@ -1,10 +1,10 @@
 import React from 'react';
+import GetCategoryById from '../categories/GetCategoryById';
 import { useParams } from 'react-router';
 import { useQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
 import dummyImgScooter from '../../assets/images/dummyImgScooter.png';
 import './ShowScooter.css';
-import GetCategoryById from '../categories/GetCategoryById';
 
 // Importér Reactstrap komponenter
 import { Container, Row, Col } from 'reactstrap';
