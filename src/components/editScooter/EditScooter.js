@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
+import GetCategoryById from '../categories/GetCategoryById';
 import { useParams } from 'react-router';
 import { useMutation, useQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
 import './EditScooter.css';
-import GetCategoryById from '../categories/GetCategoryById';
 
 // Importér Reactstrap komponenter
 import {
