@@ -60,7 +60,7 @@ function Spareparts() {
           key={_id}
           className="col-sm-6 col-md-4 col-lg-4 d-flex align-items-stretch"
         >
-          <Card className="mb-4 cardHover">
+          <Card className="mb-4 cardHover" style={{ minWidth: '21.5vw' }}>
             <CardHeader className="veryLightGreenBg">{name}</CardHeader>
             <CardImg width="100%" src={imgPlaceholder} alt="" />
             <CardBody>
