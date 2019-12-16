@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useMutation } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
 import client from '../../config/apolloClient';
+import s3 from '../../config/spacesConfig';
 import GetCategories from '../categories/GetCategories';
 import './AddNewScooter.css';
 
@@ -85,6 +86,52 @@ function AddNewScooter() {
 
   // Anvend mutation
   const [addScooter] = useMutation(ADD_SCOOTER);
+
+  // Håndter fejl ifm. billede
+  const handleImageError = () => {
+    console.log('Fejl!');
+  };
+
+  // Håndtér ændring af billede
+  const handleImageChange = event => {
+    var params = {
+      Body: 'The contents of the file',
+      Bucket: 'tukka',
+      Key: 'file.ext',
+      ACL: 'public-read'
+    };
+
+    s3.putObject(params, function(err, data) {
+      if (err) console.log(err, err.stack);
+      else console.log(data);
+    });
+
+    // if (event.target.files && event.target.files[0]) {
+    //   const blob = event.target.files[0];
+    //   const params = {
+    //     Body: blob,
+    //     Bucket: 'https://tukka.fra1.digitaloceanspaces.com',
+    //     Key: blob.name
+    //   };
+    //   // Uploader filen til DO Space
+    //   s3.putObject(params)
+    //     .on('build', request => {
+    //       request.httpRequest.headers.Host =
+    //         'https://tukka.fra1.digitaloceanspaces.com/';
+    //       request.httpRequest.headers['Content-Length'] = blob.size;
+    //       request.httpRequest.headers['Content-Type'] = blob.type;
+    //       request.httpRequest.headers['x-amz-acl'] = 'public-read';
+    //     })
+    //     .send(err => {
+    //       if (err) handleImageError();
+    //       else {
+    //         const imageUrl =
+    //           'https://tukka.fra1.digitaloceanspaces.com/' + blob.name;
+    //         console.log(imageUrl);
+    //       }
+    //     });
+    // }
+  };
 
   // Håndtér indsendelse af elscooteroplysninger
   const handleSubmit = event => {
@@ -420,6 +467,17 @@ function AddNewScooter() {
         <FormGroup>
           <InputGroup>
             <GetCategories />
+          </InputGroup>
+        </FormGroup>
+        <FormGroup>
+          <InputGroup>
+            <Input
+              className="inputStyles p-2"
+              type="file"
+              id="inputfile"
+              accept=".txt"
+              onChange={handleImageChange}
+            />
           </InputGroup>
         </FormGroup>
         {/* Vis alert, hvis elscooteren oprettes korrekt */}
