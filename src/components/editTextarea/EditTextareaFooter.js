@@ -5,8 +5,8 @@ import './EditTextarea.css';
 function EditTextareaFooterText() {
   return (
     <p className="footerTextStyles">
-      Såfremt at der ændres i teksten, vil den ændrede tekst automatisk blive
-      gemt og vist på forsiden.
+      Såfremt at der ændres i teksten, vil ændringerne automatisk blive gemt og
+      vist på forsiden.
     </p>
   );
 }
