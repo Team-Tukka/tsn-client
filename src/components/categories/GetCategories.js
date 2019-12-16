@@ -6,7 +6,7 @@ import { gql } from 'apollo-boost';
 import { Input } from 'reactstrap';
 
 // Komponent, der renderer alle kategorier i databasen
-function GetCategories() {
+function GetCategories(props) {
   // Definér query til at hente alle kategorier
   const GET_CATEGORIES = gql`
     {
@@ -23,6 +23,11 @@ function GetCategories() {
   if (loading) return <p className="text-center m-3">Loading...</p>;
   if (error) return <p className="text-center m-3">Error!</p>;
 
+  // Funktion til at sende data til parent-komponent vha. props
+  const sendDate = event => {
+    props.parentCallback(event.target.value);
+  };
+
   // Returnerer et select-input med kategorierne som options
   return (
     <Input
@@ -31,6 +36,7 @@ function GetCategories() {
       type="select"
       name="selectCategory"
       id="chosenCategoryId"
+      onChange={sendDate}
     >
       <option value="" disabled selected>
         Vælg kategori...
