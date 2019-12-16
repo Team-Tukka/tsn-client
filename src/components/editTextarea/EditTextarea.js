@@ -55,7 +55,7 @@ function EditTextarea() {
       <Editor
         initialValue={data.getTextareaById.text}
         init={{
-          height: 500,
+          height: 470,
           menubar: false,
           plugins: [
             'advlist autolink lists link image charmap print preview anchor',
