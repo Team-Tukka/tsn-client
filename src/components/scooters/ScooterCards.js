@@ -74,7 +74,7 @@ function ScooterCards() {
             <CardSubtitle>
               <span className="priceGlow">{price} DKK</span>
             </CardSubtitle>
-            <CardSubtitle className="priceVAT mb-4">
+            <CardSubtitle className="priceVAT mb-3">
               {priceVAT} DKK inkl. moms
             </CardSubtitle>
             <Link to={`/showScooter/${_id}`}>
