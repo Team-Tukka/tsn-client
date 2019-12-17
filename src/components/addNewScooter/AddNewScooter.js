@@ -102,7 +102,7 @@ function AddNewScooter() {
       const blob = event.target.files[0];
       const params = {
         Body: blob,
-        Bucket: 'https://tukka.fra1.digitaloceanspaces.com',
+        Bucket: 'tukka',
         Key: blob.name
       };
       // Uploader filen til DO Space
