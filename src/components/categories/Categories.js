@@ -8,49 +8,43 @@ import './Categories.css';
 // Importér Reactstrap komponenter
 import { Col, Row } from 'reactstrap';
 
-// Komponent, der renderer alle kategorier i rækker og kolonner!
+/*
+  Parent Component, der indeholder Sub Components, som giver
+  mulighed for at tilføje og ændre kategorier samt tilføje og
+  ændre splittegninger (underkategorier)
+*/
 function Categories() {
   return (
-    <React.Fragment>
-      <Row>
-        <Col>
-          <Row>
-            <Col>
-              <div className="flexElements">
-                <h3 className="mb-3">Kategorier</h3>
-              </div>
-              <EditCategory />
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              <div className="flexElements">
-                <h3 className="mb-3">Splittegninger</h3>
-              </div>
-              <EditSubCategory />
-            </Col>
-          </Row>
-        </Col>
-        <Col>
-          <Row>
-            <Col>
-              <div className="flexElements">
-                <h3 className="mb-3">Tilføj kategori</h3>
-              </div>
-              <AddNewCategory />
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              <div className="flexElements">
-                <h3 className="mb-3">Tilføj splittegning</h3>
-              </div>
-              <AddNewSubCategory />
-            </Col>
-          </Row>
-        </Col>
-      </Row>
-    </React.Fragment>
+    <Row>
+      <Col>
+        <Row>
+          <Col>
+            <h3 className="mb-3">Kategorier</h3>
+            <EditCategory />
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <h3 className="mb-3">Splittegninger</h3>
+            <EditSubCategory />
+          </Col>
+        </Row>
+      </Col>
+      <Col>
+        <Row>
+          <Col>
+            <h3 className="mb-3">Tilføj kategori</h3>
+            <AddNewCategory />
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <h3 className="mb-3">Tilføj splittegning</h3>
+            <AddNewSubCategory />
+          </Col>
+        </Row>
+      </Col>
+    </Row>
   );
 }
 

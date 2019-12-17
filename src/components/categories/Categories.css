@@ -1,9 +1,4 @@
-@import url('../../assets/css/globalStyles.css');
-
-.flexElements {
-  display: flex;
-  justify-content: space-between;
-}
+@import url("../../assets/css/globalStyles.css");
 
 .fontAwesomeIconNavStyles {
   font-size: 1rem;
