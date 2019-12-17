@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { useMutation, useQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
+import GetCategories from './GetCategories.js';
+import GetCategoryName from './GetCategoryName.js';
 
 // Importér Reactstrap komponenter
-import { Form, Button, Alert, Input } from 'reactstrap';
+import { Form, Button, Alert, Input, Collapse } from 'reactstrap';
 
 function EditSubCategory() {
   const [inputId, setInputId] = useState('');
@@ -11,6 +13,7 @@ function EditSubCategory() {
   const [inputCategoryId, setInputCategoryId] = useState('');
   const [inputImagePath, setInputImagePath] = useState('');
   const [alertStatus, setAlertStatus] = useState(false);
+  const [categorySwitchOpen, setCategorySwitchOpen] = useState(false);
 
   const GET_SUB_CATEGORIES = gql`
     {
@@ -60,6 +63,7 @@ function EditSubCategory() {
     setInputName('');
     setInputCategoryId('');
     setInputImagePath('');
+    setCategorySwitchOpen(false);
     // Sæt 'alertStatus' til at være true (så den vises)
     setAlertStatus(true);
     // Sæt 'alertStatus' til at være false efter 3 sekunder (så den forsvinder)
@@ -73,7 +77,6 @@ function EditSubCategory() {
 
   return data.getSubCategories.map(subCategory => {
     const { _id, name, categoryId, imagePath } = subCategory; // Destructoring
-
     // Håndterer statens _id
     const handleId = event => {
       event.preventDefault();
@@ -102,8 +105,7 @@ function EditSubCategory() {
     };
 
     // Håndterer statens categoryId
-    const handleCategoryId = event => {
-      event.preventDefault();
+    const handleCategoryId = childData => {
       if (
         inputId !== '' &&
         inputName !== '' &&
@@ -113,7 +115,8 @@ function EditSubCategory() {
       ) {
         document.getElementById(inputId).reset();
       }
-      setInputCategoryId(event.target.value);
+      setInputCategoryId(childData);
+
       if (inputName === '' || inputId !== _id) {
         setInputName(name);
       }
@@ -142,6 +145,15 @@ function EditSubCategory() {
         setInputCategoryId(categoryId);
       }
     };
+    // Toggle til "skift kategori" - knap
+    const toggleCategory = () => {
+      setInputId(_id);
+      if (inputId === '' || inputId !== _id) {
+        setCategorySwitchOpen(true);
+      } else {
+        setCategorySwitchOpen(!categorySwitchOpen);
+      }
+    };
 
     return (
       <Form
@@ -151,39 +163,39 @@ function EditSubCategory() {
         key={_id}
         onChange={handleId}
       >
-        <div>
-          <Input
-            className="inputStylesSubCategory"
-            defaultValue={name}
-            id="subCategoryName"
-            placeholder="Navn..."
-            onChange={handleName}
-          />
-          <Input
-            className="inputStylesSubCategory"
-            defaultValue={categoryId}
-            id="subCategoryCategoryId"
-            placeholder="Kategori ID..."
-            onChange={handleCategoryId}
-          />
-          <Input
-            className="inputStylesSubCategory"
-            defaultValue={imagePath}
-            id="subCategoryImagePath"
-            placeholder="Billedesti..."
-            onChange={handleImagePath}
-          />
-          {/* Vis alert, hvis underkategorien opdateres korrekt */}
-          {alertStatus === true && inputId === _id && (
-            <Alert color="success" id={inputId}>
-              Underkategorien blev opdateret.
-            </Alert>
+        <Input
+          className="inputStylesSubCategory"
+          defaultValue={name}
+          id="subCategoryName"
+          placeholder="Navn..."
+          onChange={handleName}
+        />
+        <GetCategoryName categoryId={categoryId}></GetCategoryName>{' '}
+        <Button className="btnStylesCategory" onClick={toggleCategory}>
+          Skift kategori
+        </Button>
+        <Collapse isOpen={categorySwitchOpen}>
+          {inputId === _id && (
+            <GetCategories parentCallback={handleCategoryId}></GetCategories>
           )}
-          {/* Knap til at indsende indtastede data */}
-          <Button type="submit" className="btnStylesSubCategory">
-            Gem
-          </Button>
-        </div>
+        </Collapse>
+        <Input
+          className="my-2 inputStylesSubCategory "
+          defaultValue={imagePath}
+          id="subCategoryImagePath"
+          placeholder="Billedesti..."
+          onChange={handleImagePath}
+        />
+        {/* Vis alert, hvis underkategorien opdateres korrekt */}
+        {alertStatus === true && inputId === _id && (
+          <Alert color="success" id={inputId}>
+            Underkategorien blev opdateret.
+          </Alert>
+        )}
+        {/* Knap til at indsende indtastede data */}
+        <Button type="submit" className="btnStylesSubCategory">
+          Gem
+        </Button>
       </Form>
     );
   });
