@@ -124,7 +124,7 @@ function AddNewSubCategory() {
           <Alert color="success">Splittegningen blev oprettet.</Alert>
         )}
         {/* Knap til at indsende indtastede data */}
-        <Button type="submit" className="btnStyles">
+        <Button type="submit" className="btnStyles mb-5">
           Tilføj splittegning
         </Button>
       </Form>
