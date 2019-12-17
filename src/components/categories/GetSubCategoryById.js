@@ -9,8 +9,9 @@ function GetSubCategoryById(props) {
         name
         } 
     }
-`;
-  // Anvend Query
+  `;
+
+  // Anvend query
   const { loading, error, data } = useQuery(GET_SUB_CATEGORY_BY_ID);
 
   if (loading) return <p>Loading...</p>;
