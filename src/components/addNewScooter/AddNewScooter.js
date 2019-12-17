@@ -94,43 +94,31 @@ function AddNewScooter() {
 
   // Håndtér ændring af billede
   const handleImageChange = event => {
-    var params = {
-      Body: 'The contents of the file',
-      Bucket: 'tukka',
-      Key: 'file.ext',
-      ACL: 'public-read'
-    };
-
-    s3.putObject(params, function(err, data) {
-      if (err) console.log(err, err.stack);
-      else console.log(data);
-    });
-
-    // if (event.target.files && event.target.files[0]) {
-    //   const blob = event.target.files[0];
-    //   const params = {
-    //     Body: blob,
-    //     Bucket: 'https://tukka.fra1.digitaloceanspaces.com',
-    //     Key: blob.name
-    //   };
-    //   // Uploader filen til DO Space
-    //   s3.putObject(params)
-    //     .on('build', request => {
-    //       request.httpRequest.headers.Host =
-    //         'https://tukka.fra1.digitaloceanspaces.com/';
-    //       request.httpRequest.headers['Content-Length'] = blob.size;
-    //       request.httpRequest.headers['Content-Type'] = blob.type;
-    //       request.httpRequest.headers['x-amz-acl'] = 'public-read';
-    //     })
-    //     .send(err => {
-    //       if (err) handleImageError();
-    //       else {
-    //         const imageUrl =
-    //           'https://tukka.fra1.digitaloceanspaces.com/' + blob.name;
-    //         console.log(imageUrl);
-    //       }
-    //     });
-    // }
+    if (event.target.files && event.target.files[0]) {
+      const blob = event.target.files[0];
+      const params = {
+        Body: blob,
+        Bucket: 'https://tukka.fra1.digitaloceanspaces.com',
+        Key: blob.name
+      };
+      // Uploader filen til DO Space
+      s3.putObject(params)
+        .on('build', request => {
+          request.httpRequest.headers.Host =
+            'https://tukka.fra1.digitaloceanspaces.com/';
+          request.httpRequest.headers['Content-Length'] = blob.size;
+          request.httpRequest.headers['Content-Type'] = blob.type;
+          request.httpRequest.headers['x-amz-acl'] = 'public-read';
+        })
+        .send(err => {
+          if (err) handleImageError();
+          else {
+            const imageUrl =
+              'https://tukka.fra1.digitaloceanspaces.com/' + blob.name;
+            console.log(imageUrl);
+          }
+        });
+    }
   };
 
   // Håndtér indsendelse af elscooteroplysninger
