@@ -40,6 +40,7 @@ function AddNewScooter() {
   const [description, setDescription] = useState('');
   const [itemNo, setItemNo] = useState('');
   const [imagePath, setImagePath] = useState('');
+  const [imageFile, setImageFile] = useState('');
   const [alertStatus, setAlertStatus] = useState(false);
 
   // States til tooltips
@@ -99,7 +100,19 @@ function AddNewScooter() {
   // Håndtér ændring af billede
   const handleImageChange = event => {
     if (event.target.files && event.target.files[0]) {
-      const blob = event.target.files[0];
+      setImageFile(event.target.files);
+      const imageUrl =
+        'https://tukka.fra1.digitaloceanspaces.com/' +
+        event.target.files[0].name;
+      setImagePath(imageUrl);
+    }
+  };
+
+  // Håndtér indsendelse af elscooteroplysninger
+  const handleSubmit = event => {
+    event.preventDefault();
+    if (imageFile && imageFile[0]) {
+      const blob = imageFile[0];
       const params = {
         Body: blob,
         Bucket: 'tukka',
@@ -123,11 +136,6 @@ function AddNewScooter() {
           }
         });
     }
-  };
-
-  // Håndtér indsendelse af elscooteroplysninger
-  const handleSubmit = event => {
-    event.preventDefault();
     if (name === '') {
       alert('Du skal som minimum udfylde et navn på elscooteren!');
     } else {
