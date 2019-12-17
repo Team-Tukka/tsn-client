@@ -463,7 +463,7 @@ function AddNewScooter() {
               className="inputStyles p-2"
               type="file"
               id="inputfile"
-              accept=".txt"
+              accept="images/*"
               onChange={handleImageChange}
             />
           </InputGroup>
