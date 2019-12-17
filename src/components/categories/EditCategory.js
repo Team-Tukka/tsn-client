@@ -9,14 +9,17 @@ import {
   Alert,
   Input,
   InputGroup,
-  InputGroupAddon
+  InputGroupAddon,
+  InputGroupText
 } from 'reactstrap';
 
 function EditCategory() {
+  // States med React Hooks
   const [inputId, setInputId] = useState('');
   const [inputName, setInputName] = useState('');
   const [alertStatus, setAlertStatus] = useState(false);
 
+  // Defineret query
   const GET_CATEGORIES = gql`
     {
       getCategories {
@@ -26,6 +29,7 @@ function EditCategory() {
     }
   `;
 
+  // Defineret mutation
   const UPDATE_CATEGORY_BY_ID = gql`
     mutation {
       updateCategoryById(
@@ -39,6 +43,7 @@ function EditCategory() {
     }
   `;
 
+  // Anvend query og mutation
   const { loading, error, data } = useQuery(GET_CATEGORIES);
   const [updateCategoryById] = useMutation(UPDATE_CATEGORY_BY_ID);
 
@@ -46,7 +51,7 @@ function EditCategory() {
   const handleSubmit = event => {
     event.preventDefault();
     if (inputName === '') {
-      alert('Du har ikke lavet nogle ændringer!');
+      alert('Du skal udfylde/ændre navnet før du kan gemme!');
     } else {
       updateCategoryById({
         variables: {
@@ -93,8 +98,13 @@ function EditCategory() {
         onChange={handleId}
       >
         <InputGroup>
+          <InputGroupAddon className="mb-3" addonType="prepend">
+            <InputGroupText className="inputGroupTextStyles">
+              Navn
+            </InputGroupText>
+          </InputGroupAddon>
           <Input
-            className="inputStylesCategory"
+            className="inputStylesCategory mb-3"
             defaultValue={name}
             id="categoryName"
             placeholder="Navn på kategori..."
@@ -102,7 +112,7 @@ function EditCategory() {
           />
           <InputGroupAddon addonType="append">
             {/* Knap til at indsende indtastede data */}
-            <Button type="submit" className="btnStylesCategory">
+            <Button type="submit" className="btnStylesCategory mb-3">
               Gem
             </Button>
           </InputGroupAddon>
