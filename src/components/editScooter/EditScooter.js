@@ -43,6 +43,7 @@ export function GetScooterById() {
         description
         itemNo
         categoryId
+        imagePath
       }
     }
   `;
@@ -63,6 +64,7 @@ export function GetScooterById() {
   const scoDescription = data.getScooterById.description;
   const scoItemNo = data.getScooterById.itemNo;
   const scoCategoryId = data.getScooterById.categoryId;
+  const scoImagePath = data.getScooterById.imagePath;
 
   // Returnér 'EditScooter' komponentet med konstanterne som props
   return (
@@ -76,6 +78,7 @@ export function GetScooterById() {
       scoDescription={scoDescription}
       scoItemNo={scoItemNo}
       scoCategoryId={scoCategoryId}
+      scoImagePath={scoImagePath}
     />
   );
 }
@@ -92,6 +95,7 @@ function EditScooter(props) {
   const scoDescription = props.scoDescription;
   const scoItemNo = props.scoItemNo;
   const scoCategoryId = props.scoCategoryId;
+  const scoImagePath = props.scoImagePath;
 
   // States med React Hooks
   const [name, setName] = useState(scoName);
@@ -101,6 +105,7 @@ function EditScooter(props) {
   const [brand, setBrand] = useState(scoBrand);
   const [description, setDescription] = useState(scoDescription);
   const [itemNo, setItemNo] = useState(scoItemNo);
+  const [imagePath, setImagePath] = useState(scoImagePath);
   const [alertStatus, setAlertStatus] = useState(false);
   const [modal, setModal] = useState(false);
 
@@ -484,6 +489,11 @@ function EditScooter(props) {
             </Tooltip>
           </InputGroup>
         </FormGroup>
+        <img
+          style={{ display: 'block', maxWidth: '50vh' }}
+          src={imagePath}
+          alt={imagePath.slice(42)}
+        />
         <FormText color="muted" className="mb-3">
           Oprettet i kategorien: <GetCategoryById categoryId={scoCategoryId} />
         </FormText>
