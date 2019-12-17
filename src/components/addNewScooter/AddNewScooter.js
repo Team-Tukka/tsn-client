@@ -39,6 +39,7 @@ function AddNewScooter() {
   const [brand, setBrand] = useState('');
   const [description, setDescription] = useState('');
   const [itemNo, setItemNo] = useState('');
+  const [imagePath, setImagePath] = useState('');
   const [alertStatus, setAlertStatus] = useState(false);
 
   // States til tooltips
@@ -61,6 +62,7 @@ function AddNewScooter() {
       $description: String
       $itemNo: String!
       $categoryId: String
+      $imagePath: String!
     ) {
       addScooter(
         name: $name
@@ -71,6 +73,7 @@ function AddNewScooter() {
         description: $description
         itemNo: $itemNo
         categoryId: $categoryId
+        imagePath: $imagePath
       ) {
         name
         price
@@ -80,6 +83,7 @@ function AddNewScooter() {
         description
         itemNo
         categoryId
+        imagePath
       }
     }
   `;
@@ -115,7 +119,7 @@ function AddNewScooter() {
           else {
             const imageUrl =
               'https://tukka.fra1.digitaloceanspaces.com/' + blob.name;
-            console.log(imageUrl);
+            setImagePath(imageUrl);
           }
         });
     }
@@ -136,7 +140,8 @@ function AddNewScooter() {
           brand: brand,
           description: description,
           itemNo: itemNo,
-          categoryId: document.getElementById('chosenCategoryId').value
+          categoryId: document.getElementById('chosenCategoryId').value,
+          imagePath: imagePath
         }
       });
       // Sæt 'alertStatus' til at være true (så den vises)
@@ -149,6 +154,7 @@ function AddNewScooter() {
       setBrand('');
       setDescription('');
       setItemNo('');
+      setImagePath('');
       document.getElementById('scooterPrice').value = '';
       document.getElementById('chosenCategoryId').value = '';
     }
@@ -462,7 +468,7 @@ function AddNewScooter() {
             <Input
               className="inputStyles p-2"
               type="file"
-              id="inputfile"
+              id="scooterImagePath"
               accept="images/*"
               onChange={handleImageChange}
             />

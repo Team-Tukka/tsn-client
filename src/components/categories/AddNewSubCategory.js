@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useMutation } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
 import client from '../../config/apolloClient';
+import s3 from '../../config/spacesConfig';
 import GetCategories from './GetCategories';
 
 // Importér Reactstrap komponenter
@@ -36,6 +37,40 @@ function AddNewSubCategory() {
 
   // Anvend mutation
   const [addSubCategory] = useMutation(ADD_SUB_CATEGORY);
+
+  // Håndter fejl ifm. billede
+  const handleImageError = () => {
+    console.log('Fejl!');
+  };
+
+  // Håndtér ændring af billede
+  const handleImageChange = event => {
+    if (event.target.files && event.target.files[0]) {
+      const blob = event.target.files[0];
+      const params = {
+        Body: blob,
+        Bucket: 'https://tukka.fra1.digitaloceanspaces.com',
+        Key: blob.name
+      };
+      // Uploader filen til DO Space
+      s3.putObject(params)
+        .on('build', request => {
+          request.httpRequest.headers.Host =
+            'https://tukka.fra1.digitaloceanspaces.com/';
+          request.httpRequest.headers['Content-Length'] = blob.size;
+          request.httpRequest.headers['Content-Type'] = blob.type;
+          request.httpRequest.headers['x-amz-acl'] = 'public-read';
+        })
+        .send(err => {
+          if (err) handleImageError();
+          else {
+            const imageUrl =
+              'https://tukka.fra1.digitaloceanspaces.com/' + blob.name;
+            setImagePath(imageUrl);
+          }
+        });
+    }
+  };
 
   // Håndtér indsendelse af underkategoriens oplysninger
   const handleSubmit = event => {
@@ -86,15 +121,11 @@ function AddNewSubCategory() {
         <FormGroup>
           <InputGroup>
             <Input
-              className="inputStyles"
-              type="text"
-              name="imagePath"
-              id="subCategoryImagePath"
-              minLength="1"
-              maxLength="50"
-              value={imagePath}
-              placeholder="Billedesti..."
-              onChange={event => setImagePath(event.target.value)}
+              className="inputStyles p-2"
+              type="file"
+              id="scooterImagePath"
+              accept="images/*"
+              onChange={handleImageChange}
             />
           </InputGroup>
         </FormGroup>

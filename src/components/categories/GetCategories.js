@@ -25,7 +25,9 @@ function GetCategories(props) {
 
   // Funktion til at sende data til parent-komponent vha. props
   const sendDate = event => {
-    props.parentCallback(event.target.value);
+    if (props.parentCallback) {
+      props.parentCallback(event.target.value);
+    }
   };
 
   // Returnerer et select-input med kategorierne som options
