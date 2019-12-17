@@ -221,7 +221,7 @@ function EditSubCategory() {
             onChange={handleImagePath}
           />
         </InputGroup>
-        {/* Vis alert, hvis underkategorien opdateres korrekt */}
+        {/* Vis alert, hvis splittegningen opdateres korrekt */}
         {alertStatus === true && inputId === _id && (
           <Alert color="success" id={inputId}>
             Splittegningen blev opdateret.
