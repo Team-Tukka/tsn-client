@@ -111,6 +111,7 @@ function AddNewScooter() {
   // Håndtér indsendelse af elscooteroplysninger
   const handleSubmit = event => {
     event.preventDefault();
+    // Håndtér ændring af billede
     if (imageFile && imageFile[0]) {
       const blob = imageFile[0];
       const params = {
