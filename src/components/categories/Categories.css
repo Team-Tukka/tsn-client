@@ -1,5 +1,14 @@
 @import url("../../assets/css/globalStyles.css");
 
+.flexElements {
+  display: flex;
+  justify-content: space-between;
+}
+
+.showHideTextStyles {
+  font-size: 1rem;
+}
+
 .fontAwesomeIconNavStyles {
   font-size: 1rem;
   margin-right: 0.4rem;
