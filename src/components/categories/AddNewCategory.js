@@ -69,7 +69,6 @@ function AddNewCategory() {
               className="inputStylesCategory"
               type="text"
               name="name"
-              id="categoryName"
               minLength="1"
               maxLength="50"
               value={name}

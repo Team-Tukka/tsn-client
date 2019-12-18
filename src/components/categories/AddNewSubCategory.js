@@ -120,7 +120,6 @@ function AddNewSubCategory() {
               className="inputStylesCategory"
               type="text"
               name="name"
-              id="categoryName"
               minLength="1"
               maxLength="50"
               value={name}
@@ -136,13 +135,8 @@ function AddNewSubCategory() {
         </FormGroup>
         <FormGroup>
           <InputGroup>
-            <InputGroupAddon addonType="prepend">
-              <InputGroupText className="inputGroupTextStyles">
-                Billedsti
-              </InputGroupText>
-            </InputGroupAddon>
             <Input
-              className="inputStylesCategory"
+              className="inputStyles p-2"
               type="file"
               id="subCategoryImagePath"
               accept="images/*"

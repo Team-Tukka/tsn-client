@@ -187,7 +187,6 @@ function EditSubCategory() {
           <Input
             className="inputStylesSubCategory mb-3"
             defaultValue={name}
-            id="subCategoryName"
             placeholder="Navn på splittegning..."
             onChange={handleName}
           />
@@ -195,6 +194,7 @@ function EditSubCategory() {
         <GetCategoryName categoryId={categoryId}></GetCategoryName>
         <span className="mx-2">•</span>
         <Link
+          to="#"
           className="showHideTextStyles linkStyles"
           onClick={toggleCategory}
         >
@@ -216,7 +216,6 @@ function EditSubCategory() {
           <Input
             className="inputStylesSubCategory mt-2 mb-3"
             defaultValue={imagePath}
-            id="subCategoryImagePath"
             placeholder="Stien til billedet..."
             onChange={handleImagePath}
           />
