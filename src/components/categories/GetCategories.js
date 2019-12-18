@@ -46,6 +46,7 @@ function GetCategories() {
     </Input>
   );
 }
+
 // Komponent, der renderer alle kategorier i databasen
 export function GetCategoriesNotRequired(props) {
   // Definér query til at hente alle kategorier
