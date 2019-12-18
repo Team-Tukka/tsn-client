@@ -4,7 +4,6 @@ import { useParams } from 'react-router';
 import { useQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
 import './ShowSubCategory.css';
-import dummyImgDrawing from '../../assets/images/dummyImgDrawing.jpg';
 
 // Importér Reactstrap komponenter
 import { Container, Row, CardDeck } from 'reactstrap';
@@ -35,9 +34,12 @@ function ShowSubCategory() {
       <h3>{data.getSubCategoryById.name}</h3>
       <img
         className="fadeIn"
-        src={dummyImgDrawing}
+        src={data.getSubCategoryById.imagePath}
         width="100%"
-        alt="Splittegning"
+        alt={
+          data.getSubCategoryById.imagePath &&
+          data.getSubCategoryById.imagePath.slice(42)
+        }
       />
       <h3 className="mb-3">Reservedele</h3>
       <Row>

@@ -3,7 +3,6 @@ import GetCategoryById from '../categories/GetCategoryById';
 import { useParams } from 'react-router';
 import { useQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
-import dummyImgScooter from '../../assets/images/dummyImgScooter.png';
 import './ShowScooter.css';
 
 // Importér Reactstrap komponenter
@@ -26,6 +25,7 @@ function ShowScooter() {
         description
         itemNo
         categoryId
+        imagePath
       }
     }
   `;
@@ -46,6 +46,7 @@ function ShowScooter() {
   const scoDescription = data.getScooterById.description;
   const scoItemNo = data.getScooterById.itemNo;
   const scoCategoryId = data.getScooterById.categoryId;
+  const scoImagePath = data.getScooterById.imagePath;
 
   // Løber gennem alle tags og udskriver hvert enkelt som et list item
   const tagCloudItems = scoTagsArray.map(tag => (
@@ -61,8 +62,8 @@ function ShowScooter() {
         <Col lg="4" md="3" className="mb-4 mr-5">
           <img
             className="img-fluid"
-            src={dummyImgScooter}
-            alt={scoName}
+            src={scoImagePath}
+            alt={scoImagePath && scoImagePath.slice(42)}
             title={scoName}
           />
         </Col>

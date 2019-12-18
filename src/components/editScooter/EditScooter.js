@@ -3,6 +3,7 @@ import GetCategoryById from '../categories/GetCategoryById';
 import { useParams } from 'react-router';
 import { useMutation, useQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
+import s3 from '../../config/spacesConfig';
 import './EditScooter.css';
 
 // Importér Reactstrap komponenter
@@ -106,6 +107,7 @@ function EditScooter(props) {
   const [description, setDescription] = useState(scoDescription);
   const [itemNo, setItemNo] = useState(scoItemNo);
   const [imagePath, setImagePath] = useState(scoImagePath);
+  const [imageFile, setImageFile] = useState('');
   const [alertStatus, setAlertStatus] = useState(false);
   const [modal, setModal] = useState(false);
 
@@ -131,6 +133,7 @@ function EditScooter(props) {
           brand: "${brand}"
           description: "${description}"
           itemNo: "${itemNo}"
+          imagePath: "${imagePath}"
         }
       ){
         name
@@ -140,6 +143,7 @@ function EditScooter(props) {
         brand
         description
         itemNo
+        imagePath
       }
     }
   `;
@@ -157,25 +161,68 @@ function EditScooter(props) {
   const [updateScooterById] = useMutation(UPDATE_SCOOTER_BY_ID);
   const [deleteScooterById] = useMutation(DELETE_SCOOTER_BY_ID);
 
+  // Håndter fejl ifm. billede
+  const handleImageError = () => {
+    console.log('Fejl!');
+  };
+
+  // Håndtér ændring af billede
+  const handleImageChange = event => {
+    if (event.target.files && event.target.files[0]) {
+      setImageFile(event.target.files);
+      const imageUrl =
+        'https://tukka.fra1.digitaloceanspaces.com/' +
+        event.target.files[0].name;
+      setImagePath(imageUrl);
+    }
+  };
+
   // Håndtér indsendelse af redigerede elscooteroplysninger
   const handleSubmit = event => {
     event.preventDefault();
     if (name === '') {
       alert('Du skal som minimum udfylde et navn på elscooteren!');
     } else {
-      updateScooterById({
-        variables: {
-          name: name,
-          price: price,
-          sku: sku,
-          tags: tags,
-          brand: brand,
-          description: description,
-          itemNo: itemNo
-        }
-      });
-      // Sæt 'alertStatus' til at være true (så den vises)
-      setAlertStatus(true);
+      // Håndtér ændring af billede
+      if (imageFile && imageFile[0]) {
+        const blob = imageFile[0];
+        const params = {
+          Body: blob,
+          Bucket: 'tukka',
+          Key: blob.name
+        };
+        // Uploader filen til DO Space
+        s3.putObject(params)
+          .on('build', request => {
+            request.httpRequest.headers.Host =
+              'https://tukka.fra1.digitaloceanspaces.com/';
+            request.httpRequest.headers['Content-Length'] = blob.size;
+            request.httpRequest.headers['Content-Type'] = blob.type;
+            request.httpRequest.headers['x-amz-acl'] = 'public-read';
+          })
+          .send(err => {
+            if (err) handleImageError();
+            else {
+              const imageUrl =
+                'https://tukka.fra1.digitaloceanspaces.com/' + blob.name;
+              setImagePath(imageUrl);
+              updateScooterById({
+                variables: {
+                  name: name,
+                  price: price,
+                  sku: sku,
+                  tags: tags,
+                  brand: brand,
+                  description: description,
+                  itemNo: itemNo,
+                  imagePath: imagePath
+                }
+              });
+              // Sæt 'alertStatus' til at være true (så den vises)
+              setAlertStatus(true);
+            }
+          });
+      }
     }
   };
 
@@ -487,6 +534,18 @@ function EditScooter(props) {
               Her indtaster du en fyldestgørende beskrivelse af enheden. Max 200
               tegn.
             </Tooltip>
+          </InputGroup>
+        </FormGroup>
+        <FormGroup>
+          <InputGroup>
+            <Input
+              required
+              className="inputStyles p-2"
+              type="file"
+              id="scooterImagePath"
+              accept="images/*"
+              onChange={handleImageChange}
+            />
           </InputGroup>
         </FormGroup>
         <img
