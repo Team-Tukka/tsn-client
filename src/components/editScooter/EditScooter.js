@@ -492,7 +492,7 @@ function EditScooter(props) {
         <img
           style={{ display: 'block', maxWidth: '50vh' }}
           src={imagePath}
-          alt={imagePath.slice(42)}
+          alt={imagePath && imagePath.slice(42)}
         />
         <FormText color="muted" className="mb-3">
           Oprettet i kategorien: <GetCategoryById categoryId={scoCategoryId} />
