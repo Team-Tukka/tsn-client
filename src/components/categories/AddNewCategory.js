@@ -4,16 +4,27 @@ import { gql } from 'apollo-boost';
 import client from '../../config/apolloClient';
 
 // Importér Reactstrap komponenter
-import { Form, InputGroup, FormGroup, Input, Button, Alert } from 'reactstrap';
+import {
+  Form,
+  InputGroup,
+  FormGroup,
+  Input,
+  InputGroupAddon,
+  InputGroupText,
+  Button,
+  Alert
+} from 'reactstrap';
 
 function AddNewCategory() {
   /* Klientens cache ryddes, så vi er sikkre på, at den nye
   kategori tilføjes, uden man behøver rerendere hele DOM'en */
   client.cache.reset();
 
+  // States med React Hooks
   const [name, setName] = useState('');
   const [alertStatus, setAlertStatus] = useState(false);
 
+  // Defineret mutation
   const ADD_CATEGORY = gql`
     mutation addCategory($name: String!) {
       addCategory(name: $name) {
@@ -48,16 +59,21 @@ function AddNewCategory() {
       <Form className="form" onSubmit={handleSubmit}>
         <FormGroup>
           <InputGroup>
+            <InputGroupAddon addonType="prepend">
+              <InputGroupText className="inputGroupTextStyles">
+                Navn
+              </InputGroupText>
+            </InputGroupAddon>
             <Input
               required
-              className="inputStyles"
+              className="inputStylesCategory"
               type="text"
               name="name"
               id="categoryName"
               minLength="1"
               maxLength="50"
               value={name}
-              placeholder="Navn..."
+              placeholder="Navn på kategori..."
               onChange={event => setName(event.target.value)}
             />
           </InputGroup>

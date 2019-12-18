@@ -6,17 +6,28 @@ import s3 from '../../config/spacesConfig';
 import GetCategories from './GetCategories';
 
 // Importér Reactstrap komponenter
-import { Form, InputGroup, FormGroup, Input, Button, Alert } from 'reactstrap';
+import {
+  Form,
+  InputGroup,
+  InputGroupAddon,
+  InputGroupText,
+  FormGroup,
+  Input,
+  Button,
+  Alert
+} from 'reactstrap';
 
 function AddNewSubCategory() {
   /* Klientens cache ryddes, så vi er sikkre på, at den nye
   underkategori tilføjes, uden man behøver rerendere hele DOM'en */
   client.cache.reset();
 
+  // States med React Hooks
   const [name, setName] = useState('');
   const [imagePath, setImagePath] = useState('');
   const [alertStatus, setAlertStatus] = useState(false);
 
+  // Defineret mutation
   const ADD_SUB_CATEGORY = gql`
     mutation addSubCategory(
       $name: String!
@@ -99,16 +110,21 @@ function AddNewSubCategory() {
       <Form className="form" onSubmit={handleSubmit}>
         <FormGroup>
           <InputGroup>
+            <InputGroupAddon addonType="prepend">
+              <InputGroupText className="inputGroupTextStyles">
+                Navn
+              </InputGroupText>
+            </InputGroupAddon>
             <Input
               required
-              className="inputStyles"
+              className="inputStylesCategory"
               type="text"
               name="name"
               id="categoryName"
               minLength="1"
               maxLength="50"
               value={name}
-              placeholder="Navn..."
+              placeholder="Navn på splittegning..."
               onChange={event => setName(event.target.value)}
             />
           </InputGroup>
@@ -120,10 +136,15 @@ function AddNewSubCategory() {
         </FormGroup>
         <FormGroup>
           <InputGroup>
+            <InputGroupAddon addonType="prepend">
+              <InputGroupText className="inputGroupTextStyles">
+                Billedsti
+              </InputGroupText>
+            </InputGroupAddon>
             <Input
-              className="inputStyles p-2"
+              className="inputStylesCategory"
               type="file"
-              id="scooterImagePath"
+              id="subCategoryImagePath"
               accept="images/*"
               onChange={handleImageChange}
             />
@@ -134,7 +155,7 @@ function AddNewSubCategory() {
           <Alert color="success">Splittegningen blev oprettet.</Alert>
         )}
         {/* Knap til at indsende indtastede data */}
-        <Button type="submit" className="btnStyles">
+        <Button type="submit" className="btnStyles mb-5">
           Tilføj splittegning
         </Button>
       </Form>
