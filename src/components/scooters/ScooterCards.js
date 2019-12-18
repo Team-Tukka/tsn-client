@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
-import dummyImgScooter from '../../assets/images/dummyImgScooter.png';
 import GetCategoryById from '../categories/GetCategoryById';
 
 // Importér Reactstrap komponenter
@@ -31,6 +30,7 @@ function ScooterCards() {
         price
         priceVAT
         categoryId
+        imagePath
       }
     }
   `;
@@ -47,10 +47,10 @@ function ScooterCards() {
       _id,
       itemNo,
       name,
-      description,
       price,
       priceVAT,
-      categoryId
+      categoryId,
+      imagePath
     } = scooter; // Destructuring
     return (
       <Col
@@ -63,8 +63,8 @@ function ScooterCards() {
             <CardImg
               width="100%"
               className="p-2"
-              src={dummyImgScooter}
-              alt={description}
+              src={imagePath}
+              alt={imagePath && imagePath.slice(42)}
             />
           </Link>
           <CardBody>
