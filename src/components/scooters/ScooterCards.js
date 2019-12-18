@@ -49,6 +49,7 @@ function ScooterCards() {
       name,
       price,
       priceVAT,
+      description,
       categoryId,
       imagePath
     } = scooter; // Destructuring
@@ -64,7 +65,7 @@ function ScooterCards() {
               width="100%"
               className="p-2"
               src={imagePath}
-              alt={imagePath && imagePath.slice(42)}
+              alt={description}
             />
           </Link>
           <CardBody>
