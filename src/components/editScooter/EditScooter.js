@@ -490,7 +490,8 @@ function EditScooter(props) {
           </InputGroup>
         </FormGroup>
         <img
-          style={{ display: 'block', maxWidth: '50vh' }}
+          style={{ display: 'block' }}
+          className="img-fluid"
           src={imagePath}
           alt={imagePath && imagePath.slice(42)}
         />

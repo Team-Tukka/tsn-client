@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
-import GetCategories from './GetCategories.js';
+import s3 from '../../config/spacesConfig';
+import { GetCategoriesNotRequired } from './GetCategories.js';
 import GetCategoryName from './GetCategoryName.js';
 
 // Importér Reactstrap komponenter
@@ -23,6 +24,7 @@ function EditSubCategory() {
   const [inputName, setInputName] = useState('');
   const [inputCategoryId, setInputCategoryId] = useState('');
   const [inputImagePath, setInputImagePath] = useState('');
+  const [imageFile, setImageFile] = useState('');
   const [alertStatus, setAlertStatus] = useState(false);
   const [categorySwitchOpen, setCategorySwitchOpen] = useState(false);
 
@@ -60,30 +62,61 @@ function EditSubCategory() {
   const { loading, error, data } = useQuery(GET_SUB_CATEGORIES);
   const [updateSubCategoryById] = useMutation(UPDATE_SUB_CATEGORY_BY_ID);
 
+  // Håndter fejl ifm. billede
+  const handleImageError = () => {
+    console.log('Fejl!');
+  };
+
   // Håndtér indsendelse af data
   const handleSubmit = event => {
     event.preventDefault();
     if (inputName === '') {
       alert('Du skal som minimum udfylde/ændre navnet på splittegningen!');
     } else {
-      updateSubCategoryById({
-        variables: {
-          name: inputName,
-          categoryId: inputCategoryId,
-          imagePath: inputImagePath
-        }
-      });
+      // Håndtér ændring af billede
+      if (imageFile && imageFile[0]) {
+        const blob = imageFile[0];
+        const params = {
+          Body: blob,
+          Bucket: 'tukka',
+          Key: blob.name
+        };
+        // Uploader filen til DO Space
+        s3.putObject(params)
+          .on('build', request => {
+            request.httpRequest.headers.Host =
+              'https://tukka.fra1.digitaloceanspaces.com/';
+            request.httpRequest.headers['Content-Length'] = blob.size;
+            request.httpRequest.headers['Content-Type'] = blob.type;
+            request.httpRequest.headers['x-amz-acl'] = 'public-read';
+          })
+          .send(err => {
+            if (err) handleImageError();
+            else {
+              const imageUrl =
+                'https://tukka.fra1.digitaloceanspaces.com/' + blob.name;
+              setInputImagePath(imageUrl);
+              updateSubCategoryById({
+                variables: {
+                  name: inputName,
+                  categoryId: inputCategoryId,
+                  imagePath: inputImagePath
+                }
+              });
+            }
+            setInputName('');
+            setInputCategoryId('');
+            setInputImagePath('');
+            setCategorySwitchOpen(false);
+            // Sæt 'alertStatus' til at være true (så den vises)
+            setAlertStatus(true);
+            // Sæt 'alertStatus' til at være false efter 3 sekunder (så den forsvinder)
+            setTimeout(function() {
+              setAlertStatus(false);
+            }, 3000);
+          });
+      }
     }
-    setInputName('');
-    setInputCategoryId('');
-    setInputImagePath('');
-    setCategorySwitchOpen(false);
-    // Sæt 'alertStatus' til at være true (så den vises)
-    setAlertStatus(true);
-    // Sæt 'alertStatus' til at være false efter 3 sekunder (så den forsvinder)
-    setTimeout(function() {
-      setAlertStatus(false);
-    }, 3000);
   };
 
   if (loading) return <p>Loading...</p>;
@@ -151,7 +184,14 @@ function EditSubCategory() {
       ) {
         document.getElementById(inputId).reset();
       }
-      setInputImagePath(event.target.value);
+      if (event.target.files && event.target.files[0]) {
+        setImageFile(event.target.files);
+        const imageUrl =
+          'https://tukka.fra1.digitaloceanspaces.com/' +
+          event.target.files[0].name;
+        setInputImagePath(imageUrl);
+        console.log(inputImagePath);
+      }
       if (inputName === '' || inputId !== _id) {
         setInputName(name);
       }
@@ -187,7 +227,6 @@ function EditSubCategory() {
           <Input
             className="inputStylesSubCategory mb-3"
             defaultValue={name}
-            id="subCategoryName"
             placeholder="Navn på splittegning..."
             onChange={handleName}
           />
@@ -195,6 +234,7 @@ function EditSubCategory() {
         <GetCategoryName categoryId={categoryId}></GetCategoryName>
         <span className="mx-2">•</span>
         <Link
+          to="#"
           className="showHideTextStyles linkStyles"
           onClick={toggleCategory}
         >
@@ -203,24 +243,26 @@ function EditSubCategory() {
         <Collapse isOpen={categorySwitchOpen}>
           {inputId === _id && (
             <div className="mb-2">
-              <GetCategories parentCallback={handleCategoryId}></GetCategories>
+              <GetCategoriesNotRequired
+                parentCallback={handleCategoryId}
+              ></GetCategoriesNotRequired>
             </div>
           )}
         </Collapse>
         <InputGroup>
-          <InputGroupAddon className="mt-2 mb-3" addonType="prepend">
-            <InputGroupText className="inputGroupTextStyles">
-              Billedesti
-            </InputGroupText>
-          </InputGroupAddon>
           <Input
             className="inputStylesSubCategory mt-2 mb-3"
-            defaultValue={imagePath}
-            id="subCategoryImagePath"
-            placeholder="Stien til billedet..."
+            type="file"
+            accept="images/*"
             onChange={handleImagePath}
           />
         </InputGroup>
+        <img
+          style={{ display: 'block' }}
+          className="img-fluid"
+          src={imagePath}
+          alt={imagePath && imagePath.slice(42)}
+        />
         {/* Vis alert, hvis splittegningen opdateres korrekt */}
         {alertStatus === true && inputId === _id && (
           <Alert color="success" id={inputId}>
