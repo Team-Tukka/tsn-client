@@ -111,61 +111,62 @@ function AddNewScooter() {
   // Håndtér indsendelse af elscooteroplysninger
   const handleSubmit = event => {
     event.preventDefault();
-    // Håndtér ændring af billede
-    if (imageFile && imageFile[0]) {
-      const blob = imageFile[0];
-      const params = {
-        Body: blob,
-        Bucket: 'tukka',
-        Key: blob.name
-      };
-      // Uploader filen til DO Space
-      s3.putObject(params)
-        .on('build', request => {
-          request.httpRequest.headers.Host =
-            'https://tukka.fra1.digitaloceanspaces.com/';
-          request.httpRequest.headers['Content-Length'] = blob.size;
-          request.httpRequest.headers['Content-Type'] = blob.type;
-          request.httpRequest.headers['x-amz-acl'] = 'public-read';
-        })
-        .send(err => {
-          if (err) handleImageError();
-          else {
-            const imageUrl =
-              'https://tukka.fra1.digitaloceanspaces.com/' + blob.name;
-            setImagePath(imageUrl);
-          }
-        });
-    }
+
     if (name === '') {
       alert('Du skal som minimum udfylde et navn på elscooteren!');
     } else {
-      addScooter({
-        variables: {
-          name: name,
-          price: price,
-          sku: sku,
-          tags: tags,
-          brand: brand,
-          description: description,
-          itemNo: itemNo,
-          categoryId: document.getElementById('chosenCategoryId').value,
-          imagePath: imagePath
-        }
-      });
-      // Sæt 'alertStatus' til at være true (så den vises)
-      setAlertStatus(true);
-      // Clear felter, så der kan indtastes nye oplysninger
-      setName('');
-      setPrice('');
-      setSku('');
-      setTags('');
-      setBrand('');
-      setDescription('');
-      setItemNo('');
-      setImagePath('');
-      document.getElementById('scooterPrice').value = '';
-      document.getElementById('chosenCategoryId').value = '';
+      // Håndtér ændring af billede
+      if (imageFile && imageFile[0]) {
+        const blob = imageFile[0];
+        const params = {
+          Body: blob,
+          Bucket: 'tukka',
+          Key: blob.name
+        };
+        // Uploader filen til DO Space
+        s3.putObject(params)
+          .on('build', request => {
+            request.httpRequest.headers.Host =
+              'https://tukka.fra1.digitaloceanspaces.com/';
+            request.httpRequest.headers['Content-Length'] = blob.size;
+            request.httpRequest.headers['Content-Type'] = blob.type;
+            request.httpRequest.headers['x-amz-acl'] = 'public-read';
+          })
+          .send(err => {
+            if (err) handleImageError();
+            else {
+              const imageUrl =
+                'https://tukka.fra1.digitaloceanspaces.com/' + blob.name;
+              setImagePath(imageUrl);
+              addScooter({
+                variables: {
+                  name: name,
+                  price: price,
+                  sku: sku,
+                  tags: tags,
+                  brand: brand,
+                  description: description,
+                  itemNo: itemNo,
+                  categoryId: document.getElementById('chosenCategoryId').value,
+                  imagePath: imagePath
+                }
+              });
+              // Sæt 'alertStatus' til at være true (så den vises)
+              setAlertStatus(true);
+              // Clear felter, så der kan indtastes nye oplysninger
+              setName('');
+              setPrice('');
+              setSku('');
+              setTags('');
+              setBrand('');
+              setDescription('');
+              setItemNo('');
+              setImagePath('');
+              document.getElementById('scooterPrice').value = '';
+              document.getElementById('chosenCategoryId').value = '';
+            }
+          });
+      }
     }
   };
 
