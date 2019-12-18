@@ -184,7 +184,6 @@ function EditSubCategory() {
       ) {
         document.getElementById(inputId).reset();
       }
-      // setInputImagePath(event.target.value);
       if (event.target.files && event.target.files[0]) {
         setImageFile(event.target.files);
         const imageUrl =
