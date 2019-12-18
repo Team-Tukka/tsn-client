@@ -25,7 +25,6 @@ function AddNewSubCategory() {
   // States med React Hooks
   const [name, setName] = useState('');
   const [imagePath, setImagePath] = useState('');
-  const [imageFile, setImageFile] = useState('');
   const [alertStatus, setAlertStatus] = useState(false);
 
   // Defineret mutation
@@ -58,11 +57,29 @@ function AddNewSubCategory() {
   // Håndtér ændring af billede
   const handleImageChange = event => {
     if (event.target.files && event.target.files[0]) {
-      setImageFile(event.target.files);
-      const imageUrl =
-        'https://tukka.fra1.digitaloceanspaces.com/' +
-        event.target.files[0].name;
-      setImagePath(imageUrl);
+      const blob = event.target.files[0];
+      const params = {
+        Body: blob,
+        Bucket: 'https://tukka.fra1.digitaloceanspaces.com',
+        Key: blob.name
+      };
+      // Uploader filen til DO Space
+      s3.putObject(params)
+        .on('build', request => {
+          request.httpRequest.headers.Host =
+            'https://tukka.fra1.digitaloceanspaces.com/';
+          request.httpRequest.headers['Content-Length'] = blob.size;
+          request.httpRequest.headers['Content-Type'] = blob.type;
+          request.httpRequest.headers['x-amz-acl'] = 'public-read';
+        })
+        .send(err => {
+          if (err) handleImageError();
+          else {
+            const imageUrl =
+              'https://tukka.fra1.digitaloceanspaces.com/' + blob.name;
+            setImagePath(imageUrl);
+          }
+        });
     }
   };
 
@@ -72,45 +89,19 @@ function AddNewSubCategory() {
     if (name === '') {
       alert('Du skal som minimum udfylde et navn på underkategorien!');
     } else {
-      // Håndtér ændring af billede
-      if (imageFile && imageFile[0]) {
-        const blob = imageFile[0];
-        const params = {
-          Body: blob,
-          Bucket: 'tukka',
-          Key: blob.name
-        };
-        // Uploader filen til DO Space
-        s3.putObject(params)
-          .on('build', request => {
-            request.httpRequest.headers.Host =
-              'https://tukka.fra1.digitaloceanspaces.com/';
-            request.httpRequest.headers['Content-Length'] = blob.size;
-            request.httpRequest.headers['Content-Type'] = blob.type;
-            request.httpRequest.headers['x-amz-acl'] = 'public-read';
-          })
-          .send(err => {
-            if (err) handleImageError();
-            else {
-              const imageUrl =
-                'https://tukka.fra1.digitaloceanspaces.com/' + blob.name;
-              setImagePath(imageUrl);
-              addSubCategory({
-                variables: {
-                  name: name,
-                  categoryId: document.getElementById('chosenCategoryId').value,
-                  imagePath: imagePath
-                }
-              });
-              // Sæt 'alertStatus' til at være true (så den vises)
-              setAlertStatus(true);
-              // Clear feltet, så der kan indtastes nye oplysninger
-              setName('');
-              document.getElementById('chosenCategoryId').value = '';
-              setImagePath('');
-            }
-          });
-      }
+      addSubCategory({
+        variables: {
+          name: name,
+          categoryId: document.getElementById('chosenCategoryId').value,
+          imagePath: imagePath
+        }
+      });
+      // Sæt 'alertStatus' til at være true (så den vises)
+      setAlertStatus(true);
+      // Clear feltet, så der kan indtastes nye oplysninger
+      setName('');
+      document.getElementById('chosenCategoryId').value = '';
+      setImagePath('');
     }
   };
 
@@ -129,6 +120,7 @@ function AddNewSubCategory() {
               className="inputStylesCategory"
               type="text"
               name="name"
+              id="categoryName"
               minLength="1"
               maxLength="50"
               value={name}
@@ -144,8 +136,13 @@ function AddNewSubCategory() {
         </FormGroup>
         <FormGroup>
           <InputGroup>
+            <InputGroupAddon addonType="prepend">
+              <InputGroupText className="inputGroupTextStyles">
+                Billedsti
+              </InputGroupText>
+            </InputGroupAddon>
             <Input
-              className="inputStyles p-2"
+              className="inputStylesCategory"
               type="file"
               id="subCategoryImagePath"
               accept="images/*"

@@ -106,6 +106,7 @@ function EditCategory() {
           <Input
             className="inputStylesCategory mb-3"
             defaultValue={name}
+            id="categoryName"
             placeholder="Navn på kategori..."
             onChange={handleName}
           />

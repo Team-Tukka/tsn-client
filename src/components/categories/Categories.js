@@ -45,7 +45,6 @@ function Categories() {
             <div className="flexElements">
               <h4 className="mb-3">Kategorier</h4>
               <Link
-                to="#"
                 onClick={categoriesToggle}
                 className="showHideTextStyles linkStyles mb-3"
               >
@@ -67,7 +66,6 @@ function Categories() {
             <div className="flexElements">
               <h4 className="my-3">Splittegninger</h4>
               <Link
-                to="#"
                 onClick={subCategoriesToggle}
                 className="showHideTextStyles linkStyles my-3"
               >
