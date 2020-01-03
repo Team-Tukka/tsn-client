@@ -1,5 +1,7 @@
 import React from 'react';
 import { useQuery } from '@apollo/react-hooks';
+import cityElf from '../../assets/images/cityElf.png';
+import cityElf2 from '../../assets/images/cityElf2.png';
 import { gql } from 'apollo-boost';
 import './Textarea.css';
 
@@ -28,14 +30,19 @@ function Textarea() {
     <Container className="contentWrapper">
       <Row>
         <Col>
-          <h3 className="mb-2">Top Scooter Nordic</h3>
+          <h3 className="mb-3">Top Scooter Nordic</h3>
         </Col>
       </Row>
       <Row>
-        <Col>
-          <pre className="frontpageText">
-            {data.getTextareaById.text.replace(/<br\s*\/?>/gi, '\r\n')}
-          </pre>
+        <Col md={10}>
+          <pre
+            className="frontpageText"
+            dangerouslySetInnerHTML={{ __html: data.getTextareaById.text }}
+          />
+        </Col>
+        <Col md={2}>
+          <img src={cityElf} className="img-fluid mb-4" alt="City Elf" />
+          <img src={cityElf2} className="img-fluid" alt="City Elf" />
         </Col>
       </Row>
     </Container>

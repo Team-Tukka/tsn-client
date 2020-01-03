@@ -62,8 +62,13 @@ function AdminNav(props) {
                   </NavLink>
                 </NavItem>
                 <NavItem>
+                  <NavLink className="linkStyles" href="/categories">
+                    Kategorier
+                  </NavLink>
+                </NavItem>
+                <NavItem>
                   <NavLink className="linkStyles" href="/editTextarea">
-                    Redigér tekstfelter
+                    Redigér forsidetekst
                   </NavLink>
                 </NavItem>
                 <NavItem>

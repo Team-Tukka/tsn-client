@@ -25,7 +25,7 @@ function Products() {
 
     // Loop gennem alle tabelrækkerne og skjul dem, der ikke matcher med indtastningen
     for (i = 0; i < tr.length; i++) {
-      td = tr[i].getElementsByTagName('td')[0]; // Søger blandt værdierne i index 0 (række 0)
+      td = tr[i].getElementsByTagName('td')[1]; // Søger blandt værdierne i index 1 (Enhedsnavn)
       if (td) {
         txtValue = td.textContent || td.innerText;
         if (txtValue.toUpperCase().indexOf(filter) > -1) {
@@ -77,7 +77,7 @@ function Products() {
               <th className="font-weight-normal">Enhedsnavn</th>
               <th className="font-weight-normal">Pris u. moms</th>
               <th className="font-weight-normal">Pris m. moms</th>
-              <th className="font-weight-normal">Kategori</th>
+              <th className="font-weight-normal">Kategori/model</th>
             </tr>
           </thead>
           <tbody>

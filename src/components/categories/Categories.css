@@ -1,0 +1,45 @@
+@import url("../../assets/css/globalStyles.css");
+
+.flexElements {
+  display: flex;
+  justify-content: space-between;
+}
+
+.showHideTextStyles {
+  font-size: 1rem;
+}
+
+.inputGroupTextStyles {
+  margin-bottom: 0.5rem;
+  color: #1a1a1a !important;
+  background-color: #f8f8f8 !important;
+  border: 1px #f0f6ea solid !important;
+  border-radius: 0.4rem 0 0 0.4rem !important;
+  box-shadow: 1px 1px 2px #ececec;
+}
+
+.inputStylesCategory {
+  border: 1px #f0f6ea solid !important;
+  box-shadow: 1px 1px 2px #ececec;
+  margin-bottom: 0.5rem;
+}
+
+.inputStylesSubCategory {
+  border: 1px #f0f6ea solid !important;
+  border-radius: 0 0.4rem 0.4rem 0 !important;
+  box-shadow: 1px 1px 2px #ececec;
+  margin-bottom: 0.5rem;
+}
+
+.btnStylesCategory {
+  margin-bottom: 0.5rem;
+  color: #4b713d !important;
+  background-color: #e2eed8 !important;
+  border: 1px #f0f6ea solid !important;
+  border-radius: 0 0.4rem 0.4rem 0 !important;
+  box-shadow: 1px 1px 2px #ececec;
+}
+
+.btnStylesCategory:hover {
+  background-color: #f6fdf2 !important;
+}

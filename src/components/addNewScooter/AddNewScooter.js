@@ -3,12 +3,16 @@ import { Link } from 'react-router-dom';
 import { useMutation } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
 import client from '../../config/apolloClient';
+import s3 from '../../config/spacesConfig';
+import GetCategories from '../categories/GetCategories';
 import './AddNewScooter.css';
 
 // Importér Reactstrap komponenter
 import {
   Form,
   InputGroup,
+  InputGroupAddon,
+  InputGroupText,
   FormGroup,
   FormText,
   Input,
@@ -16,6 +20,10 @@ import {
   Alert,
   Tooltip
 } from 'reactstrap';
+
+// Importér Font Awesome komponenter
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
 
 // Komponent, der håndterer oprettelse af ny elscooter
 function AddNewScooter() {
@@ -31,8 +39,8 @@ function AddNewScooter() {
   const [brand, setBrand] = useState('');
   const [description, setDescription] = useState('');
   const [itemNo, setItemNo] = useState('');
-  const [categoryId, setCategoryId] = useState('');
-  const [subCategoryId, setSubCategoryId] = useState('');
+  const [imagePath, setImagePath] = useState('');
+  const [imageFile, setImageFile] = useState('');
   const [alertStatus, setAlertStatus] = useState(false);
 
   // States til tooltips
@@ -55,7 +63,7 @@ function AddNewScooter() {
       $description: String
       $itemNo: String!
       $categoryId: String
-      $subCategoryId: String
+      $imagePath: String!
     ) {
       addScooter(
         name: $name
@@ -66,7 +74,7 @@ function AddNewScooter() {
         description: $description
         itemNo: $itemNo
         categoryId: $categoryId
-        subCategoryId: $subCategoryId
+        imagePath: $imagePath
       ) {
         name
         price
@@ -76,7 +84,7 @@ function AddNewScooter() {
         description
         itemNo
         categoryId
-        subCategoryId
+        imagePath
       }
     }
   `;
@@ -84,38 +92,81 @@ function AddNewScooter() {
   // Anvend mutation
   const [addScooter] = useMutation(ADD_SCOOTER);
 
+  // Håndter fejl ifm. billede
+  const handleImageError = () => {
+    console.log('Fejl!');
+  };
+
+  // Håndtér ændring af billede
+  const handleImageChange = event => {
+    if (event.target.files && event.target.files[0]) {
+      setImageFile(event.target.files);
+      const imageUrl =
+        'https://tukka.fra1.digitaloceanspaces.com/' +
+        event.target.files[0].name;
+      setImagePath(imageUrl);
+    }
+  };
+
   // Håndtér indsendelse af elscooteroplysninger
   const handleSubmit = event => {
     event.preventDefault();
+
     if (name === '') {
       alert('Du skal som minimum udfylde et navn på elscooteren!');
     } else {
-      addScooter({
-        variables: {
-          name: name,
-          price: price,
-          sku: sku,
-          tags: tags,
-          brand: brand,
-          description: description,
-          itemNo: itemNo,
-          categoryId: categoryId,
-          subCategoryId: subCategoryId
-        }
-      });
-      // Sæt 'alertStatus' til at være true (så den vises)
-      setAlertStatus(true);
-      // Clear felter, så der kan indtastes nye oplysninger
-      setName('');
-      setPrice('');
-      setSku('');
-      setTags('');
-      setBrand('');
-      setDescription('');
-      setItemNo('');
-      setCategoryId('');
-      setSubCategoryId('');
-      document.getElementById('scooterPrice').value = '';
+      // Håndtér ændring af billede
+      if (imageFile && imageFile[0]) {
+        const blob = imageFile[0];
+        const params = {
+          Body: blob,
+          Bucket: 'tukka',
+          Key: blob.name
+        };
+        // Uploader filen til DO Space
+        s3.putObject(params)
+          .on('build', request => {
+            request.httpRequest.headers.Host =
+              'https://tukka.fra1.digitaloceanspaces.com/';
+            request.httpRequest.headers['Content-Length'] = blob.size;
+            request.httpRequest.headers['Content-Type'] = blob.type;
+            request.httpRequest.headers['x-amz-acl'] = 'public-read';
+          })
+          .send(err => {
+            if (err) handleImageError();
+            else {
+              const imageUrl =
+                'https://tukka.fra1.digitaloceanspaces.com/' + blob.name;
+              setImagePath(imageUrl);
+              addScooter({
+                variables: {
+                  name: name,
+                  price: price,
+                  sku: sku,
+                  tags: tags,
+                  brand: brand,
+                  description: description,
+                  itemNo: itemNo,
+                  categoryId: document.getElementById('chosenCategoryId').value,
+                  imagePath: imagePath
+                }
+              });
+              // Sæt 'alertStatus' til at være true (så den vises)
+              setAlertStatus(true);
+              // Clear felter, så der kan indtastes nye oplysninger
+              setName('');
+              setPrice('');
+              setSku('');
+              setTags('');
+              setBrand('');
+              setDescription('');
+              setItemNo('');
+              setImagePath('');
+              document.getElementById('scooterPrice').value = '';
+              document.getElementById('chosenCategoryId').value = '';
+            }
+          });
+      }
     }
   };
 
@@ -147,10 +198,22 @@ function AddNewScooter() {
               placeholder="Enhedsnummer..."
               onChange={event => setItemNo(event.target.value)}
             />
+            <InputGroupAddon
+              addonType="append"
+              id="itemNoTooltip"
+              style={{ marginLeft: '0.5rem' }}
+            >
+              <InputGroupText className="btnStyles">
+                <FontAwesomeIcon
+                  icon={faQuestionCircle}
+                  id="questionIcon"
+                ></FontAwesomeIcon>
+              </InputGroupText>
+            </InputGroupAddon>
             <Tooltip
               placement="top"
               isOpen={itemNoTooltipOpen}
-              target="scooterItemNo"
+              target="itemNoTooltip"
               toggle={toggleItemNo}
               style={{
                 padding: '0.5rem',
@@ -176,10 +239,22 @@ function AddNewScooter() {
               placeholder="Enhedsnavn..."
               onChange={event => setName(event.target.value)}
             />
+            <InputGroupAddon
+              addonType="append"
+              id="nameTooltip"
+              style={{ marginLeft: '0.5rem' }}
+            >
+              <InputGroupText className="btnStyles">
+                <FontAwesomeIcon
+                  icon={faQuestionCircle}
+                  id="questionIcon"
+                ></FontAwesomeIcon>
+              </InputGroupText>
+            </InputGroupAddon>
             <Tooltip
               placement="top"
               isOpen={nameTooltipOpen}
-              target="scooterName"
+              target="nameTooltip"
               toggle={toggleName}
               style={{
                 padding: '0.5rem',
@@ -203,10 +278,22 @@ function AddNewScooter() {
               placeholder="Pris uden moms..."
               onChange={event => setPrice(parseFloat(event.target.value))}
             />
+            <InputGroupAddon
+              addonType="append"
+              id="priceTooltip"
+              style={{ marginLeft: '0.5rem' }}
+            >
+              <InputGroupText className="btnStyles">
+                <FontAwesomeIcon
+                  icon={faQuestionCircle}
+                  id="questionIcon"
+                ></FontAwesomeIcon>
+              </InputGroupText>
+            </InputGroupAddon>
             <Tooltip
               placement="top"
               isOpen={priceTooltipOpen}
-              target="scooterPrice"
+              target="priceTooltip"
               toggle={togglePrice}
               style={{
                 padding: '0.5rem',
@@ -234,10 +321,22 @@ function AddNewScooter() {
               placeholder="SKU..."
               onChange={event => setSku(event.target.value)}
             />
+            <InputGroupAddon
+              addonType="append"
+              id="skuTooltip"
+              style={{ marginLeft: '0.5rem' }}
+            >
+              <InputGroupText className="btnStyles">
+                <FontAwesomeIcon
+                  icon={faQuestionCircle}
+                  id="questionIcon"
+                ></FontAwesomeIcon>
+              </InputGroupText>
+            </InputGroupAddon>
             <Tooltip
               placement="top"
               isOpen={skuTooltipOpen}
-              target="scooterSku"
+              target="skuTooltip"
               toggle={toggleSku}
               style={{
                 padding: '0.5rem',
@@ -261,10 +360,22 @@ function AddNewScooter() {
               placeholder="Tags..."
               onChange={event => setTags(event.target.value)}
             />
+            <InputGroupAddon
+              addonType="append"
+              id="tagsTooltip"
+              style={{ marginLeft: '0.5rem' }}
+            >
+              <InputGroupText className="btnStyles">
+                <FontAwesomeIcon
+                  icon={faQuestionCircle}
+                  id="questionIcon"
+                ></FontAwesomeIcon>
+              </InputGroupText>
+            </InputGroupAddon>
             <Tooltip
               placement="top"
               isOpen={tagsTooltipOpen}
-              target="scooterTags"
+              target="tagsTooltip"
               toggle={toggleTags}
               style={{
                 padding: '0.5rem',
@@ -288,10 +399,22 @@ function AddNewScooter() {
               placeholder="Mærke..."
               onChange={event => setBrand(event.target.value)}
             />
+            <InputGroupAddon
+              addonType="append"
+              id="brandTooltip"
+              style={{ marginLeft: '0.5rem' }}
+            >
+              <InputGroupText className="btnStyles">
+                <FontAwesomeIcon
+                  icon={faQuestionCircle}
+                  id="questionIcon"
+                ></FontAwesomeIcon>
+              </InputGroupText>
+            </InputGroupAddon>
             <Tooltip
               placement="top"
               isOpen={brandTooltipOpen}
-              target="scooterBrand"
+              target="brandTooltip"
               toggle={toggleBrand}
               style={{
                 padding: '0.5rem',
@@ -317,10 +440,22 @@ function AddNewScooter() {
               placeholder="Beskrivelse..."
               onChange={event => setDescription(event.target.value)}
             />
+            <InputGroupAddon
+              addonType="append"
+              id="descriptionTooltip"
+              style={{ marginLeft: '0.5rem' }}
+            >
+              <InputGroupText className="btnStyles">
+                <FontAwesomeIcon
+                  icon={faQuestionCircle}
+                  id="questionIcon"
+                ></FontAwesomeIcon>
+              </InputGroupText>
+            </InputGroupAddon>
             <Tooltip
               placement="top"
               isOpen={descriptionTooltipOpen}
-              target="scooterDescription"
+              target="descriptionTooltip"
               toggle={toggleDescription}
               style={{
                 padding: '0.5rem',
@@ -335,29 +470,17 @@ function AddNewScooter() {
         </FormGroup>
         <FormGroup>
           <InputGroup>
-            <Input
-              readOnly="readonly"
-              className="inputStyles"
-              type="text"
-              name="categoryId"
-              id="scooterCategoryId"
-              value={categoryId}
-              placeholder="Kategori ID (Under udvikling)"
-              onChange={event => setCategoryId(event.target.value)}
-            />
+            <GetCategories />
           </InputGroup>
         </FormGroup>
         <FormGroup>
           <InputGroup>
             <Input
-              readOnly="readonly"
-              className="inputStyles"
-              type="text"
-              name="subCategoryId"
-              id="scooterSubCategoryId"
-              value={subCategoryId}
-              placeholder="Underkategori ID (Under udvikling)"
-              onChange={event => setSubCategoryId(event.target.value)}
+              className="inputStyles p-2"
+              type="file"
+              id="scooterImagePath"
+              accept="images/*"
+              onChange={handleImageChange}
             />
           </InputGroup>
         </FormGroup>
