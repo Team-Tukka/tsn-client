@@ -53,6 +53,7 @@ function EditTextarea() {
     <React.Fragment>
       <h3 className="mb-3">Redigér forsidetekst</h3>
       <Editor
+        apiKey="u5lbj06anhycskcmb656llf5agkiqro4mornqsh2z9gm4g8b"
         initialValue={data.getTextareaById.text}
         init={{
           height: 470,
