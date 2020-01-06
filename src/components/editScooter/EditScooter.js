@@ -549,7 +549,7 @@ function EditScooter(props) {
               name="description"
               id="scooterDescription"
               minLength="1"
-              maxLength="200"
+              maxLength="500"
               defaultValue={description.replace(/<br ?\/?>/g, '\n')}
               placeholder="Beskrivelse..."
               onChange={event =>
