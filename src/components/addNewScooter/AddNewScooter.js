@@ -435,10 +435,12 @@ function AddNewScooter() {
               name="description"
               id="scooterDescription"
               minLength="1"
-              maxLength="200"
-              value={description}
+              maxLength="500"
+              defaultValue={description}
               placeholder="Beskrivelse..."
-              onChange={event => setDescription(event.target.value)}
+              onChange={event =>
+                setDescription(event.target.value.replace(/\r?\n/g, '<br>'))
+              }
             />
             <InputGroupAddon
               addonType="append"

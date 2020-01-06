@@ -58,7 +58,7 @@ function App() {
     <Router>
       <ApolloProvider client={client}>
         <Header />
-        <AdminNav />
+        {localStorage.token && <AdminNav />}
         <Switch>
           {/* Routes til offentligt tilgængeligt indhold */}
           <Route path="/" exact component={Textarea} />

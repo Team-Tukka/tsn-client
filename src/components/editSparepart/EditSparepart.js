@@ -168,7 +168,6 @@ function EditSparepart(props) {
               </InputGroupText>
             </InputGroupAddon>
             <Input
-              required
               className="inputStylesEditSparepart"
               type="text"
               name="itemNo"
@@ -217,7 +216,6 @@ function EditSparepart(props) {
               </InputGroupText>
             </InputGroupAddon>
             <Input
-              required
               className="inputStylesEditSparepart"
               type="text"
               name="name"
