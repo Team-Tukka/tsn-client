@@ -252,8 +252,16 @@ function EditScooter(props) {
       <Form className="form" onSubmit={handleSubmit}>
         <FormGroup>
           <InputGroup>
+            <InputGroupAddon addonType="prepend">
+              <InputGroupText
+                className="inputGroupTextStyles"
+                style={{ minWidth: '8.7rem' }}
+              >
+                Enhedsnummer
+              </InputGroupText>
+            </InputGroupAddon>
             <Input
-              className="inputStyles"
+              className="inputStylesEditScooter"
               type="text"
               name="itemNo"
               id="scooterItemNo"
@@ -283,7 +291,7 @@ function EditScooter(props) {
               style={{
                 padding: '0.5rem',
                 whiteSpace: 'nowrap',
-                minWidth: 'fit-content'
+                minWidth: 'min-content'
               }}
             >
               Her indtaster du elscooterens enhedsnummer. Fx AK-3761.
@@ -292,8 +300,16 @@ function EditScooter(props) {
         </FormGroup>
         <FormGroup>
           <InputGroup>
+            <InputGroupAddon addonType="prepend">
+              <InputGroupText
+                className="inputGroupTextStyles"
+                style={{ minWidth: '8.7rem' }}
+              >
+                Enhedsnavn
+              </InputGroupText>
+            </InputGroupAddon>
             <Input
-              className="inputStyles"
+              className="inputStylesEditScooter"
               type="text"
               name="name"
               id="scooterName"
@@ -323,7 +339,7 @@ function EditScooter(props) {
               style={{
                 padding: '0.5rem',
                 whiteSpace: 'nowrap',
-                minWidth: 'fit-content'
+                minWidth: 'min-content'
               }}
             >
               Her indtaster du elscooterens navn. Fx HS-855 Hvid.
@@ -332,8 +348,16 @@ function EditScooter(props) {
         </FormGroup>
         <FormGroup>
           <InputGroup>
+            <InputGroupAddon addonType="prepend">
+              <InputGroupText
+                className="inputGroupTextStyles"
+                style={{ minWidth: '8.7rem' }}
+              >
+                Pris uden moms
+              </InputGroupText>
+            </InputGroupAddon>
             <Input
-              className="inputStyles"
+              className="inputStylesEditScooter"
               type="number"
               step={0.01}
               name="price"
@@ -364,7 +388,7 @@ function EditScooter(props) {
               style={{
                 padding: '0.5rem',
                 whiteSpace: 'nowrap',
-                minWidth: 'fit-content'
+                minWidth: 'min-content'
               }}
             >
               Her indtaster du elscooterens pris uden moms i DKK. Fx 22999,95.
@@ -378,8 +402,16 @@ function EditScooter(props) {
         </FormGroup>
         <FormGroup>
           <InputGroup>
+            <InputGroupAddon addonType="prepend">
+              <InputGroupText
+                className="inputGroupTextStyles"
+                style={{ minWidth: '8.7rem' }}
+              >
+                SKU
+              </InputGroupText>
+            </InputGroupAddon>
             <Input
-              className="inputStyles"
+              className="inputStylesEditScooter"
               type="text"
               name="sku"
               id="scooterSku"
@@ -407,7 +439,7 @@ function EditScooter(props) {
               style={{
                 padding: '0.5rem',
                 whiteSpace: 'nowrap',
-                minWidth: 'fit-content'
+                minWidth: 'min-content'
               }}
             >
               Her indtaster du den unikke kode, der identificerer enheden. En
@@ -417,8 +449,16 @@ function EditScooter(props) {
         </FormGroup>
         <FormGroup>
           <InputGroup>
+            <InputGroupAddon addonType="prepend">
+              <InputGroupText
+                className="inputGroupTextStyles"
+                style={{ minWidth: '8.7rem' }}
+              >
+                Tags
+              </InputGroupText>
+            </InputGroupAddon>
             <Input
-              className="inputStyles"
+              className="inputStylesEditScooter"
               type="text"
               name="tags"
               id="scooterTags"
@@ -446,7 +486,7 @@ function EditScooter(props) {
               style={{
                 padding: '0.5rem',
                 whiteSpace: 'nowrap',
-                minWidth: 'fit-content'
+                minWidth: 'min-content'
               }}
             >
               Her indtaster du de ord, der kan identificere enheden. Ordene
@@ -456,8 +496,16 @@ function EditScooter(props) {
         </FormGroup>
         <FormGroup>
           <InputGroup>
+            <InputGroupAddon addonType="prepend">
+              <InputGroupText
+                className="inputGroupTextStyles"
+                style={{ minWidth: '8.7rem' }}
+              >
+                Mærke
+              </InputGroupText>
+            </InputGroupAddon>
             <Input
-              className="inputStyles"
+              className="inputStylesEditScooter"
               type="text"
               name="brand"
               id="scooterBrand"
@@ -485,7 +533,7 @@ function EditScooter(props) {
               style={{
                 padding: '0.5rem',
                 whiteSpace: 'nowrap',
-                minWidth: 'fit-content'
+                minWidth: 'min-content'
               }}
             >
               Her indtaster du elscooterens mærke. Fx C.T.M.
@@ -528,7 +576,7 @@ function EditScooter(props) {
               style={{
                 padding: '0.5rem',
                 whiteSpace: 'nowrap',
-                minWidth: 'fit-content'
+                minWidth: 'min-content'
               }}
             >
               Her indtaster du en fyldestgørende beskrivelse af enheden. Max 200

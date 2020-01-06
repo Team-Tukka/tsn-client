@@ -52,12 +52,12 @@ function SparepartRows() {
         </td>
         <td>
           <Link to={`/editSparepart/${_id}`} className="linkStyles">
-            {price}
+            {price} DKK
           </Link>
         </td>
         <td>
           <Link to={`/editSparepart/${_id}`} className="linkStyles">
-            {priceVAT}
+            {priceVAT} DKK
           </Link>
         </td>
         <td>

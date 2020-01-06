@@ -218,7 +218,7 @@ function AddNewScooter() {
               style={{
                 padding: '0.5rem',
                 whiteSpace: 'nowrap',
-                minWidth: 'fit-content'
+                minWidth: 'min-content'
               }}
             >
               Her indtaster du elscooterens enhedsnummer. Fx AK-3761.
@@ -259,7 +259,7 @@ function AddNewScooter() {
               style={{
                 padding: '0.5rem',
                 whiteSpace: 'nowrap',
-                minWidth: 'fit-content'
+                minWidth: 'min-content'
               }}
             >
               Her indtaster du elscooterens navn. Fx HS-855 Hvid.
@@ -298,7 +298,7 @@ function AddNewScooter() {
               style={{
                 padding: '0.5rem',
                 whiteSpace: 'nowrap',
-                minWidth: 'fit-content'
+                minWidth: 'min-content'
               }}
             >
               Her indtaster du elscooterens pris uden moms i DKK. Fx 22999,95.
@@ -341,7 +341,7 @@ function AddNewScooter() {
               style={{
                 padding: '0.5rem',
                 whiteSpace: 'nowrap',
-                minWidth: 'fit-content'
+                minWidth: 'min-content'
               }}
             >
               Her indtaster du den unikke kode, der identificerer enheden. En
@@ -380,7 +380,7 @@ function AddNewScooter() {
               style={{
                 padding: '0.5rem',
                 whiteSpace: 'nowrap',
-                minWidth: 'fit-content'
+                minWidth: 'min-content'
               }}
             >
               Her indtaster du de ord, der kan identificere enheden. Ordene
@@ -419,7 +419,7 @@ function AddNewScooter() {
               style={{
                 padding: '0.5rem',
                 whiteSpace: 'nowrap',
-                minWidth: 'fit-content'
+                minWidth: 'min-content'
               }}
             >
               Her indtaster du elscooterens mærke. Fx C.T.M.
@@ -462,7 +462,7 @@ function AddNewScooter() {
               style={{
                 padding: '0.5rem',
                 whiteSpace: 'nowrap',
-                minWidth: 'fit-content'
+                minWidth: 'min-content'
               }}
             >
               Her indtaster du en fyldestgørende beskrivelse af enheden. Max 200

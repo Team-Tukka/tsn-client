@@ -52,12 +52,12 @@ function ScooterRows() {
         </td>
         <td>
           <Link to={`/editScooter/${_id}`} className="linkStyles">
-            {price}
+            {price} DKK
           </Link>
         </td>
         <td>
           <Link to={`/editScooter/${_id}`} className="linkStyles">
-            {priceVAT}
+            {priceVAT} DKK
           </Link>
         </td>
         <td>
