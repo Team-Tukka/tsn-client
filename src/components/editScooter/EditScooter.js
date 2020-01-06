@@ -284,7 +284,7 @@ function EditScooter(props) {
               style={{
                 padding: '0.5rem',
                 whiteSpace: 'nowrap',
-                minWidth: 'fit-content'
+                minWidth: 'min-content'
               }}
             >
               Her indtaster du elscooterens enhedsnummer. Fx AK-3761.
@@ -325,7 +325,7 @@ function EditScooter(props) {
               style={{
                 padding: '0.5rem',
                 whiteSpace: 'nowrap',
-                minWidth: 'fit-content'
+                minWidth: 'min-content'
               }}
             >
               Her indtaster du elscooterens navn. Fx HS-855 Hvid.
@@ -366,7 +366,7 @@ function EditScooter(props) {
               style={{
                 padding: '0.5rem',
                 whiteSpace: 'nowrap',
-                minWidth: 'fit-content'
+                minWidth: 'min-content'
               }}
             >
               Her indtaster du elscooterens pris uden moms i DKK. Fx 22999,95.
@@ -409,7 +409,7 @@ function EditScooter(props) {
               style={{
                 padding: '0.5rem',
                 whiteSpace: 'nowrap',
-                minWidth: 'fit-content'
+                minWidth: 'min-content'
               }}
             >
               Her indtaster du den unikke kode, der identificerer enheden. En
@@ -448,7 +448,7 @@ function EditScooter(props) {
               style={{
                 padding: '0.5rem',
                 whiteSpace: 'nowrap',
-                minWidth: 'fit-content'
+                minWidth: 'min-content'
               }}
             >
               Her indtaster du de ord, der kan identificere enheden. Ordene
@@ -487,7 +487,7 @@ function EditScooter(props) {
               style={{
                 padding: '0.5rem',
                 whiteSpace: 'nowrap',
-                minWidth: 'fit-content'
+                minWidth: 'min-content'
               }}
             >
               Her indtaster du elscooterens mærke. Fx C.T.M.
@@ -528,7 +528,7 @@ function EditScooter(props) {
               style={{
                 padding: '0.5rem',
                 whiteSpace: 'nowrap',
-                minWidth: 'fit-content'
+                minWidth: 'min-content'
               }}
             >
               Her indtaster du en fyldestgørende beskrivelse af enheden. Max 200

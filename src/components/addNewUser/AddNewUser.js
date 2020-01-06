@@ -236,7 +236,7 @@ function AddNewUser() {
               toggle={toggleAdminRole}
               style={{
                 whiteSpace: 'nowrap',
-                minWidth: 'fit-content'
+                minWidth: 'min-content'
               }}
             >
               Bemærk! Hvis du checker af i dette felt, så bliver brugeren

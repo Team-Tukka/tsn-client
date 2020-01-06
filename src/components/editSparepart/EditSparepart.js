@@ -191,7 +191,7 @@ function EditSparepart(props) {
               style={{
                 padding: '0.5rem',
                 whiteSpace: 'nowrap',
-                minWidth: 'fit-content'
+                minWidth: 'min-content'
               }}
             >
               Her indtaster du reservedelens enhedsnummer. Fx HL-372761.
@@ -232,7 +232,7 @@ function EditSparepart(props) {
               style={{
                 padding: '0.5rem',
                 whiteSpace: 'nowrap',
-                minWidth: 'fit-content'
+                minWidth: 'min-content'
               }}
             >
               Her indtaster du reservedelens enhedsnavn. Fx Armlæn Højre.
@@ -273,7 +273,7 @@ function EditSparepart(props) {
               style={{
                 padding: '0.5rem',
                 whiteSpace: 'nowrap',
-                minWidth: 'fit-content'
+                minWidth: 'min-content'
               }}
             >
               Her indtaster du reservedelens pris uden moms i DKK. Fx 99,95.
