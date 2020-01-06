@@ -52,7 +52,7 @@ function AdminNav() {
       {localStorage.token && (
         <Navbar className="veryLightGreenBg adminNavStyles" light expand="md">
           <Container>
-            <NavbarBrand href="/">
+            <NavbarBrand href="/welcome">
               {data.me2.firstName + ' ' + data.me2.lastName}
             </NavbarBrand>
             <NavbarToggler onClick={toggle} />
