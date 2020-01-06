@@ -29,11 +29,6 @@ function Textarea() {
   return (
     <Container className="contentWrapper">
       <Row>
-        <Col>
-          <h3 className="mb-3">Top Scooter Nordic</h3>
-        </Col>
-      </Row>
-      <Row>
         <Col md={10}>
           <pre
             className="frontpageText"
@@ -41,7 +36,7 @@ function Textarea() {
           />
         </Col>
         <Col md={2}>
-          <img src={cityElf} className="img-fluid mb-4" alt="City Elf" />
+          <img src={cityElf} className="img-fluid my-5" alt="City Elf" />
           <img src={cityElf2} className="img-fluid" alt="City Elf" />
         </Col>
       </Row>
