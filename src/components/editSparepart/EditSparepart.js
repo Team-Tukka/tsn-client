@@ -160,7 +160,6 @@ function EditSparepart(props) {
         <FormGroup>
           <InputGroup>
             <Input
-              required
               className="inputStyles"
               type="text"
               name="itemNo"
@@ -201,7 +200,6 @@ function EditSparepart(props) {
         <FormGroup>
           <InputGroup>
             <Input
-              required
               className="inputStyles"
               type="text"
               name="name"
