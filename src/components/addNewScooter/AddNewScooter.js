@@ -436,7 +436,7 @@ function AddNewScooter() {
               id="scooterDescription"
               minLength="1"
               maxLength="500"
-              default={description}
+              defaultValue={description}
               placeholder="Beskrivelse..."
               onChange={event =>
                 setDescription(event.target.value.replace(/\r?\n/g, '<br>'))
