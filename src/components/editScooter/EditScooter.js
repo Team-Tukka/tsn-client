@@ -206,23 +206,23 @@ function EditScooter(props) {
               const imageUrl =
                 'https://tukka.fra1.digitaloceanspaces.com/' + blob.name;
               setImagePath(imageUrl);
-              updateScooterById({
-                variables: {
-                  name: name,
-                  price: price,
-                  sku: sku,
-                  tags: tags,
-                  brand: brand,
-                  description: description,
-                  itemNo: itemNo,
-                  imagePath: imagePath
-                }
-              });
-              // Sæt 'alertStatus' til at være true (så den vises)
-              setAlertStatus(true);
             }
           });
       }
+      updateScooterById({
+        variables: {
+          name: name,
+          price: price,
+          sku: sku,
+          tags: tags,
+          brand: brand,
+          description: description,
+          itemNo: itemNo,
+          imagePath: imagePath
+        }
+      });
+      // Sæt 'alertStatus' til at være true (så den vises)
+      setAlertStatus(true);
     }
   };
 
@@ -253,7 +253,6 @@ function EditScooter(props) {
         <FormGroup>
           <InputGroup>
             <Input
-              required
               className="inputStyles"
               type="text"
               name="itemNo"
@@ -294,7 +293,6 @@ function EditScooter(props) {
         <FormGroup>
           <InputGroup>
             <Input
-              required
               className="inputStyles"
               type="text"
               name="name"
@@ -504,9 +502,11 @@ function EditScooter(props) {
               id="scooterDescription"
               minLength="1"
               maxLength="200"
-              defaultValue={description}
+              defaultValue={description.replace(/<br ?\/?>/g, '\n')}
               placeholder="Beskrivelse..."
-              onChange={event => setDescription(event.target.value)}
+              onChange={event =>
+                setDescription(event.target.value.replace(/\r?\n/g, '<br>'))
+              }
             />
             <InputGroupAddon
               addonType="append"
@@ -539,7 +539,6 @@ function EditScooter(props) {
         <FormGroup>
           <InputGroup>
             <Input
-              required
               className="inputStyles p-2"
               type="file"
               id="scooterImagePath"
