@@ -159,9 +159,17 @@ function EditSparepart(props) {
       <Form className="form" onSubmit={handleSubmit}>
         <FormGroup>
           <InputGroup>
+            <InputGroupAddon addonType="prepend">
+              <InputGroupText
+                className="inputGroupTextStyles"
+                style={{ minWidth: '8.7rem' }}
+              >
+                Enhedsnummer
+              </InputGroupText>
+            </InputGroupAddon>
             <Input
               required
-              className="inputStyles"
+              className="inputStylesEditSparepart"
               type="text"
               name="itemNo"
               id="sparepartItemNo"
@@ -200,9 +208,17 @@ function EditSparepart(props) {
         </FormGroup>
         <FormGroup>
           <InputGroup>
+            <InputGroupAddon addonType="prepend">
+              <InputGroupText
+                className="inputGroupTextStyles"
+                style={{ minWidth: '8.7rem' }}
+              >
+                Enhedsnavn
+              </InputGroupText>
+            </InputGroupAddon>
             <Input
               required
-              className="inputStyles"
+              className="inputStylesEditSparepart"
               type="text"
               name="name"
               id="sparepartName"
@@ -241,8 +257,16 @@ function EditSparepart(props) {
         </FormGroup>
         <FormGroup>
           <InputGroup>
+            <InputGroupAddon addonType="prepend">
+              <InputGroupText
+                className="inputGroupTextStyles"
+                style={{ minWidth: '8.7rem' }}
+              >
+                Pris uden moms
+              </InputGroupText>
+            </InputGroupAddon>
             <Input
-              className="inputStyles"
+              className="inputStylesEditSparepart"
               type="number"
               step={0.01}
               name="price"

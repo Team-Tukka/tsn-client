@@ -252,9 +252,17 @@ function EditScooter(props) {
       <Form className="form" onSubmit={handleSubmit}>
         <FormGroup>
           <InputGroup>
+            <InputGroupAddon addonType="prepend">
+              <InputGroupText
+                className="inputGroupTextStyles"
+                style={{ minWidth: '8.7rem' }}
+              >
+                Enhedsnummer
+              </InputGroupText>
+            </InputGroupAddon>
             <Input
               required
-              className="inputStyles"
+              className="inputStylesEditScooter"
               type="text"
               name="itemNo"
               id="scooterItemNo"
@@ -293,9 +301,17 @@ function EditScooter(props) {
         </FormGroup>
         <FormGroup>
           <InputGroup>
+            <InputGroupAddon addonType="prepend">
+              <InputGroupText
+                className="inputGroupTextStyles"
+                style={{ minWidth: '8.7rem' }}
+              >
+                Enhedsnavn
+              </InputGroupText>
+            </InputGroupAddon>
             <Input
               required
-              className="inputStyles"
+              className="inputStylesEditScooter"
               type="text"
               name="name"
               id="scooterName"
@@ -334,8 +350,16 @@ function EditScooter(props) {
         </FormGroup>
         <FormGroup>
           <InputGroup>
+            <InputGroupAddon addonType="prepend">
+              <InputGroupText
+                className="inputGroupTextStyles"
+                style={{ minWidth: '8.7rem' }}
+              >
+                Pris uden moms
+              </InputGroupText>
+            </InputGroupAddon>
             <Input
-              className="inputStyles"
+              className="inputStylesEditScooter"
               type="number"
               step={0.01}
               name="price"
@@ -380,8 +404,16 @@ function EditScooter(props) {
         </FormGroup>
         <FormGroup>
           <InputGroup>
+            <InputGroupAddon addonType="prepend">
+              <InputGroupText
+                className="inputGroupTextStyles"
+                style={{ minWidth: '8.7rem' }}
+              >
+                SKU
+              </InputGroupText>
+            </InputGroupAddon>
             <Input
-              className="inputStyles"
+              className="inputStylesEditScooter"
               type="text"
               name="sku"
               id="scooterSku"
@@ -419,8 +451,16 @@ function EditScooter(props) {
         </FormGroup>
         <FormGroup>
           <InputGroup>
+            <InputGroupAddon addonType="prepend">
+              <InputGroupText
+                className="inputGroupTextStyles"
+                style={{ minWidth: '8.7rem' }}
+              >
+                Tags
+              </InputGroupText>
+            </InputGroupAddon>
             <Input
-              className="inputStyles"
+              className="inputStylesEditScooter"
               type="text"
               name="tags"
               id="scooterTags"
@@ -458,8 +498,16 @@ function EditScooter(props) {
         </FormGroup>
         <FormGroup>
           <InputGroup>
+            <InputGroupAddon addonType="prepend">
+              <InputGroupText
+                className="inputGroupTextStyles"
+                style={{ minWidth: '8.7rem' }}
+              >
+                Mærke
+              </InputGroupText>
+            </InputGroupAddon>
             <Input
-              className="inputStyles"
+              className="inputStylesEditScooter"
               type="text"
               name="brand"
               id="scooterBrand"
