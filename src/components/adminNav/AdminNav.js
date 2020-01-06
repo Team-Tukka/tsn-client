@@ -17,7 +17,7 @@ import {
 
 // AdminNav komponent
 function AdminNav() {
-  // ME query defineres
+  // ME2 query defineres
   const ME2 = gql`
     {
       me2(token: ${localStorage.token}) {
@@ -27,8 +27,10 @@ function AdminNav() {
       }
     }
   `;
+  
   // Client initialiseres til at være ME2 query
   const { loading, error, data, client } = useQuery(ME2);
+  
   // States med React Hooks
   const [isOpen, setIsOpen] = useState(false);
 
@@ -89,4 +91,5 @@ function AdminNav() {
     </React.Fragment>
   );
 }
+
 export default AdminNav;
