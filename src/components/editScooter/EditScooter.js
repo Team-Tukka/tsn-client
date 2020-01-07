@@ -163,7 +163,7 @@ function EditScooter(props) {
 
   // Håndter fejl ifm. billede
   const handleImageError = () => {
-    console.log('Fejl!');
+    alert('Der skete en fejl under tilføjelsen af billede!');
   };
 
   // Håndtér ændring af billede
@@ -549,7 +549,7 @@ function EditScooter(props) {
               name="description"
               id="scooterDescription"
               minLength="1"
-              maxLength="200"
+              maxLength="500"
               defaultValue={description.replace(/<br ?\/?>/g, '\n')}
               placeholder="Beskrivelse..."
               onChange={event =>

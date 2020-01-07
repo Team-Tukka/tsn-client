@@ -94,7 +94,7 @@ function AddNewScooter() {
 
   // Håndter fejl ifm. billede
   const handleImageError = () => {
-    console.log('Fejl!');
+    alert('Der skete en fejl under tilføjelsen af billede!');
   };
 
   // Håndtér ændring af billede
