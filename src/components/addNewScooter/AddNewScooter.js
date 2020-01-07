@@ -164,6 +164,8 @@ function AddNewScooter() {
               setImagePath('');
               document.getElementById('scooterPrice').value = '';
               document.getElementById('chosenCategoryId').value = '';
+              document.getElementById('scooterDescription').value = '';
+              document.getElementById('scooterImagePath').value = '';
             }
           });
       }

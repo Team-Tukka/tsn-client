@@ -107,6 +107,7 @@ function AddNewSubCategory() {
               // Clear feltet, så der kan indtastes nye oplysninger
               setName('');
               document.getElementById('chosenCategoryId').value = '';
+              document.getElementById('subCategoryImagePath').value = '';
               setImagePath('');
             }
           });
