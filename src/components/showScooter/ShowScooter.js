@@ -81,7 +81,11 @@ function ShowScooter() {
             <li>
               <b>Kategori:</b> <GetCategoryById categoryId={scoCategoryId} />
             </li>
-            <li className="my-4">{scoDescription}</li>
+            <li className="my-4">
+              <pre className="frontpageText">
+                {scoDescription.replace(/<br ?\/?>/g, '\n')}
+              </pre>
+            </li>
             <li className="priceGlow">{scoPrice} DKK</li>
             <li className="priceVAT">{scoPriceVAT} DKK inkl. moms</li>
           </ul>
