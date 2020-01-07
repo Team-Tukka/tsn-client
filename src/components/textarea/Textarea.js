@@ -8,7 +8,7 @@ import './Textarea.css';
 // Importér Reactstrap komponenter
 import { Container, Row, Col } from 'reactstrap';
 
-// Textarea komponent
+// Textarea-komponent
 function Textarea() {
   // Definér mutation til at hente textarea
   const GET_TEXTAREA_BY_ID = gql`

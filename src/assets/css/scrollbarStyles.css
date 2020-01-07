@@ -1,3 +1,5 @@
+/* Styling på scrollbar, som anvendes globalt */
+
 ::-webkit-scrollbar {
   width: 10px;
 }

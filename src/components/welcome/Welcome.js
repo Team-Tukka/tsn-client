@@ -1,7 +1,7 @@
 import React from 'react';
 import './Welcome.css';
 
-// Komponent der renderes, når brugeren er logget ind
+// Et af parent-komponenterne der renderes, når brugeren er logget ind
 function Welcome() {
   return (
     <React.Fragment>
