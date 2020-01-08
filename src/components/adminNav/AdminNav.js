@@ -44,15 +44,19 @@ function AdminNav() {
     client.resetStore();
     window.location = '/login';
   };
+  
+  // Tjekker feljbeskeden og kører Logout() hvis token er udløbet.
+  const checkToken = () => {
+    if (error.message === 'GraphQL error: Token er udløbet!') {
+      Logout();
+    } else {
+      return 'Error!';
+    }
+  };
 
-  if (loading)
-    return (
-      <p className="text-center m-3">
-        <Spinner size="sm" color="secondary" />
-      </p>
-    );
-  if (error) return <p className="text-center m-3">Error!</p>;
-
+  if (loading) return <p className="text-center m-3"><Spinner size="sm" color="secondary" /></p>;
+  if (error) return <p className="text-center m-3">{checkToken()}</p>;
+                                                    
   return (
     <React.Fragment>
       {localStorage.token && (
