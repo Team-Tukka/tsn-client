@@ -27,10 +27,10 @@ function AdminNav() {
       }
     }
   `;
-  
+
   // Client initialiseres til at være ME2 query
   const { loading, error, data, client } = useQuery(ME2);
-  
+
   // States med React Hooks
   const [isOpen, setIsOpen] = useState(false);
 
@@ -43,9 +43,18 @@ function AdminNav() {
     client.resetStore();
     window.location = '/login';
   };
+  
+  // Tjekker feljbeskeden og kører Logout() hvis token er udløbet.
+  const checkToken = () => {
+    if (error.message === 'GraphQL error: Token er udløbet!') {
+      Logout();
+    } else {
+      return 'Error!';
+    }
+  };
 
   if (loading) return <p className="text-center m-3">Loading...</p>;
-  if (error) return <p className="text-center m-3">Error!</p>;
+  if (error) return <p className="text-center m-3">{checkToken()}</p>;
 
   return (
     <React.Fragment>
