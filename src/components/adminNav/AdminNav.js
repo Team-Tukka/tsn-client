@@ -12,7 +12,8 @@ import {
   NavbarBrand,
   Nav,
   NavItem,
-  NavLink
+  NavLink,
+  Spinner
 } from 'reactstrap';
 
 // AdminNav komponent
@@ -27,10 +28,10 @@ function AdminNav() {
       }
     }
   `;
-  
+
   // Client initialiseres til at være ME2 query
   const { loading, error, data, client } = useQuery(ME2);
-  
+
   // States med React Hooks
   const [isOpen, setIsOpen] = useState(false);
 
@@ -44,7 +45,12 @@ function AdminNav() {
     window.location = '/login';
   };
 
-  if (loading) return <p className="text-center m-3">Loading...</p>;
+  if (loading)
+    return (
+      <p className="text-center m-3">
+        <Spinner size="sm" color="secondary" />
+      </p>
+    );
   if (error) return <p className="text-center m-3">Error!</p>;
 
   return (
