@@ -56,7 +56,7 @@ function AdminNav() {
 
   if (loading) return <p className="text-center m-3"><Spinner size="sm" color="secondary" /></p>;
   if (error) return <p className="text-center m-3">{checkToken()}</p>;
-                                                    
+
   return (
     <React.Fragment>
       {localStorage.token && (
