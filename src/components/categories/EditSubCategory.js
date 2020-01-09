@@ -96,26 +96,26 @@ function EditSubCategory() {
               const imageUrl =
                 'https://tukka.fra1.digitaloceanspaces.com/' + blob.name;
               setInputImagePath(imageUrl);
-              updateSubCategoryById({
-                variables: {
-                  name: inputName,
-                  categoryId: inputCategoryId,
-                  imagePath: inputImagePath
-                }
-              });
             }
-            setInputName('');
-            setInputCategoryId('');
-            setInputImagePath('');
-            setCategorySwitchOpen(false);
-            // Sæt 'alertStatus' til at være true (så den vises)
-            setAlertStatus(true);
-            // Sæt 'alertStatus' til at være false efter 3 sekunder (så den forsvinder)
-            setTimeout(function() {
-              setAlertStatus(false);
-            }, 3000);
           });
       }
+      updateSubCategoryById({
+        variables: {
+          name: inputName,
+          categoryId: inputCategoryId,
+          imagePath: inputImagePath
+        }
+      });
+      setInputName('');
+      setInputCategoryId('');
+      setInputImagePath('');
+      setCategorySwitchOpen(false);
+      // Sæt 'alertStatus' til at være true (så den vises)
+      setAlertStatus(true);
+      // Sæt 'alertStatus' til at være false efter 3 sekunder (så den forsvinder)
+      setTimeout(function() {
+        setAlertStatus(false);
+      }, 3000);
     }
   };
 
@@ -124,7 +124,6 @@ function EditSubCategory() {
 
   return data.getSubCategories.map(subCategory => {
     const { _id, name, categoryId, imagePath } = subCategory; // Destructoring
-
     // Håndtér statens "_id"
     const handleId = event => {
       event.preventDefault();
@@ -190,7 +189,6 @@ function EditSubCategory() {
           'https://tukka.fra1.digitaloceanspaces.com/' +
           event.target.files[0].name;
         setInputImagePath(imageUrl);
-        console.log(inputImagePath);
       }
       if (inputName === '' || inputId !== _id) {
         setInputName(name);
