@@ -2,7 +2,7 @@ import ApolloClient from 'apollo-boost';
 
 // Instantiér Apollo Client
 const client = new ApolloClient({
-  uri: 'http://localhost:3000/graphql',
+  uri: 'https://hovedopgave.tukka.dk/graphl',
   request: operation => {
     const token = localStorage.getItem('token');
     operation.setContext({
