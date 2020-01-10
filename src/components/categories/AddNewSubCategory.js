@@ -52,7 +52,7 @@ function AddNewSubCategory() {
 
   // Håndter fejl ifm. billede
   const handleImageError = () => {
-    console.log('Fejl!');
+    alert('Der skete en fejl under tilføjelsen af billede!');
   };
 
   // Håndtér ændring af billede
@@ -107,6 +107,7 @@ function AddNewSubCategory() {
               // Clear feltet, så der kan indtastes nye oplysninger
               setName('');
               document.getElementById('chosenCategoryId').value = '';
+              document.getElementById('subCategoryImagePath').value = '';
               setImagePath('');
             }
           });

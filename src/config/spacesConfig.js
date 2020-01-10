@@ -1,9 +1,9 @@
 import AWS from 'aws-sdk';
 
-// Instantierer endpoint vha. AWS
+// Instantiér endpoint vha. AWS
 const spacesEndpoint = new AWS.Endpoint('fra1.digitaloceanspaces.com');
 
-// Initialiserer endpointet til et S3-objekt sammen med accessKeyId og secretAccessKey
+// Initialisér endpointet til et S3-objekt sammen med accessKeyId og secretAccessKey
 const s3 = new AWS.S3({
   endpoint: spacesEndpoint,
   accessKeyId: 'ATVOV26DKSYLWT46IP65',

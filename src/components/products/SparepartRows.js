@@ -22,6 +22,15 @@ function SparepartRows() {
   // Anvend query
   const { loading, error, data } = useQuery(GET_SPAREPARTS);
 
+  // Tjekker feljbeskeden og fjerner 'GraphQL error' fra strengen.
+  const errorHandler = () => {
+    if (error.message === 'GraphQL error: Ingen reservedele fundet!') {
+      return error.message.slice(15);
+    } else {
+      return 'Error!';
+    }
+  };
+
   if (loading)
     return (
       <tr>
@@ -31,7 +40,7 @@ function SparepartRows() {
   if (error)
     return (
       <tr>
-        <td>Error!</td>
+        <td>{errorHandler()}</td>
       </tr>
     );
 
@@ -52,12 +61,12 @@ function SparepartRows() {
         </td>
         <td>
           <Link to={`/editSparepart/${_id}`} className="linkStyles">
-            {price}
+            {price} DKK
           </Link>
         </td>
         <td>
           <Link to={`/editSparepart/${_id}`} className="linkStyles">
-            {priceVAT}
+            {priceVAT} DKK
           </Link>
         </td>
         <td>

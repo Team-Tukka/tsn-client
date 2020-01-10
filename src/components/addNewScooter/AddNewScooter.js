@@ -94,7 +94,7 @@ function AddNewScooter() {
 
   // Håndter fejl ifm. billede
   const handleImageError = () => {
-    console.log('Fejl!');
+    alert('Der skete en fejl under tilføjelsen af billede!');
   };
 
   // Håndtér ændring af billede
@@ -164,6 +164,8 @@ function AddNewScooter() {
               setImagePath('');
               document.getElementById('scooterPrice').value = '';
               document.getElementById('chosenCategoryId').value = '';
+              document.getElementById('scooterDescription').value = '';
+              document.getElementById('scooterImagePath').value = '';
             }
           });
       }
@@ -218,7 +220,7 @@ function AddNewScooter() {
               style={{
                 padding: '0.5rem',
                 whiteSpace: 'nowrap',
-                minWidth: 'fit-content'
+                minWidth: 'min-content'
               }}
             >
               Her indtaster du elscooterens enhedsnummer. Fx AK-3761.
@@ -259,7 +261,7 @@ function AddNewScooter() {
               style={{
                 padding: '0.5rem',
                 whiteSpace: 'nowrap',
-                minWidth: 'fit-content'
+                minWidth: 'min-content'
               }}
             >
               Her indtaster du elscooterens navn. Fx HS-855 Hvid.
@@ -298,7 +300,7 @@ function AddNewScooter() {
               style={{
                 padding: '0.5rem',
                 whiteSpace: 'nowrap',
-                minWidth: 'fit-content'
+                minWidth: 'min-content'
               }}
             >
               Her indtaster du elscooterens pris uden moms i DKK. Fx 22999,95.
@@ -341,7 +343,7 @@ function AddNewScooter() {
               style={{
                 padding: '0.5rem',
                 whiteSpace: 'nowrap',
-                minWidth: 'fit-content'
+                minWidth: 'min-content'
               }}
             >
               Her indtaster du den unikke kode, der identificerer enheden. En
@@ -380,7 +382,7 @@ function AddNewScooter() {
               style={{
                 padding: '0.5rem',
                 whiteSpace: 'nowrap',
-                minWidth: 'fit-content'
+                minWidth: 'min-content'
               }}
             >
               Her indtaster du de ord, der kan identificere enheden. Ordene
@@ -419,7 +421,7 @@ function AddNewScooter() {
               style={{
                 padding: '0.5rem',
                 whiteSpace: 'nowrap',
-                minWidth: 'fit-content'
+                minWidth: 'min-content'
               }}
             >
               Her indtaster du elscooterens mærke. Fx C.T.M.
@@ -435,10 +437,12 @@ function AddNewScooter() {
               name="description"
               id="scooterDescription"
               minLength="1"
-              maxLength="200"
-              value={description}
+              maxLength="500"
+              defaultValue={description}
               placeholder="Beskrivelse..."
-              onChange={event => setDescription(event.target.value)}
+              onChange={event =>
+                setDescription(event.target.value.replace(/\r?\n/g, '<br>'))
+              }
             />
             <InputGroupAddon
               addonType="append"
@@ -460,7 +464,7 @@ function AddNewScooter() {
               style={{
                 padding: '0.5rem',
                 whiteSpace: 'nowrap',
-                minWidth: 'fit-content'
+                minWidth: 'min-content'
               }}
             >
               Her indtaster du en fyldestgørende beskrivelse af enheden. Max 200

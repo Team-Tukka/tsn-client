@@ -10,6 +10,7 @@
   text-shadow: 2px 1px 6px #d7ecc7 !important;
 }
 
+/* Kan anvendes, såfremt en tilbudsfunktion udvikles i fremtiden */
 .priceSale {
   color: #b42727 !important;
   font-size: 1.8rem;

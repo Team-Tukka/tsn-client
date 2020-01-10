@@ -38,7 +38,7 @@ import AddNewSparepart from './components/addNewSparepart/AddNewSparepart';
 import AddNewUser from './components/addNewUser/AddNewUser';
 import Categories from './components/categories/Categories';
 
-// App komponentet indeholder den samlede app, der renderes i index.js
+// App-komponentet indeholder den samlede app, der renderes i index.js
 function App() {
   // Definér angivelsen af Auth route
   const Auth = ({ render: Component, ...rest }) => (
@@ -58,7 +58,8 @@ function App() {
     <Router>
       <ApolloProvider client={client}>
         <Header />
-        <AdminNav />
+        {/* Rendér AdminNav, hvis der er tildelt en token */}
+        {localStorage.token && <AdminNav />}
         <Switch>
           {/* Routes til offentligt tilgængeligt indhold */}
           <Route path="/" exact component={Textarea} />

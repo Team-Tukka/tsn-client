@@ -1,3 +1,5 @@
+/* Styling vedr. den fade-in-effekt der bruges på tabeller og list-views */
+
 .fadeIn {
   -webkit-animation: fadein 2s; /* Safari, Chrome og Opera > 12.1 */
   -moz-animation: fadein 2s; /* Firefox < 16 */

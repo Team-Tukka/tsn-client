@@ -12,28 +12,31 @@ import {
   NavbarBrand,
   Nav,
   NavItem,
-  NavLink
+  NavLink,
+  Spinner
 } from 'reactstrap';
 
-// ME query defineres
-export const ME = gql`
-  {
-    me {
-      _id
-    }
-  }
-`;
-
 // AdminNav komponent
-function AdminNav(props) {
+function AdminNav() {
+  // ME2 query defineres
+  const ME2 = gql`
+    {
+      me2(token: ${localStorage.token}) {
+        _id
+        firstName
+        lastName
+      }
+    }
+  `;
+
+  // Client initialiseres til at være ME2 query
+  const { loading, error, data, client } = useQuery(ME2);
+
   // States med React Hooks
   const [isOpen, setIsOpen] = useState(false);
 
   // Toggle til at åbne og lukke AdminNav
   const toggle = () => setIsOpen(!isOpen);
-
-  // Client initialiseres til at være ME query
-  const { client } = useQuery(ME);
 
   // Funktion der smider token og redirecter til login-siden
   const Logout = () => {
@@ -42,12 +45,31 @@ function AdminNav(props) {
     window.location = '/login';
   };
 
+  // Tjekker feljbeskeden og kører Logout() hvis token er udløbet.
+  const checkToken = () => {
+    if (error.message === 'GraphQL error: Token er udløbet!') {
+      Logout();
+    } else {
+      return 'Error!';
+    }
+  };
+
+  if (loading)
+    return (
+      <div className="text-center m-3">
+        <Spinner size="sm" color="secondary" />
+      </div>
+    );
+  if (error) return <p className="text-center m-3">{checkToken()}</p>;
+
   return (
     <React.Fragment>
       {localStorage.token && (
         <Navbar className="veryLightGreenBg adminNavStyles" light expand="md">
           <Container>
-            <NavbarBrand></NavbarBrand>
+            <NavbarBrand href="/welcome">
+              {data.me2.firstName + ' ' + data.me2.lastName}
+            </NavbarBrand>
             <NavbarToggler onClick={toggle} />
             <Collapse isOpen={isOpen} navbar>
               <Nav className="ml-auto" navbar>

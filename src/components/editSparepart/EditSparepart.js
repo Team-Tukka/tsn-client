@@ -159,9 +159,16 @@ function EditSparepart(props) {
       <Form className="form" onSubmit={handleSubmit}>
         <FormGroup>
           <InputGroup>
+            <InputGroupAddon addonType="prepend">
+              <InputGroupText
+                className="inputGroupTextStyles"
+                style={{ minWidth: '8.7rem' }}
+              >
+                Enhedsnummer
+              </InputGroupText>
+            </InputGroupAddon>
             <Input
-              required
-              className="inputStyles"
+              className="inputStylesEditSparepart"
               type="text"
               name="itemNo"
               id="sparepartItemNo"
@@ -191,7 +198,7 @@ function EditSparepart(props) {
               style={{
                 padding: '0.5rem',
                 whiteSpace: 'nowrap',
-                minWidth: 'fit-content'
+                minWidth: 'min-content'
               }}
             >
               Her indtaster du reservedelens enhedsnummer. Fx HL-372761.
@@ -200,9 +207,16 @@ function EditSparepart(props) {
         </FormGroup>
         <FormGroup>
           <InputGroup>
+            <InputGroupAddon addonType="prepend">
+              <InputGroupText
+                className="inputGroupTextStyles"
+                style={{ minWidth: '8.7rem' }}
+              >
+                Enhedsnavn
+              </InputGroupText>
+            </InputGroupAddon>
             <Input
-              required
-              className="inputStyles"
+              className="inputStylesEditSparepart"
               type="text"
               name="name"
               id="sparepartName"
@@ -232,7 +246,7 @@ function EditSparepart(props) {
               style={{
                 padding: '0.5rem',
                 whiteSpace: 'nowrap',
-                minWidth: 'fit-content'
+                minWidth: 'min-content'
               }}
             >
               Her indtaster du reservedelens enhedsnavn. Fx Armlæn Højre.
@@ -241,8 +255,16 @@ function EditSparepart(props) {
         </FormGroup>
         <FormGroup>
           <InputGroup>
+            <InputGroupAddon addonType="prepend">
+              <InputGroupText
+                className="inputGroupTextStyles"
+                style={{ minWidth: '8.7rem' }}
+              >
+                Pris uden moms
+              </InputGroupText>
+            </InputGroupAddon>
             <Input
-              className="inputStyles"
+              className="inputStylesEditSparepart"
               type="number"
               step={0.01}
               name="price"
@@ -273,7 +295,7 @@ function EditSparepart(props) {
               style={{
                 padding: '0.5rem',
                 whiteSpace: 'nowrap',
-                minWidth: 'fit-content'
+                minWidth: 'min-content'
               }}
             >
               Her indtaster du reservedelens pris uden moms i DKK. Fx 99,95.
