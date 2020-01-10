@@ -1,12 +1,14 @@
 import React from 'react';
 import { useQuery } from '@apollo/react-hooks';
+import cityElf from '../../assets/images/cityElf.png';
+import cityElf2 from '../../assets/images/cityElf2.png';
 import { gql } from 'apollo-boost';
 import './Textarea.css';
 
 // Importér Reactstrap komponenter
 import { Container, Row, Col } from 'reactstrap';
 
-// Textarea komponent
+// Textarea-komponent
 function Textarea() {
   // Definér mutation til at hente textarea
   const GET_TEXTAREA_BY_ID = gql`
@@ -27,15 +29,15 @@ function Textarea() {
   return (
     <Container className="contentWrapper">
       <Row>
-        <Col>
-          <h3 className="mb-2">Top Scooter Nordic</h3>
+        <Col md={10}>
+          <pre
+            className="frontpageText"
+            dangerouslySetInnerHTML={{ __html: data.getTextareaById.text }}
+          />
         </Col>
-      </Row>
-      <Row>
-        <Col>
-          <pre className="frontpageText">
-            {data.getTextareaById.text.replace(/<br\s*\/?>/gi, '\r\n')}
-          </pre>
+        <Col md={2}>
+          <img src={cityElf} className="img-fluid my-5" alt="City Elf" />
+          <img src={cityElf2} className="img-fluid" alt="City Elf" />
         </Col>
       </Row>
     </Container>

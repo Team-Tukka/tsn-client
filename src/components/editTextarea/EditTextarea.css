@@ -1,10 +1,5 @@
-@import url("../../assets/css/globalStyles.css");
+@import url('../../assets/css/globalStyles.css');
 
-.hiddenContent {
-  display: none;
-}
-
-.shownContent {
-  display: block;
-  white-space: pre-wrap; /* Bruges til at formatere <pre> elementet */
+.footerTextStyles {
+  margin-top: 2rem;
 }

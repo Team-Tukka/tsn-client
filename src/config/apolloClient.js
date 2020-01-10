@@ -1,5 +1,6 @@
 import ApolloClient from 'apollo-boost';
 
+// Instantiér Apollo Client
 const client = new ApolloClient({
   uri: 'http://localhost:3000/graphql',
   request: operation => {
@@ -11,4 +12,5 @@ const client = new ApolloClient({
     });
   }
 });
+
 export default client;

@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
+import GetCategoryById from '../categories/GetCategoryById';
 import { useParams } from 'react-router';
 import { useMutation, useQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
+import s3 from '../../config/spacesConfig';
 import './EditScooter.css';
 
 // Importér Reactstrap komponenter
@@ -11,6 +13,8 @@ import {
   FormGroup,
   FormText,
   Input,
+  InputGroupAddon,
+  InputGroupText,
   Button,
   Alert,
   Tooltip,
@@ -19,6 +23,10 @@ import {
   ModalBody,
   ModalFooter
 } from 'reactstrap';
+
+// Importér Font Awesome komponenter
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
 
 export function GetScooterById() {
   const { id } = useParams();
@@ -36,7 +44,7 @@ export function GetScooterById() {
         description
         itemNo
         categoryId
-        subCategoryId
+        imagePath
       }
     }
   `;
@@ -57,7 +65,7 @@ export function GetScooterById() {
   const scoDescription = data.getScooterById.description;
   const scoItemNo = data.getScooterById.itemNo;
   const scoCategoryId = data.getScooterById.categoryId;
-  const scoSubCategoryId = data.getScooterById.subCategoryId;
+  const scoImagePath = data.getScooterById.imagePath;
 
   // Returnér 'EditScooter' komponentet med konstanterne som props
   return (
@@ -71,7 +79,7 @@ export function GetScooterById() {
       scoDescription={scoDescription}
       scoItemNo={scoItemNo}
       scoCategoryId={scoCategoryId}
-      scoSubCategoryId={scoSubCategoryId}
+      scoImagePath={scoImagePath}
     />
   );
 }
@@ -88,7 +96,7 @@ function EditScooter(props) {
   const scoDescription = props.scoDescription;
   const scoItemNo = props.scoItemNo;
   const scoCategoryId = props.scoCategoryId;
-  const scoSubCategoryId = props.scoSubCategoryId;
+  const scoImagePath = props.scoImagePath;
 
   // States med React Hooks
   const [name, setName] = useState(scoName);
@@ -98,8 +106,8 @@ function EditScooter(props) {
   const [brand, setBrand] = useState(scoBrand);
   const [description, setDescription] = useState(scoDescription);
   const [itemNo, setItemNo] = useState(scoItemNo);
-  const [categoryId, setCategoryId] = useState(scoCategoryId);
-  const [subCategoryId, setSubCategoryId] = useState(scoSubCategoryId);
+  const [imagePath, setImagePath] = useState(scoImagePath);
+  const [imageFile, setImageFile] = useState('');
   const [alertStatus, setAlertStatus] = useState(false);
   const [modal, setModal] = useState(false);
 
@@ -115,29 +123,27 @@ function EditScooter(props) {
   // Mutation til at opdatere en elscooter
   const UPDATE_SCOOTER_BY_ID = gql`
     mutation { 
-        updateScooterById(
+      updateScooterById(
         _id: "${scoId}"
         input: {
-        name: "${name}"
-        price: ${price}
-        sku: "${sku}"
-        tags: "${tags}"
-        brand: "${brand}"
-        description: "${description}"
-        itemNo: "${itemNo}"
-        categoryId: "${categoryId}"
-        subCategoryId: "${subCategoryId}"
+          name: "${name}"
+          price: ${price}
+          sku: "${sku}"
+          tags: "${tags}"
+          brand: "${brand}"
+          description: "${description}"
+          itemNo: "${itemNo}"
+          imagePath: "${imagePath}"
         }
-    ) {
-       name
+      ){
+        name
         price
         sku
         tags
         brand
         description
         itemNo
-        categoryId
-        subCategoryId
+        imagePath
       }
     }
   `;
@@ -155,12 +161,54 @@ function EditScooter(props) {
   const [updateScooterById] = useMutation(UPDATE_SCOOTER_BY_ID);
   const [deleteScooterById] = useMutation(DELETE_SCOOTER_BY_ID);
 
+  // Håndter fejl ifm. billede
+  const handleImageError = () => {
+    alert('Der skete en fejl under tilføjelsen af billede!');
+  };
+
+  // Håndtér ændring af billede
+  const handleImageChange = event => {
+    if (event.target.files && event.target.files[0]) {
+      setImageFile(event.target.files);
+      const imageUrl =
+        'https://tukka.fra1.digitaloceanspaces.com/' +
+        event.target.files[0].name;
+      setImagePath(imageUrl);
+    }
+  };
+
   // Håndtér indsendelse af redigerede elscooteroplysninger
   const handleSubmit = event => {
     event.preventDefault();
     if (name === '') {
       alert('Du skal som minimum udfylde et navn på elscooteren!');
     } else {
+      // Håndtér ændring af billede
+      if (imageFile && imageFile[0]) {
+        const blob = imageFile[0];
+        const params = {
+          Body: blob,
+          Bucket: 'tukka',
+          Key: blob.name
+        };
+        // Uploader filen til DO Space
+        s3.putObject(params)
+          .on('build', request => {
+            request.httpRequest.headers.Host =
+              'https://tukka.fra1.digitaloceanspaces.com/';
+            request.httpRequest.headers['Content-Length'] = blob.size;
+            request.httpRequest.headers['Content-Type'] = blob.type;
+            request.httpRequest.headers['x-amz-acl'] = 'public-read';
+          })
+          .send(err => {
+            if (err) handleImageError();
+            else {
+              const imageUrl =
+                'https://tukka.fra1.digitaloceanspaces.com/' + blob.name;
+              setImagePath(imageUrl);
+            }
+          });
+      }
       updateScooterById({
         variables: {
           name: name,
@@ -170,8 +218,7 @@ function EditScooter(props) {
           brand: brand,
           description: description,
           itemNo: itemNo,
-          categoryId: categoryId,
-          subCategoryId: subCategoryId
+          imagePath: imagePath
         }
       });
       // Sæt 'alertStatus' til at være true (så den vises)
@@ -205,9 +252,16 @@ function EditScooter(props) {
       <Form className="form" onSubmit={handleSubmit}>
         <FormGroup>
           <InputGroup>
+            <InputGroupAddon addonType="prepend">
+              <InputGroupText
+                className="inputGroupTextStyles"
+                style={{ minWidth: '8.7rem' }}
+              >
+                Enhedsnummer
+              </InputGroupText>
+            </InputGroupAddon>
             <Input
-              required
-              className="inputStyles"
+              className="inputStylesEditScooter"
               type="text"
               name="itemNo"
               id="scooterItemNo"
@@ -217,15 +271,27 @@ function EditScooter(props) {
               placeholder="Enhedsnummer..."
               onChange={event => setItemNo(event.target.value)}
             />
+            <InputGroupAddon
+              addonType="append"
+              id="itemNoTooltip"
+              style={{ marginLeft: '0.5rem' }}
+            >
+              <InputGroupText className="btnStyles">
+                <FontAwesomeIcon
+                  icon={faQuestionCircle}
+                  id="questionIcon"
+                ></FontAwesomeIcon>
+              </InputGroupText>
+            </InputGroupAddon>
             <Tooltip
               placement="top"
               isOpen={itemNoTooltipOpen}
-              target="scooterItemNo"
+              target="itemNoTooltip"
               toggle={toggleItemNo}
               style={{
                 padding: '0.5rem',
                 whiteSpace: 'nowrap',
-                minWidth: 'fit-content'
+                minWidth: 'min-content'
               }}
             >
               Her indtaster du elscooterens enhedsnummer. Fx AK-3761.
@@ -234,9 +300,16 @@ function EditScooter(props) {
         </FormGroup>
         <FormGroup>
           <InputGroup>
+            <InputGroupAddon addonType="prepend">
+              <InputGroupText
+                className="inputGroupTextStyles"
+                style={{ minWidth: '8.7rem' }}
+              >
+                Enhedsnavn
+              </InputGroupText>
+            </InputGroupAddon>
             <Input
-              required
-              className="inputStyles"
+              className="inputStylesEditScooter"
               type="text"
               name="name"
               id="scooterName"
@@ -246,15 +319,27 @@ function EditScooter(props) {
               placeholder="Enhedsnavn..."
               onChange={event => setName(event.target.value)}
             />
+            <InputGroupAddon
+              addonType="append"
+              id="nameTooltip"
+              style={{ marginLeft: '0.5rem' }}
+            >
+              <InputGroupText className="btnStyles">
+                <FontAwesomeIcon
+                  icon={faQuestionCircle}
+                  id="questionIcon"
+                ></FontAwesomeIcon>
+              </InputGroupText>
+            </InputGroupAddon>
             <Tooltip
               placement="top"
               isOpen={nameTooltipOpen}
-              target="scooterName"
+              target="nameTooltip"
               toggle={toggleName}
               style={{
                 padding: '0.5rem',
                 whiteSpace: 'nowrap',
-                minWidth: 'fit-content'
+                minWidth: 'min-content'
               }}
             >
               Her indtaster du elscooterens navn. Fx HS-855 Hvid.
@@ -263,8 +348,16 @@ function EditScooter(props) {
         </FormGroup>
         <FormGroup>
           <InputGroup>
+            <InputGroupAddon addonType="prepend">
+              <InputGroupText
+                className="inputGroupTextStyles"
+                style={{ minWidth: '8.7rem' }}
+              >
+                Pris uden moms
+              </InputGroupText>
+            </InputGroupAddon>
             <Input
-              className="inputStyles"
+              className="inputStylesEditScooter"
               type="number"
               step={0.01}
               name="price"
@@ -275,15 +368,27 @@ function EditScooter(props) {
               placeholder="Pris uden moms..."
               onChange={event => setPrice(parseFloat(event.target.value))}
             />
+            <InputGroupAddon
+              addonType="append"
+              id="priceTooltip"
+              style={{ marginLeft: '0.5rem' }}
+            >
+              <InputGroupText className="btnStyles">
+                <FontAwesomeIcon
+                  icon={faQuestionCircle}
+                  id="questionIcon"
+                ></FontAwesomeIcon>
+              </InputGroupText>
+            </InputGroupAddon>
             <Tooltip
               placement="top"
               isOpen={priceTooltipOpen}
-              target="scooterPrice"
+              target="priceTooltip"
               toggle={togglePrice}
               style={{
                 padding: '0.5rem',
                 whiteSpace: 'nowrap',
-                minWidth: 'fit-content'
+                minWidth: 'min-content'
               }}
             >
               Her indtaster du elscooterens pris uden moms i DKK. Fx 22999,95.
@@ -297,8 +402,16 @@ function EditScooter(props) {
         </FormGroup>
         <FormGroup>
           <InputGroup>
+            <InputGroupAddon addonType="prepend">
+              <InputGroupText
+                className="inputGroupTextStyles"
+                style={{ minWidth: '8.7rem' }}
+              >
+                SKU
+              </InputGroupText>
+            </InputGroupAddon>
             <Input
-              className="inputStyles"
+              className="inputStylesEditScooter"
               type="text"
               name="sku"
               id="scooterSku"
@@ -306,15 +419,27 @@ function EditScooter(props) {
               placeholder="SKU..."
               onChange={event => setSku(event.target.value)}
             />
+            <InputGroupAddon
+              addonType="append"
+              id="skuTooltip"
+              style={{ marginLeft: '0.5rem' }}
+            >
+              <InputGroupText className="btnStyles">
+                <FontAwesomeIcon
+                  icon={faQuestionCircle}
+                  id="questionIcon"
+                ></FontAwesomeIcon>
+              </InputGroupText>
+            </InputGroupAddon>
             <Tooltip
               placement="top"
               isOpen={skuTooltipOpen}
-              target="scooterSku"
+              target="skuTooltip"
               toggle={toggleSku}
               style={{
                 padding: '0.5rem',
                 whiteSpace: 'nowrap',
-                minWidth: 'fit-content'
+                minWidth: 'min-content'
               }}
             >
               Her indtaster du den unikke kode, der identificerer enheden. En
@@ -324,8 +449,16 @@ function EditScooter(props) {
         </FormGroup>
         <FormGroup>
           <InputGroup>
+            <InputGroupAddon addonType="prepend">
+              <InputGroupText
+                className="inputGroupTextStyles"
+                style={{ minWidth: '8.7rem' }}
+              >
+                Tags
+              </InputGroupText>
+            </InputGroupAddon>
             <Input
-              className="inputStyles"
+              className="inputStylesEditScooter"
               type="text"
               name="tags"
               id="scooterTags"
@@ -333,15 +466,27 @@ function EditScooter(props) {
               placeholder="Tags..."
               onChange={event => setTags(event.target.value)}
             />
+            <InputGroupAddon
+              addonType="append"
+              id="tagsTooltip"
+              style={{ marginLeft: '0.5rem' }}
+            >
+              <InputGroupText className="btnStyles">
+                <FontAwesomeIcon
+                  icon={faQuestionCircle}
+                  id="questionIcon"
+                ></FontAwesomeIcon>
+              </InputGroupText>
+            </InputGroupAddon>
             <Tooltip
               placement="top"
               isOpen={tagsTooltipOpen}
-              target="scooterTags"
+              target="tagsTooltip"
               toggle={toggleTags}
               style={{
                 padding: '0.5rem',
                 whiteSpace: 'nowrap',
-                minWidth: 'fit-content'
+                minWidth: 'min-content'
               }}
             >
               Her indtaster du de ord, der kan identificere enheden. Ordene
@@ -351,8 +496,16 @@ function EditScooter(props) {
         </FormGroup>
         <FormGroup>
           <InputGroup>
+            <InputGroupAddon addonType="prepend">
+              <InputGroupText
+                className="inputGroupTextStyles"
+                style={{ minWidth: '8.7rem' }}
+              >
+                Mærke
+              </InputGroupText>
+            </InputGroupAddon>
             <Input
-              className="inputStyles"
+              className="inputStylesEditScooter"
               type="text"
               name="brand"
               id="scooterBrand"
@@ -360,15 +513,27 @@ function EditScooter(props) {
               placeholder="Mærke..."
               onChange={event => setBrand(event.target.value)}
             />
+            <InputGroupAddon
+              addonType="append"
+              id="brandTooltip"
+              style={{ marginLeft: '0.5rem' }}
+            >
+              <InputGroupText className="btnStyles">
+                <FontAwesomeIcon
+                  icon={faQuestionCircle}
+                  id="questionIcon"
+                ></FontAwesomeIcon>
+              </InputGroupText>
+            </InputGroupAddon>
             <Tooltip
               placement="top"
               isOpen={brandTooltipOpen}
-              target="scooterBrand"
+              target="brandTooltip"
               toggle={toggleBrand}
               style={{
                 padding: '0.5rem',
                 whiteSpace: 'nowrap',
-                minWidth: 'fit-content'
+                minWidth: 'min-content'
               }}
             >
               Her indtaster du elscooterens mærke. Fx C.T.M.
@@ -384,20 +549,34 @@ function EditScooter(props) {
               name="description"
               id="scooterDescription"
               minLength="1"
-              maxLength="200"
-              defaultValue={description}
+              maxLength="500"
+              defaultValue={description.replace(/<br ?\/?>/g, '\n')}
               placeholder="Beskrivelse..."
-              onChange={event => setDescription(event.target.value)}
+              onChange={event =>
+                setDescription(event.target.value.replace(/\r?\n/g, '<br>'))
+              }
             />
+            <InputGroupAddon
+              addonType="append"
+              id="descriptionTooltip"
+              style={{ marginLeft: '0.5rem' }}
+            >
+              <InputGroupText className="btnStyles">
+                <FontAwesomeIcon
+                  icon={faQuestionCircle}
+                  id="questionIcon"
+                ></FontAwesomeIcon>
+              </InputGroupText>
+            </InputGroupAddon>
             <Tooltip
               placement="top"
               isOpen={descriptionTooltipOpen}
-              target="scooterDescription"
+              target="descriptionTooltip"
               toggle={toggleDescription}
               style={{
                 padding: '0.5rem',
                 whiteSpace: 'nowrap',
-                minWidth: 'fit-content'
+                minWidth: 'min-content'
               }}
             >
               Her indtaster du en fyldestgørende beskrivelse af enheden. Max 200
@@ -408,31 +587,23 @@ function EditScooter(props) {
         <FormGroup>
           <InputGroup>
             <Input
-              readOnly="readonly"
-              className="inputStyles"
-              type="text"
-              name="categoryId"
-              id="scooterCategoryId"
-              defaultValue={categoryId}
-              placeholder="Kategori ID (Under udvikling)"
-              onChange={event => setCategoryId(event.target.value)}
+              className="inputStyles p-2"
+              type="file"
+              id="scooterImagePath"
+              accept="images/*"
+              onChange={handleImageChange}
             />
           </InputGroup>
         </FormGroup>
-        <FormGroup>
-          <InputGroup>
-            <Input
-              readOnly="readonly"
-              className="inputStyles"
-              type="text"
-              name="subCategoryId"
-              id="scooterSubCategoryId"
-              defaultValue={subCategoryId}
-              placeholder="Underkategori ID (Under udvikling)"
-              onChange={event => setSubCategoryId(event.target.value)}
-            />
-          </InputGroup>
-        </FormGroup>
+        <img
+          style={{ display: 'block' }}
+          className="img-fluid"
+          src={imagePath}
+          alt={imagePath && imagePath.slice(42)}
+        />
+        <FormText color="muted" className="mb-3">
+          Oprettet i kategorien: <GetCategoryById categoryId={scoCategoryId} />
+        </FormText>
         {/* Vis alert, hvis elscooteren opdateres korrekt */}
         {alertStatus === true && (
           <Alert color="success">Elscooteren blev opdateret.</Alert>
@@ -458,7 +629,7 @@ function EditScooter(props) {
           <ModalFooter>
             <Button color="danger" onClick={handleDelete}>
               Ja!
-            </Button>{' '}
+            </Button>
             <Button color="secondary" onClick={toggleModal}>
               Nej!
             </Button>

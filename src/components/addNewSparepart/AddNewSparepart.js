@@ -3,12 +3,15 @@ import { Link } from 'react-router-dom';
 import { useMutation } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
 import client from '../../config/apolloClient';
+import GetSubCategories from '../categories/GetSubCategories';
 import './AddNewSparepart.css';
 
 // Importér Reactstrap komponenter
 import {
   Form,
   InputGroup,
+  InputGroupAddon,
+  InputGroupText,
   FormGroup,
   FormText,
   Input,
@@ -16,6 +19,10 @@ import {
   Alert,
   Tooltip
 } from 'reactstrap';
+
+// Importér Font Awesome komponenter
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
 
 // Komponent, der håndterer oprettelse af ny reservedel
 function AddNewSparepart() {
@@ -27,15 +34,12 @@ function AddNewSparepart() {
   const [itemNo, setItemNo] = useState('');
   const [name, setName] = useState('');
   const [price, setPrice] = useState('');
-  const [scooterId, setScooterId] = useState('');
-  const [categoryId, setCategoryId] = useState('');
   const [alertStatus, setAlertStatus] = useState(false);
 
   // States til tooltips
   const [itemNoTooltipOpen, setItemNoTooltipOpen] = useState(false);
   const [nameTooltipOpen, setNameTooltipOpen] = useState(false);
   const [priceTooltipOpen, setPriceTooltipOpen] = useState(false);
-  const [scooterIdTooltipOpen, setScooterIdTooltipOpen] = useState(false);
 
   // Definér mutation til at tilføje ny reservedel
   const ADD_SPAREPART = gql`
@@ -43,21 +47,18 @@ function AddNewSparepart() {
       $itemNo: String!
       $name: String!
       $price: Float!
-      $scooterId: String
-      $categoryId: String
+      $subCategoryId: String
     ) {
       addSparepart(
         itemNo: $itemNo
         name: $name
         price: $price
-        scooterId: $scooterId
-        categoryId: $categoryId
+        subCategoryId: $subCategoryId
       ) {
         itemNo
         name
         price
-        scooterId
-        categoryId
+        subCategoryId
       }
     }
   `;
@@ -76,8 +77,7 @@ function AddNewSparepart() {
           itemNo: itemNo,
           name: name,
           price: price,
-          scooterId: scooterId,
-          categoryId: categoryId
+          subCategoryId: document.getElementById('chosenSubCategoryId').value
         }
       });
       // Sæt 'alertStatus' til at være true (så den vises)
@@ -86,9 +86,8 @@ function AddNewSparepart() {
       setItemNo('');
       setName('');
       setPrice('');
-      setScooterId('');
-      setCategoryId('');
       document.getElementById('sparepartPrice').value = '';
+      document.getElementById('chosenSubCategoryId').value = '';
     }
   };
 
@@ -96,7 +95,6 @@ function AddNewSparepart() {
   const toggleItemNo = () => setItemNoTooltipOpen(!itemNoTooltipOpen);
   const toggleName = () => setNameTooltipOpen(!nameTooltipOpen);
   const togglePrice = () => setPriceTooltipOpen(!priceTooltipOpen);
-  const toggleScooterId = () => setScooterIdTooltipOpen(!scooterIdTooltipOpen);
 
   return (
     <React.Fragment>
@@ -116,15 +114,27 @@ function AddNewSparepart() {
               placeholder="Enhedsnummer..."
               onChange={event => setItemNo(event.target.value)}
             />
+            <InputGroupAddon
+              addonType="append"
+              id="itemNoTooltip"
+              style={{ marginLeft: '0.5rem' }}
+            >
+              <InputGroupText className="btnStyles">
+                <FontAwesomeIcon
+                  icon={faQuestionCircle}
+                  id="questionIcon"
+                ></FontAwesomeIcon>
+              </InputGroupText>
+            </InputGroupAddon>
             <Tooltip
               placement="top"
               isOpen={itemNoTooltipOpen}
-              target="sparepartItemNo"
+              target="itemNoTooltip"
               toggle={toggleItemNo}
               style={{
                 padding: '0.5rem',
                 whiteSpace: 'nowrap',
-                minWidth: 'fit-content'
+                minWidth: 'min-content'
               }}
             >
               Her indtaster du reservedelens enhedsnummer. Fx HL-372761.
@@ -145,15 +155,27 @@ function AddNewSparepart() {
               placeholder="Enhedsnavn..."
               onChange={event => setName(event.target.value)}
             />
+            <InputGroupAddon
+              addonType="append"
+              id="nameTooltip"
+              style={{ marginLeft: '0.5rem' }}
+            >
+              <InputGroupText className="btnStyles">
+                <FontAwesomeIcon
+                  icon={faQuestionCircle}
+                  id="questionIcon"
+                ></FontAwesomeIcon>
+              </InputGroupText>
+            </InputGroupAddon>
             <Tooltip
               placement="top"
               isOpen={nameTooltipOpen}
-              target="sparepartName"
+              target="nameTooltip"
               toggle={toggleName}
               style={{
                 padding: '0.5rem',
                 whiteSpace: 'nowrap',
-                minWidth: 'fit-content'
+                minWidth: 'min-content'
               }}
             >
               Her indtaster du reservedelens enhedsnavn. Fx Armlæn Højre.
@@ -172,15 +194,27 @@ function AddNewSparepart() {
               placeholder="Pris uden moms..."
               onChange={event => setPrice(parseFloat(event.target.value))}
             />
+            <InputGroupAddon
+              addonType="append"
+              id="priceTooltip"
+              style={{ marginLeft: '0.5rem' }}
+            >
+              <InputGroupText className="btnStyles">
+                <FontAwesomeIcon
+                  icon={faQuestionCircle}
+                  id="questionIcon"
+                ></FontAwesomeIcon>
+              </InputGroupText>
+            </InputGroupAddon>
             <Tooltip
               placement="top"
               isOpen={priceTooltipOpen}
-              target="sparepartPrice"
+              target="priceTooltip"
               toggle={togglePrice}
               style={{
                 padding: '0.5rem',
                 whiteSpace: 'nowrap',
-                minWidth: 'fit-content'
+                minWidth: 'min-content'
               }}
             >
               Her indtaster du reservedelens pris uden moms i DKK. Fx 99,95.
@@ -194,43 +228,7 @@ function AddNewSparepart() {
         </FormGroup>
         <FormGroup>
           <InputGroup>
-            <Input
-              className="inputStyles"
-              type="text"
-              name="scooterId"
-              id="sparepartScooterId"
-              value={scooterId}
-              placeholder="Scooter ID"
-              onChange={event => setScooterId(event.target.value)}
-            />
-            <Tooltip
-              placement="top"
-              isOpen={scooterIdTooltipOpen}
-              target="sparepartScooterId"
-              toggle={toggleScooterId}
-              style={{
-                padding: '0.5rem',
-                whiteSpace: 'nowrap',
-                minWidth: 'fit-content'
-              }}
-            >
-              Her indtaster du ID'et på den elscooter, reservedelen tilhører. Fx
-              125.
-            </Tooltip>
-          </InputGroup>
-        </FormGroup>
-        <FormGroup>
-          <InputGroup>
-            <Input
-              readOnly="readonly"
-              className="inputStyles"
-              type="text"
-              name="categoryId"
-              id="sparepartCategoryId"
-              value={categoryId}
-              placeholder="Kategori ID (Under udvikling)"
-              onChange={event => setCategoryId(event.target.value)}
-            />
+            <GetSubCategories />
           </InputGroup>
         </FormGroup>
         {/* Vis alert, hvis elscooteren oprettes korrekt */}

@@ -1,0 +1,19 @@
+/*
+  Styling vedr. den tag-cloud der anvendes i komponentet,
+  der renderer visning af en enkelt elscooter.
+*/
+
+.tagCloudItemStyles {
+  padding: 0.1rem 0.4rem;
+  display: inline-block;
+  border: none;
+  color: #373a3c;
+  border-radius: 0.2rem;
+  background-color: #e2eed8;
+  box-shadow: 1px 2px 3px #f1f1f1;
+}
+
+.tagCloudItemStyles:hover {
+  background-color: #f6fdf2;
+  box-shadow: 1px 2px 3px #f1f1f1;
+}

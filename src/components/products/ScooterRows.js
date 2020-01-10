@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
+import GetCategoryById from '../categories/GetCategoryById';
 
 function ScooterRows() {
   // Definér først query til at hente array med alle elscootere
@@ -21,6 +22,15 @@ function ScooterRows() {
   // Anvend query
   const { loading, error, data } = useQuery(GET_SCOOTERS);
 
+  // Tjekker feljbeskeden og fjerner 'GraphQL error' fra strengen.
+  const errorHandler = () => {
+    if (error.message === 'GraphQL error: Ingen elscootere fundet!') {
+      return error.message.slice(15);
+    } else {
+      return 'Error!';
+    }
+  };
+
   if (loading)
     return (
       <tr>
@@ -30,7 +40,7 @@ function ScooterRows() {
   if (error)
     return (
       <tr>
-        <td>Error!</td>
+        <td>{errorHandler()}</td>
       </tr>
     );
 
@@ -51,17 +61,17 @@ function ScooterRows() {
         </td>
         <td>
           <Link to={`/editScooter/${_id}`} className="linkStyles">
-            {price}
+            {price} DKK
           </Link>
         </td>
         <td>
           <Link to={`/editScooter/${_id}`} className="linkStyles">
-            {priceVAT}
+            {priceVAT} DKK
           </Link>
         </td>
         <td>
           <Link to={`/editScooter/${_id}`} className="linkStyles">
-            {categoryId}
+            <GetCategoryById categoryId={categoryId} />
           </Link>
         </td>
       </tr>
