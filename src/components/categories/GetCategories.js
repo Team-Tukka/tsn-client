@@ -95,6 +95,7 @@ export function GetCategoriesNotRequired(props) {
     </Input>
   );
 }
+
 // Komponent, der renderer to udvalgte kategorier i databasen
 export function GetCategoriesById(props) {
   // Definér query til at hente kategorier ud fra ID'er
@@ -149,6 +150,7 @@ export function GetCategoriesById(props) {
     </Input>
   );
 }
+
 // Komponent, der renderer to udvalgte kategorier i databasen
 export function GetCategoriesByIdNotRequired(props) {
   // Definér query til at hente kategorier ud fra ID'er
@@ -202,4 +204,5 @@ export function GetCategoriesByIdNotRequired(props) {
     </Input>
   );
 }
+
 export default GetCategories;
