@@ -41,7 +41,7 @@ function ShowSubCategory() {
           data.getSubCategoryById.imagePath.slice(42)
         }
       />
-      <h3 className="mb-3">Reservedele</h3>
+      <h3 className="mt-4 mb-3">Reservedele</h3>
       <Row>
         <CardDeck className="fadeIn">
           <Spareparts />
