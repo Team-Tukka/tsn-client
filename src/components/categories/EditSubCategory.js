@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
 import s3 from '../../config/spacesConfig';
-import { GetCategoriesNotRequired } from './GetCategories.js';
+import { GetCategoriesByIdNotRequired } from './GetCategories.js';
 import GetCategoryName from './GetCategoryName.js';
 
 // Importér Reactstrap komponenter
@@ -241,9 +241,9 @@ function EditSubCategory() {
         <Collapse isOpen={categorySwitchOpen}>
           {inputId === _id && (
             <div className="mb-2">
-              <GetCategoriesNotRequired
+              <GetCategoriesByIdNotRequired
                 parentCallback={handleCategoryId}
-              ></GetCategoriesNotRequired>
+              ></GetCategoriesByIdNotRequired>
             </div>
           )}
         </Collapse>
