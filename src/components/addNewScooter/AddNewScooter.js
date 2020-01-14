@@ -467,7 +467,7 @@ function AddNewScooter() {
                 minWidth: 'min-content'
               }}
             >
-              Her indtaster du en fyldestgørende beskrivelse af enheden. Max 200
+              Her indtaster du en fyldestgørende beskrivelse af enheden. Max 500
               tegn.
             </Tooltip>
           </InputGroup>

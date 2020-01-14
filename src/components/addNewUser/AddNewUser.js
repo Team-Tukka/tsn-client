@@ -98,8 +98,8 @@ function AddNewUser() {
     setPassword('');
     setAdminRole(false);
     setAddress('');
-    setZipCode('');
-    setPhone('');
+    document.getElementById('userZipCode').value = '';
+    document.getElementById('userPhone').value = '';
   };
 
   // Toggle tooltip ved administrator checkbox
@@ -189,11 +189,12 @@ function AddNewUser() {
             <Input
               required
               className="inputStyles"
-              type="number"
+              id="userZipCode"
+              type="tel"
               name="zipCode"
-              minLength="1"
-              maxLength="10"
-              value={zipCode}
+              pattern="^[0-9]*$"
+              minLength="4"
+              maxLength="4"
               placeholder="Postnummer..."
               onChange={event => setZipCode(parseInt(event.target.value))}
             />
@@ -204,11 +205,12 @@ function AddNewUser() {
             <Input
               required
               className="inputStyles"
-              type="number"
+              id="userPhone"
               name="phone"
-              minLength="2"
-              maxLength="20"
-              value={phone}
+              type="tel"
+              pattern="^[0-9]*$"
+              maxLength="8"
+              minLength="8"
               placeholder="Telefonnummer..."
               onChange={event => setPhone(parseInt(event.target.value))}
             />
