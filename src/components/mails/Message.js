@@ -89,21 +89,26 @@ function Message() {
       <h5 className="name">
         {mailFirstName} {mailLastName}
       </h5>
-      <p>
+      <span className="d-block mb-1">
         <FontAwesomeIcon
           icon={faAt}
           className="fontAwesomeAtStyle"
         ></FontAwesomeIcon>
-        {mailEmail}
-      </p>
-      <p>
+        <a
+          className="linkStyles"
+          href={`mailto:${mailEmail}?subject=SV: ${mailTitle}&body=Vedrørende din henvendelse til Top Scooter Nordic med titlen: "${mailTitle}"`}
+        >
+          {mailEmail}
+        </a>
+      </span>
+      <span className="d-block">
         <FontAwesomeIcon
           icon={faPhoneAlt}
           className="fontAwesomeAtStyle"
         ></FontAwesomeIcon>
         {mailPhone > 0 && mailPhone}
         {mailPhone === null && <span>Intet nummer angivet.</span>}
-      </p>
+      </span>
       <Button onClick={toggleModal} className="dangerBtnStylesMail">
         Slet mailen
       </Button>
