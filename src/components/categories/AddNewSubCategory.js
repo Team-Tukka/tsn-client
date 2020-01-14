@@ -3,7 +3,7 @@ import { useMutation } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
 import client from '../../config/apolloClient';
 import s3 from '../../config/spacesConfig';
-import GetCategories from './GetCategories';
+import { GetCategoriesById } from './GetCategories';
 
 // Importér Reactstrap komponenter
 import {
@@ -140,7 +140,7 @@ function AddNewSubCategory() {
         </FormGroup>
         <FormGroup>
           <InputGroup>
-            <GetCategories />
+            <GetCategoriesById />
           </InputGroup>
         </FormGroup>
         <FormGroup>

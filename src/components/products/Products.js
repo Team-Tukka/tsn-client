@@ -66,7 +66,7 @@ function Products() {
         id="filterInput"
         className="inputStyles mb-3"
         onKeyUp={filterProducts}
-        placeholder="Søg efter enhedsnummer..."
+        placeholder="Søg efter enhedsnavn..."
       />
       <div className="tableScrollView fadeIn">
         <Table id="productList" responsive borderless>
