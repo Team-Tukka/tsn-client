@@ -31,7 +31,6 @@ function AddNewUser() {
   const [zipCode, setZipCode] = useState('');
   const [phone, setPhone] = useState('');
   const [alertStatus, setAlertStatus] = useState(false);
-  const [errorStatus, setErrorStatus] = useState(false);
 
   // State til tooltip ved administrator checkbox
   const [adminRoleTooltipOpen, setAdminRoleTooltipOpen] = useState(false);
@@ -78,12 +77,6 @@ function AddNewUser() {
     { loading: mutationLoading, error: mutationError }
   ] = useMutation(ADD_USER);
 
-  const handleError = () => {
-    if (mutationError) {
-      setErrorStatus(true);
-    }
-  };
-
   // Håndtér indsendelse af brugeroplysninger
   const handleSubmit = event => {
     event.preventDefault();
@@ -98,9 +91,7 @@ function AddNewUser() {
         zipCode: zipCode,
         phone: phone
       }
-    }).catch(error => {
-      handleError();
-    });
+    }).catch(error => {});
     setAlertStatus(true);
     // Clear felter, så der kan indtastes nye oplysninger
     setFirstName('');
