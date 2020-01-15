@@ -249,7 +249,7 @@ function EditSubCategory() {
         </Collapse>
         <InputGroup>
           <Input
-            className="inputStylesSubCategory mt-2 mb-3"
+            className="inputStyles p-2 mt-2"
             type="file"
             accept="images/*"
             onChange={handleImagePath}
@@ -257,7 +257,7 @@ function EditSubCategory() {
         </InputGroup>
         <img
           style={{ display: 'block' }}
-          className="img-fluid"
+          className="img-fluid my-2"
           src={imagePath}
           alt={imagePath && imagePath.slice(42)}
         />

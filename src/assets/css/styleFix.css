@@ -1,0 +1,9 @@
+button,
+input,
+select,
+option,
+input-group-text,
+input-group-prepend,
+input-group-append {
+  min-height: 2.6rem !important;
+}
