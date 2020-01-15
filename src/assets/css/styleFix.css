@@ -2,8 +2,9 @@ button,
 input,
 select,
 option,
-input-group-text,
-input-group-prepend,
-input-group-append {
+.input-group,
+.input-group-text,
+.input-group-prepend,
+.input-group-append {
   height: 2.7rem !important;
 }
