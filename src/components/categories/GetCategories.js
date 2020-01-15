@@ -137,7 +137,7 @@ export function GetCategoriesById(props) {
       onChange={sendDate}
     >
       <option value="" disabled selected>
-        Vælg kategori...
+        Vælg model...
       </option>
       {data.getCategoriesByIds.map((category, index) => {
         const { _id, name } = category; // Destructuring
@@ -191,7 +191,7 @@ export function GetCategoriesByIdNotRequired(props) {
       onChange={sendDate}
     >
       <option value="" disabled selected>
-        Vælg kategori...
+        Vælg model...
       </option>
       {data.getCategoriesByIds.map((category, index) => {
         const { _id, name } = category; // Destructuring

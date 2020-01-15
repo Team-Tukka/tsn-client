@@ -71,9 +71,12 @@ function AddNewUser() {
       }
     }
   `;
-
+  
   // Anvend mutation
-  const [addUser, { error }] = useMutation(ADD_USER);
+  const [
+    addUser,
+    { loading: mutationLoading, error: mutationError }
+  ] = useMutation(ADD_USER);
 
   // Håndtér indsendelse af brugeroplysninger
   const handleSubmit = event => {
@@ -89,7 +92,7 @@ function AddNewUser() {
         zipCode: zipCode,
         phone: phone
       }
-    });
+    }).catch(error => {});
     setAlertStatus(true);
     // Clear felter, så der kan indtastes nye oplysninger
     setFirstName('');
@@ -98,8 +101,8 @@ function AddNewUser() {
     setPassword('');
     setAdminRole(false);
     setAddress('');
-    setZipCode('');
-    setPhone('');
+    document.getElementById('userZipCode').value = '';
+    document.getElementById('userPhone').value = '';
   };
 
   // Toggle tooltip ved administrator checkbox
@@ -189,11 +192,12 @@ function AddNewUser() {
             <Input
               required
               className="inputStyles"
-              type="number"
+              id="userZipCode"
+              type="tel"
               name="zipCode"
-              minLength="1"
-              maxLength="10"
-              value={zipCode}
+              pattern="^[0-9]*$"
+              minLength="4"
+              maxLength="4"
               placeholder="Postnummer..."
               onChange={event => setZipCode(parseInt(event.target.value))}
             />
@@ -204,11 +208,12 @@ function AddNewUser() {
             <Input
               required
               className="inputStyles"
-              type="number"
+              id="userPhone"
               name="phone"
-              minLength="2"
-              maxLength="20"
-              value={phone}
+              type="tel"
+              pattern="^[0-9]*$"
+              maxLength="8"
+              minLength="8"
               placeholder="Telefonnummer..."
               onChange={event => setPhone(parseInt(event.target.value))}
             />
@@ -244,13 +249,15 @@ function AddNewUser() {
             </Tooltip>
           </InputGroup>
         </FormGroup>
+        {/*Loader mutation*/}
+        {mutationLoading && <Alert color="warning">Loading...</Alert>}
         {/* Vis alert, hvis brugeren oprettes korrekt */}
-        {!error && alertStatus === true && (
+        {!mutationError && alertStatus === true && (
           <Alert color="success">Brugeren blev oprettet!</Alert>
         )}
         {/* Vis anden alert, hvis der er fejl, og hent fejlen som er beskrevet i mutation fra serveren */}
-        {error &&
-          error.graphQLErrors.map(({ message }, i) => (
+        {mutationError &&
+          mutationError.graphQLErrors.map(({ message }, i) => (
             <Alert color="danger" key={i}>
               {message}
             </Alert>

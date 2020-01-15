@@ -236,7 +236,7 @@ function EditSubCategory() {
           className="showHideTextStyles linkStyles"
           onClick={toggleCategory}
         >
-          Skift kategori
+          Skift model
         </Link>
         <Collapse isOpen={categorySwitchOpen}>
           {inputId === _id && (
