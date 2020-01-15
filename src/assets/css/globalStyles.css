@@ -3,10 +3,11 @@
   i alle parent-komponenters tilhørende CSS-fil.
 */
 
-@import url("../../assets/css/fadeInStyles.css");
-@import url("../../assets/css/priceStyles.css");
-@import url("../../assets/css/tagCloudStyles.css");
-@import url("../../assets/css/scrollbarStyles.css");
+@import url('../../assets/css/fadeInStyles.css');
+@import url('../../assets/css/priceStyles.css');
+@import url('../../assets/css/tagCloudStyles.css');
+@import url('../../assets/css/scrollbarStyles.css');
+@import url('../../assets/css/styleFix.css');
 
 h1,
 h2,
