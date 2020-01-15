@@ -31,6 +31,7 @@ function AddNewUser() {
   const [zipCode, setZipCode] = useState('');
   const [phone, setPhone] = useState('');
   const [alertStatus, setAlertStatus] = useState(false);
+  const [errorStatus, setErrorStatus] = useState(false);
 
   // State til tooltip ved administrator checkbox
   const [adminRoleTooltipOpen, setAdminRoleTooltipOpen] = useState(false);
@@ -71,9 +72,17 @@ function AddNewUser() {
       }
     }
   `;
-
   // Anvend mutation
-  const [addUser, { error }] = useMutation(ADD_USER);
+  const [
+    addUser,
+    { loading: mutationLoading, error: mutationError }
+  ] = useMutation(ADD_USER);
+
+  const handleError = () => {
+    if (mutationError) {
+      setErrorStatus(true);
+    }
+  };
 
   // Håndtér indsendelse af brugeroplysninger
   const handleSubmit = event => {
@@ -89,6 +98,8 @@ function AddNewUser() {
         zipCode: zipCode,
         phone: phone
       }
+    }).catch(error => {
+      handleError();
     });
     setAlertStatus(true);
     // Clear felter, så der kan indtastes nye oplysninger
@@ -246,13 +257,15 @@ function AddNewUser() {
             </Tooltip>
           </InputGroup>
         </FormGroup>
+        {/*Loader mutation*/}
+        {mutationLoading && <Alert color="warning">Loading...</Alert>}
         {/* Vis alert, hvis brugeren oprettes korrekt */}
-        {!error && alertStatus === true && (
+        {!mutationError && alertStatus === true && (
           <Alert color="success">Brugeren blev oprettet!</Alert>
         )}
         {/* Vis anden alert, hvis der er fejl, og hent fejlen som er beskrevet i mutation fra serveren */}
-        {error &&
-          error.graphQLErrors.map(({ message }, i) => (
+        {mutationError &&
+          mutationError.graphQLErrors.map(({ message }, i) => (
             <Alert color="danger" key={i}>
               {message}
             </Alert>
