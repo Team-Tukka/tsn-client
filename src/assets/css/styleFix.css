@@ -6,5 +6,5 @@ option,
 .input-group-text,
 .input-group-prepend,
 .input-group-append {
-  height: 2.7rem !important;
+  min-height: 2.7rem !important;
 }
